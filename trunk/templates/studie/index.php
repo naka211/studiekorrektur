@@ -190,7 +190,7 @@ JHtml::_('behavior.formvalidation');
 			}
 		});
 		
-		$('input#title').on('change invalid', function() {
+		$('input#subject').on('change invalid', function() {
 			var textfield = $(this).get(0);
 			textfield.setCustomValidity('');
 			
