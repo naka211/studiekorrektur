@@ -209,7 +209,7 @@ $tmpl = JURI::base().'templates/studie/';
 					<div class="row">
 						<div class="col-md-12 form-group">
 							<label for="">Emne</label>
-							<input type="text" class="form-control input3 required" name="jform[contact_email]" id="title">
+							<input type="text" class="form-control input3 required" name="jform[contact_subject]" id="subject">
 						</div>
 					</div>
 					<div class="row">

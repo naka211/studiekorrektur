@@ -56,7 +56,6 @@ class ContactControllerContact extends JControllerForm
         // What happens when the CAPTCHA was entered incorrectly
         //die ("The reCAPTCHA wasn't entered correctly. Go back and try it again." ."(reCAPTCHA said: " . $resp->error . ")");
         } else {
-
 			$app    = JFactory::getApplication();
 			$model  = $this->getModel('contact');
 			$params = JComponentHelper::getParams('com_contact');
@@ -100,7 +99,7 @@ class ContactControllerContact extends JControllerForm
 				return false;
 			}
 	
-			$validate = $model->validate($form, $data);
+			/*$validate = $model->validate($form, $data);
 	
 			if ($validate === false)
 			{
@@ -127,7 +126,7 @@ class ContactControllerContact extends JControllerForm
 				$this->setRedirect(JRoute::_('index.php?option=com_contact&view=contact&id=' . $stub, false));
 	
 				return false;
-			}
+			}*/
 	
 			// Validation succeeded, continue with custom handlers
 			$results = $dispatcher->trigger('onValidateContact', array(&$contact, &$data));
@@ -171,7 +170,7 @@ class ContactControllerContact extends JControllerForm
 			}
 			else
 			{
-				$this->setRedirect(JRoute::_('index.php?option=com_contact&view=contact&id=' . $stub, false), $msg);
+				$this->setRedirect(JRoute::_('index.php?option=com_contact&view=contact&id=' . $stub.'&layout=success', false), $msg);
 			}
 	
 			return true;
@@ -210,7 +209,8 @@ class ContactControllerContact extends JControllerForm
 
 			// Prepare email body
 			$prefix = JText::sprintf('COM_CONTACT_ENQUIRY_TEXT', JUri::base());
-			$body	= $prefix . "\n" . $name . ' <' . $email . '>' . "\r\n\r\n" . stripslashes($body);
+			//$body	= $prefix . "\n" . $name . ' <' . $email . '>' . "\r\n\r\n" . stripslashes($body);
+			$body	= 'Navn: '.$name . "\n\nE-mail: " . $email ."\n\nBesked: " . stripslashes($body);
 
 			$mail = JFactory::getMailer();
 			$mail->addRecipient($contact->email_to);
