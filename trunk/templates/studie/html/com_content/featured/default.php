@@ -188,31 +188,44 @@ $tmpl = JURI::base().'templates/studie/';
 		</div>
 		<div class="row pad0">
 			<div class="col-md-12">
+				<script type="text/javascript">
+                 var RecaptchaOptions = {
+                    theme : 'white',
+                    lang : 'da',
+                    custom_translations : { instructions_visual : "Indtast koden" }
+                 };
+                 </script>
 				<form class="col-md-10 col-md-offset-2 ml8p form-validate" action="index.php" method="post">
 					<div class="row">
 						<div class="col-md-6 form-group">
 							<label for="">Navn</label>
-							<input type="text" class="form-control input3 required" name="jform[contact_name]">
+							<input type="text" class="form-control input3 required" name="jform[contact_name]" id="name">
 						</div>
 						<div class="col-md-6 form-group pl0">
 							<label for="">E-mail</label>
-							<input type="text" class="form-control input3 required validate-email" name="jform[contact_email]">
+							<input type="text" class="form-control input3 required validate-email" name="jform[contact_email]" id="email">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-12 form-group">
 							<label for="">Emne</label>
-							<input type="text" class="form-control input3 required" name="jform[contact_email]">
+							<input type="text" class="form-control input3 required" name="jform[contact_email]" id="title">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-12 form-group">
 							<label for="">Besked</label>
-							<textarea class="form-control h158 input3 required" name="jform[contact_message]"></textarea>
+							<textarea class="form-control h158 input3 required" name="jform[contact_message]" id="content"></textarea>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-md-12 form-group"> <img class="img-responsive" src="<?php echo $tmpl;?>img/capcha.jpg" alt=""> </div>
+						<div class="col-md-12 form-group">
+							<?php
+							  require_once('recaptchalib.php');
+							  $publickey = "6LeznvkSAAAAAFtnSP0wmbHyPrp643iRsMuY9_Zw"; // you got this from the signup page
+							  echo recaptcha_get_html($publickey);
+							?>
+						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-12 form-group">
