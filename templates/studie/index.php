@@ -172,12 +172,39 @@ JHtml::_('behavior.formvalidation');
             }
         });
 
-		$('input#subscribe_email').on('change invalid', function() {
+		$('input#subscribe_email,input#email').on('change invalid', function() {
 			var textfield = $(this).get(0);
 			textfield.setCustomValidity('');
 			
 			if (!textfield.validity.valid) {
 			  textfield.setCustomValidity('Venligst indtast din e-mail');  
+			}
+		});
+		
+		$('input#name').on('change invalid', function() {
+			var textfield = $(this).get(0);
+			textfield.setCustomValidity('');
+			
+			if (!textfield.validity.valid) {
+			  textfield.setCustomValidity('Venligst indtast din navn');  
+			}
+		});
+		
+		$('input#title').on('change invalid', function() {
+			var textfield = $(this).get(0);
+			textfield.setCustomValidity('');
+			
+			if (!textfield.validity.valid) {
+			  textfield.setCustomValidity('Venligst indtast din emne');  
+			}
+		});
+		
+		$('textarea#content').on('change invalid', function() {
+			var textfield = $(this).get(0);
+			textfield.setCustomValidity('');
+			
+			if (!textfield.validity.valid) {
+			  textfield.setCustomValidity('Venligst indtast din besked');  
 			}
 		});
     });
