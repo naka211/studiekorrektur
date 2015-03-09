@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: view.html.php 8732 2015-02-18 18:54:43Z Milbo $
+* @version $Id: view.html.php 8745 2015-02-23 12:31:39Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -131,7 +131,9 @@ WHERE published="1"';
 		$db->setQuery($q);
 
 		$options = $db->loadAssocList();
-		$emptyOption = JHtml::_('select.option', '0', vmText::_('COM_VIRTUEMART_NONE'),'virtuemart_'.$ps.'method_id',$ps.'_name');
+		$emptyOption = JHtml::_('select.option', '0', vmText::_('COM_VIRTUEMART_NOPREF'),'virtuemart_'.$ps.'method_id',$ps.'_name');
+		array_unshift($options,$emptyOption);
+		$emptyOption = JHtml::_('select.option', '-1', vmText::_('COM_VIRTUEMART_NONE'),'virtuemart_'.$ps.'method_id',$ps.'_name');
 		array_unshift($options,$emptyOption);
 		return $options;
 	}

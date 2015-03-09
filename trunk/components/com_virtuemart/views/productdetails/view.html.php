@@ -14,7 +14,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: view.html.php 8726 2015-02-18 14:05:14Z Milbo $
+ * @version $Id: view.html.php 8768 2015-03-02 12:22:14Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -200,6 +200,13 @@ class VirtueMartViewProductdetails extends VmView {
 				$format = vRequest::getCmd('format', 'html');
 			}
 			if ($format == 'html') {
+				// remove joomla canonical before adding it
+				foreach ( $document->_links as $k => $array ) {
+					if ( $array['relation'] == 'canonical' ) {
+						unset($document->_links[$k]);
+						break;
+					}
+				}
 				// Set Canonic link
 				if($isCustomVariant !==false and !empty($isCustomVariant->usecanonical) and !empty($product->product_parent_id)){
 					$parent = $product_model ->getProduct($product->product_parent_id);
@@ -215,9 +222,9 @@ class VirtueMartViewProductdetails extends VmView {
 			// Set the titles
 			// $document->setTitle should be after the additem pathway
 			if ($product->customtitle) {
-				$document->setTitle(strip_tags($product->customtitle));
+				$document->setTitle(strip_tags(html_entity_decode($product->customtitle,ENT_QUOTES)));
 			} else {
-				$document->setTitle(strip_tags(($category->category_name ? ($category->category_name . ' : ') : '') . $product->product_name));
+				$document->setTitle(strip_tags(html_entity_decode(($category->category_name ? ($category->category_name . ' : ') : '') . $product->product_name,ENT_QUOTES)));
 			}
 
 			$this->allowReview = $ratingModel->allowReview($product->virtuemart_product_id);

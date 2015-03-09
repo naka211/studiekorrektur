@@ -8,13 +8,13 @@
  * @author Max Milbers
  * @todo Price update calculations
  * @link http://www.virtuemart.net
- * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
+ * @copyright Copyright (c) 2004 - 2015 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: product_edit_information.php 8548 2014-11-04 17:10:17Z Milbo $
+ * @version $Id: product_edit_information.php 8767 2015-03-01 10:36:07Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -41,7 +41,7 @@ $i=0;
 				<?php echo vmText::_('COM_VIRTUEMART_PRODUCT_FORM_NAME') ?>
 			</td>
 			<td>
-				<input type="text" class="inputbox"  name="product_name" id="product_name" value="<?php echo $this->product->product_name; ?>" size="32" maxlength="255" />
+				<input class="required" type="text" class="inputbox"  name="product_name" id="product_name" value="<?php echo $this->product->product_name; ?>" size="32" maxlength="255" />
 			</td>
 			<td colspan="2">
 				<label><?php echo VmHTML::checkbox('published', $this->product->published); ?><?php echo vmText::_('COM_VIRTUEMART_PUBLISHED') ?></label>
@@ -302,13 +302,6 @@ if ($link) {
             onRowRemove:function () {
             },
             onRowClone:function () {
-                //var myLastRow = jQuery('input [name="mprices[virtuemart_product_price_id][]"]',jQuery('#mainPriceTable tr:last') );
-                //var myLastRow = jQuery('#mainPriceTable tr:last' );
-	            /*jQuery.each(myLastRow,function(key, element1) {
-                           jQuery.each(element1,function(key, element) {
-                                alert('key: ' + key + '\n' + 'value: ' + element);
-                           })
-                });*/
             },
             onRowAdd:function () {
             },

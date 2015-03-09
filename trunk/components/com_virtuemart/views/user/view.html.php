@@ -15,7 +15,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: view.html.php 8727 2015-02-18 14:51:16Z Milbo $
+ * @version $Id: view.html.php 8768 2015-03-02 12:22:14Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -97,7 +97,7 @@ class VirtuemartViewUser extends VmView {
 			$virtuemart_userinfo_id = vRequest::getString('virtuemart_userinfo_id', 0);
 		}
 
-		$this->assignRef('virtuemart_userinfo_id', $virtuemart_userinfo_id);
+
 
 		$userFields = null;
 
@@ -130,6 +130,8 @@ class VirtuemartViewUser extends VmView {
 			$userFields = $userFields[$virtuemart_userinfo_id];
 		}
 
+		$this->virtuemart_userinfo_id = $virtuemart_userinfo_id;
+
 		$this->assignRef('userFields', $userFields);
 
 		if ($layoutName == 'edit') {
@@ -150,7 +152,11 @@ class VirtuemartViewUser extends VmView {
 		}
 
 
-		$this->_lists['shipTo'] = ShopFunctionsF::generateStAddressList($this,$this->_model, 'addST');
+		$stTask = 'addST';
+		if ($task == 'editaddresscart'){
+			$stTask = 'editaddresscart';
+		}
+		$this->_lists['shipTo'] = ShopFunctionsF::generateStAddressList($this,$this->_model, $stTask);
 
 		$this->assignRef('lists', $this->_lists);
 
@@ -350,7 +356,6 @@ class VirtuemartViewUser extends VmView {
     }
 
 	public function vmValidator (){
-
 		vmJsApi::vmValidator($this->userDetails->JUser->guest);
 	}
 

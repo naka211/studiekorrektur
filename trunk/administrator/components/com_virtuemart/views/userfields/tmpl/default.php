@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: default.php 8534 2014-10-28 10:23:03Z Milbo $
+* @version $Id: default.php 8770 2015-03-03 14:51:42Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -101,7 +101,7 @@ AdminUIHelper::startAdminArea($this);
 			$required = $this->toggle($row->required, $i, 'toggle.required','tick.png','publish_x.png',$coreField );
 //			$published = JHtml::_('grid.published', $row, $i);
 			$published = $this->toggle($row->published, $i, 'toggle.published','tick.png','publish_x.png', $coreField);
-			$registration = $this->toggle($row->cart, $i, 'toggle.registration','tick.png','publish_x.png', $coreField);
+			$registration = $this->toggle($row->cart, $i, 'toggle.cart','tick.png','publish_x.png', $coreField);
 			$shipment = $this->toggle($row->shipment, $i, 'toggle.shipment','tick.png','publish_x.png', $coreField);
 			$account = $this->toggle($row->account, $i, 'toggle.account','tick.png','publish_x.png', $coreField);
 			$ordering = ($this->lists['filter_order'] == 'ordering');

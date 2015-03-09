@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: view.html.php 8716 2015-02-17 13:38:31Z Milbo $
+* @version $Id: view.html.php 8768 2015-03-02 12:22:14Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -146,37 +146,7 @@ class VirtuemartViewCategory extends VmView {
 								$productItem->stock = $productModel->getStockIndicator($productItem);
 							}
 						} else {
-							$customfieldsModel = VmModel::getModel ('Customfields');
-							if (!class_exists ('vmCustomPlugin')) {
-								require(JPATH_VM_PLUGINS . DS . 'vmcustomplugin.php');
-							}
-							foreach($this->products as $i => $productItem){
-
-								if (!empty($productItem->customfields)) {
-									$product = clone($productItem);
-									$customfields = array();
-									foreach($productItem->customfields as $cu){
-										$customfields[] = clone ($cu);
-									}
-
-									$customfieldsSorted = array();
-									$customfieldsModel -> displayProductCustomfieldFE ($product, $customfields);
-									$product->stock = $productModel->getStockIndicator($product);
-									foreach ($customfields as $k => $custom) {
-										if (!empty($custom->layout_pos)  ) {
-											$customfieldsSorted[$custom->layout_pos][] = $custom;
-											unset($customfields[$k]);
-										}
-									}
-									$customfieldsSorted['normal'] = $customfields;
-									$product->customfieldsSorted = $customfieldsSorted;
-									unset($product->customfields);
-									$this->products[$i] = $product;
-								} else {
-									$productItem->stock = $productModel->getStockIndicator($productItem);
-									$this->products[$i] = $productItem;
-								}
-							}
+							shopFunctionsF::sortLoadProductCustomsStockInd($this->products,$productModel);
 						}
 					}
 
@@ -356,6 +326,14 @@ class VirtuemartViewCategory extends VmView {
 			$format = vRequest::getCmd('format', 'html');
 		}
 		if ($format == 'html') {
+
+			// remove joomla canonical before adding it
+			foreach ( $document->_links as $k => $array ) {
+				if ( $array['relation'] == 'canonical' ) {
+					unset($document->_links[$k]);
+					break;
+				}
+			}
 
 			$link = 'index.php?option=com_virtuemart&view=category';
 			if($categoryId!==-1){

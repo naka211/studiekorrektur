@@ -15,7 +15,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: cart.php 8732 2015-02-18 18:54:43Z Milbo $
+ * @version $Id: cart.php 8764 2015-02-27 11:56:11Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -357,7 +357,6 @@ class VirtueMartCart {
 		}
 		$sessionCart = $this->getCartDataToStore();
 		$sessionCart = json_encode($sessionCart);
-		//vmdebug('my session data to store',$sessionCart);
 		$session->set('vmcart', $sessionCart,'vm');
 
 		if($forceWrite){
@@ -794,9 +793,9 @@ class VirtueMartCart {
 	 * @param integer $shipment_id Shipment ID taken from the form data
 	 * @author Max Milbers
 	 */
-	public function setShipmentMethod($force=false, $redirect=true) {
+	public function setShipmentMethod($force=false, $redirect=true, $virtuemart_shipmentmethod_id = null) {
 
-		$virtuemart_shipmentmethod_id = vRequest::getInt('virtuemart_shipmentmethod_id', $this->virtuemart_shipmentmethod_id);
+		if(!isset($virtuemart_shipmentmethod_id)) $virtuemart_shipmentmethod_id = vRequest::getInt('virtuemart_shipmentmethod_id', $this->virtuemart_shipmentmethod_id);
 		if($this->virtuemart_shipmentmethod_id != $virtuemart_shipmentmethod_id or $force){
 			$this->_dataValidated = false;
 			//Now set the shipment ID into the cart
@@ -826,9 +825,9 @@ class VirtueMartCart {
 		}
 	}
 
-	public function setPaymentMethod($force=false, $redirect=true) {
+	public function setPaymentMethod($force=false, $redirect=true, $virtuemart_paymentmethod_id = null) {
 
-		$virtuemart_paymentmethod_id = vRequest::getInt('virtuemart_paymentmethod_id', $this->virtuemart_paymentmethod_id);
+		if(!isset($virtuemart_paymentmethod_id)) $virtuemart_paymentmethod_id = vRequest::getInt('virtuemart_paymentmethod_id', $this->virtuemart_paymentmethod_id);
 		if($this->virtuemart_paymentmethod_id != $virtuemart_paymentmethod_id or $force){
 			$this->_dataValidated = false;
 			$this->virtuemart_paymentmethod_id = $virtuemart_paymentmethod_id;
@@ -927,11 +926,8 @@ class VirtueMartCart {
 		}
 
 		$currentUser = JFactory::getUser();
-		if(!empty($this->STsameAsBT)){
-			if($this->_confirmDone){
-				$this->ST = $this->BT;
-			} else {
-			}
+		if(!empty($this->STsameAsBT) or empty($this->selected_shipto)){	//Guest
+			$this->ST = $this->BT;
 		} else {
 			if ($this->selected_shipto >0 ) {
 				$userModel = VmModel::getModel('user');
@@ -944,9 +940,10 @@ class VirtueMartCart {
 					}
 				} else {
 					$this->selected_shipto = 0;
+					$this->ST = $this->BT;
 				}
-
 			}
+
 			//Only when there is an ST data, test if all necessary fields are filled
 			$validUserDataST = self::validateUserData('ST');
 			if ($validUserDataST!==true) {
@@ -1155,13 +1152,13 @@ class VirtueMartCart {
 					require(VMPATH_ADMIN.DS.'helpers'.DS.'vmcrypt.php');
 				}
 
-				foreach($orderDetails['items'] as $product){
+				/*foreach($orderDetails['items'] as $product){
 					//We set a cookie for guests to allow that they can rate/review a product without logging in.
 					$app = JFactory::getApplication();
 					$key = 'productBought'.$product->virtuemart_product_id;
 					$v = vmCrypt::encrypt($key);
 					$app->input->cookie->set($key,$v,time() + $lifetime,'/');
-				}
+				}*/
 
 				if(!$this->customer_notified ) {
 					$orderModel->notifyCustomer($this->virtuemart_order_id, $orderDetails);
@@ -1255,7 +1252,7 @@ class VirtueMartCart {
 					}
 
 					$this->cartfields[$name] = $tmp;
-					vmdebug('Store $this->cartfields[$name] '.$name.' '.$tmp);
+					//vmdebug('Store $this->cartfields[$name] '.$name.' '.$tmp);
 				}
 
 			}
@@ -1322,7 +1319,7 @@ class VirtueMartCart {
 					}
 					$address[$name] = $data[$prefix.$name];
 				} else {
-					vmdebug('Data not found for type '.$type.' and name '.$prefix.$name.' ');
+					//vmdebug('Data not found for type '.$type.' and name '.$prefix.$name.' ');
 				}
 			}
 		}
@@ -1377,7 +1374,7 @@ class VirtueMartCart {
 	function checkAutomaticSelectedPlug($type){
 
 		$vm_method_name = 'virtuemart_'.$type.'method_id';
-		if (count($this->products) == 0) {
+		if (count($this->products) == 0  or  VmConfig::get('set_automatic_'.$type,'0')=='-1') {
 			return false;
 		}
 

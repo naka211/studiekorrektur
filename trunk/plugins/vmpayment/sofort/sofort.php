@@ -21,7 +21,7 @@ if (!class_exists('vmPSPlugin')) {
 }
 
 class plgVmPaymentSofort extends vmPSPlugin {
-	const RELEASE = 'VM 3.0.6';
+	const RELEASE = 'VM 3.0.6.2';
 	const SU_SOFORTBANKING = 'su';
 
 

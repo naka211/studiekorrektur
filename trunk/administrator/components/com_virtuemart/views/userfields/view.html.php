@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: view.html.php 8728 2015-02-18 15:05:58Z Milbo $
+* @version $Id: view.html.php 8745 2015-02-23 12:31:39Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -86,7 +86,7 @@ class VirtuemartViewUserfields extends VmViewAdmin {
 			JToolBarHelper::apply();
 			JToolBarHelper::cancel();
 
-			$notoggle = (in_array($this->userField->name, $lists['coreFields']) ? 'class="readonly"' : '');
+			$notoggle = ''; // (in_array($this->userField->name, $lists['coreFields']) ? 'class="readonly"' : '');
 
 			// Vendor selection
 			if(Vmconfig::get('multix','none')!=='none'){

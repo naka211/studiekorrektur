@@ -15,7 +15,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: user.php 8733 2015-02-19 11:35:27Z Milbo $
+ * @version $Id: user.php 8754 2015-02-24 13:48:29Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -368,7 +368,7 @@ class VirtueMartModelUser extends VmModel {
 			$usersConfig = JComponentHelper::getParams( 'com_users' );
 
 			$cUser = JFactory::getUser();
-			if(!($cUser->authorise('core.admin','com_virtuemart') or $cUser->authorise('core.manage','com_virtuemart')) and $usersConfig->get('allowUserRegistration') == '0') {
+			if(!($cUser->authorise('core.admin','com_virtuemart') or $cUser->authorise('core.manage','com_virtuemart') or $cUser->authorise('vm.user', 'com_virtuemart')) and $usersConfig->get('allowUserRegistration') == '0') {
 				VmConfig::loadJLang('com_virtuemart');
 				vmError( vmText::_('COM_VIRTUEMART_ACCESS_FORBIDDEN'));
 				return;
@@ -831,7 +831,6 @@ class VirtueMartModelUser extends VmModel {
 
 		//if( ($required>2 and ($i+1)<$required) or ($required<=2 and !$return) or $showInfo){
 		if($showInfo or ($required>2 and $i<($required-1)) or ($required<3 and !$return) ){
-		//if(!$return or $showInfo){
 			foreach($missingFields as $fieldname){
 				vmInfo($fieldname);
 			}
@@ -1171,7 +1170,7 @@ class VirtueMartModelUser extends VmModel {
 		$search = vRequest::getString('search', false);
 		$tableToUse = vRequest::getString('searchTable','juser');
 
-		$where = '';
+		$where = array();
 		if ($search) {
 			$where = ' WHERE ';
 			$db = JFactory::getDbo();
@@ -1196,9 +1195,9 @@ class VirtueMartModelUser extends VmModel {
 			$search = str_replace(' ','%',$db->escape( $search, true ));
 			foreach($searchArray as $field){
 
-					$where.= ' '.$field.' LIKE "%'.$search.'%" OR ';
+					$whereOr[] = ' '.$field.' LIKE "%'.$search.'%" ';
 			}
-			$where = substr($where,0,-3);
+			//$where = substr($where,0,-3);
 		}
 
 		$select = ' ju.id AS id
@@ -1226,14 +1225,24 @@ class VirtueMartModelUser extends VmModel {
 			$joinedTables .= ' LEFT JOIN #__virtuemart_userinfos AS ui ON ui.virtuemart_user_id = vmu.virtuemart_user_id';
 		}
 
+		$whereAnd = array();
 		if(VmConfig::get('multixcart',0)=='byvendor'){
 			$superVendor = VmConfig::isSuperVendor();
 			if($superVendor>1){
-				$joinedTables .= ' LEFT JOIN #__virtuemart_vendor_users AS vu using (virtuemart_user_id)';
-				$where .= ' AND vu.virtuemart_vendor_id = '.$superVendor.' ';
+				$joinedTables .= ' LEFT JOIN #__virtuemart_vendor_users AS vu ON ju.id = vmu.virtuemart_user_id';
+				$whereAnd[] = ' vu.virtuemart_vendor_id = '.$superVendor.' ';
 			}
 		}
 
+		$where = '';
+		$whereStr =  ' WHERE ';
+		if(!empty($whereOr)){
+			$where = $whereStr.implode(' OR ',$whereOr);
+			$whereStr = 'AND';
+		}
+		if(!empty($whereAnd)){
+			$where .= $whereStr.' ('.implode(' OR ',$whereAnd).')';
+		}
 		return $this->_data = $this->exeSortSearchListQuery(0,$select,$joinedTables,$where,' GROUP BY ju.id',$this->_getOrdering());
 
 	}

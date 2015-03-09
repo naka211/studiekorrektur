@@ -14,7 +14,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: userfields.php 8724 2015-02-18 14:03:29Z Milbo $
+ * @version $Id: userfields.php 8770 2015-03-03 14:51:42Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -51,7 +51,7 @@ class VirtueMartModelUserfields extends VmModel {
 		$this->setMainTable('userfields');
 
 		$this->setToggleName('required');
-		$this->setToggleName('registration');
+		$this->setToggleName('cart');
 		$this->setToggleName('shipment');
 		$this->setToggleName('account');
 		// Instantiate the Helper class
@@ -212,7 +212,7 @@ class VirtueMartModelUserfields extends VmModel {
 	}
 
 	static function getCoreFields(){
-		return array( 'name','username', 'email', 'password', 'password2','first_name','middle_name','last_name');// , 'agreed');
+		return array( 'name','username', 'email', 'password', 'password2');// , 'agreed');
 	}
 
 	/**
@@ -530,7 +530,7 @@ class VirtueMartModelUserfields extends VmModel {
 	public function getUserFields ($_sec = 'registration', $_switches=array(), $_skip = array('username', 'password', 'password2'))
 	{
 	    // stAn, we can't really create cache per sql as we want to create named array as well
-		$cache_hash = md5($_sec.serialize($_switches).serialize($_skip).$this->_selectedOrdering.$this->_selectedOrderingDir);
+		$cache_hash = md5($_sec.json_encode($_switches).json_encode($_skip).$this->_selectedOrdering.$this->_selectedOrderingDir);
 		if (isset(self::$_cache_ordered[$cache_hash])) return self::$_cache_ordered[$cache_hash];
 
 		$_q = 'SELECT * FROM `#__virtuemart_userfields` WHERE 1 = 1 ';
@@ -752,9 +752,11 @@ class VirtueMartModelUserfields extends VmModel {
 
 				if(!empty($_userDataIn) and isset($_fld->default) and $_fld->default!=''){
 					if(is_array($_userDataIn)){
-						$_userDataIn[$_fld->name] = $_fld->default;
+						if(!isset($_userDataIn[$_fld->name]))
+							$_userDataIn[$_fld->name] = $_fld->default;
 					} else {
-						$_userDataIn->{$_fld->name} = $_fld->default;
+						if(!isset($_userDataIn->{$_fld->name}))
+							$_userDataIn->{$_fld->name} = $_fld->default;
 					}
 				}
 

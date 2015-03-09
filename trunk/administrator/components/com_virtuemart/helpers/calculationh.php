@@ -8,7 +8,7 @@
  * @package	VirtueMart
  * @subpackage Helpers
  * @author Max Milbers
- * @copyright Copyright (c) 2010 - 2014 VirtueMart Team and the authors. All rights reserved.
+ * @copyright Copyright (c) 2010 - 2015 VirtueMart Team and the authors. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -174,7 +174,6 @@ class calculationHelper {
 
 			$q .= $shopperGrpJoin . $countryGrpJoin . $stateGrpJoin;
 
-vmdebug('my ',$q);
 			$this->_db->setQuery($q);
 
 			$allrules = $this->_db->loadAssocList();
@@ -953,12 +952,18 @@ vmdebug('my ',$q);
 		if (!($_data = CouponHelper::getCouponDetails($_code))) {
 			return; // TODO give some error here
 		}
+		vmdebug('my  coupon data',$_data);
 		$_value_is_total = ($_data->percent_or_total == 'total');
+
 		$this->_cart->cartData['couponCode'] = $_code;
-		$this->_cart->cartData['couponDescr'] = ($_value_is_total ? '' : (round($_data->coupon_value) . '%')
-		);
-		$this->_cart->cartPrices['salesPriceCoupon'] = ($_value_is_total ? $_data->coupon_value * -1 : ($this->_cart->cartPrices['salesPrice'] * ($_data->coupon_value / 100)) * -1
-		);
+
+		if($_value_is_total){
+			$this->_cart->cartData['couponDescr'] = $this->_currencyDisplay->priceDisplay($_data->coupon_value);
+		} else {
+			$this->_cart->cartData['couponDescr'] = rtrim(rtrim($_data->coupon_value,'0'),'.') . ' %';
+		}
+
+		$this->_cart->cartPrices['salesPriceCoupon'] = ($_value_is_total ? $_data->coupon_value * -1 : ($this->_cart->cartPrices['salesPrice'] * ($_data->coupon_value / 100)) * -1);
 
 		$this->_cart->cartPrices['couponTax'] = 0;
 		$this->_cart->cartPrices['couponValue'] = $this->_cart->cartPrices['salesPriceCoupon'] - $this->_cart->cartPrices['couponTax'];

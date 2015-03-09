@@ -14,7 +14,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: config.php 8626 2014-12-16 18:10:05Z Milbo $
+ * @version $Id: config.php 8749 2015-02-24 10:31:08Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -584,11 +584,8 @@ class VirtueMartModelConfig extends VmModel {
 						$pair[1] = substr($pair[1],6);
 						$pair[1] = explode('|',$pair[1]);
 					}
-					if($pair[0]!=='offline_message'){
-						$_line = $pair[0].'='.serialize($pair[1]);
-					} else {
-						$_line = $pair[0].'='.base64_encode(serialize($pair[1]));
-					}
+					$_line = $pair[0].'='.json_encode($pair[1]);
+
 				} else {
 					$_line = $pair[0].'=';
 				}

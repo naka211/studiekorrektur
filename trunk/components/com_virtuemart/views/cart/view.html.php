@@ -16,7 +16,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: view.html.php 8733 2015-02-19 11:35:27Z Milbo $
+ * @version $Id: view.html.php 8768 2015-03-02 12:22:14Z Milbo $
  */
 // Check to ensure this file is included in Joomla!
 defined('_JEXEC') or die('Restricted access');
@@ -423,8 +423,8 @@ class VirtueMartViewCart extends VmView {
 		$superVendor = VmConfig::isSuperVendor($adminID);
 
 		$result = false;
-		if($this->allowChangeShopper ){
-			if(!$superVendor) $superVendor = 1;
+		if($this->allowChangeShopper and $superVendor){
+			//if(!$superVendor) $superVendor = 1;
 			$db = JFactory::getDbo();
 			$search = vRequest::getUword('usersearch','');
 			if(!empty($search)){
@@ -440,13 +440,17 @@ class VirtueMartViewCart extends VmView {
 				$search = ' WHERE (vu.virtuemart_vendor_id = '.$superVendor.' ';
 			}
 
-			$search .=  ' OR (vu.virtuemart_vendor_id) IS NULL)';
+			if($superVendor==1){
+				$search .=  ' OR (vu.virtuemart_vendor_id) IS NULL)';
+			} else {
+				$search .=  ' )';
+			}
 			$search .=  ' AND ( vmu.user_is_vendor = 0 OR (vmu.virtuemart_vendor_id) IS NULL)';
 
 			$q .= $search.' ORDER BY `name` LIMIT 0,10000';
 			$db->setQuery($q);
 			$result = $db->loadObjectList();
-
+//vmdebug('user list',$q);
 			foreach($result as $k => $user) {
 				$result[$k]->displayedName = $user->name .'&nbsp;&nbsp;( '. $user->username .' )';
 			}
@@ -524,6 +528,11 @@ class VirtueMartViewCart extends VmView {
 
 	static public function addCheckRequiredJs(){
 		$j='jQuery(document).ready(function(){
+
+    jQuery(".output-shipto").find(":radio").change(function(){
+        var form = jQuery("#checkoutFormSubmit");
+		document.checkoutForm.submit();
+    });
     jQuery(".required").change(function(){
     	var count = 0;
     	var hit = 0;
@@ -534,7 +543,6 @@ class VirtueMartViewCart extends VmView {
        		}
     	});
         if(count==hit){
-        	console.log("Now fire");
         	var form = jQuery("#checkoutFormSubmit");
         	//document.checkoutForm.task = "checkout";
 			document.checkoutForm.submit();

@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: vendors.php 8581 2014-11-24 22:14:47Z Milbo $
+* @version $Id: vendors.php 8749 2015-02-24 10:31:08Z Milbo $
 */
 
 defined('_JEXEC') or die('Restricted access');
@@ -26,6 +26,7 @@ class TableVendors extends VmTableData {
     var $virtuemart_vendor_id			= 0;
     var $vendor_name  	         	= '';
     var $vendor_store_name		= '';
+	var $vendor_phone		= '';
     var $vendor_store_desc   		= '';
     var $vendor_currency	  		= 0;
     var $vendor_terms_of_service	= '';

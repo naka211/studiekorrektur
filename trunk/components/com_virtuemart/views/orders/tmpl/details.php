@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: details.php 7601 2014-01-24 14:03:36Z Milbo $
+* @version $Id: details.php 8769 2015-03-02 16:47:22Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -38,7 +38,8 @@ if($this->print){
 		echo $this->loadTemplate('items');
 		?>
 		</div>
-		<?php	echo $this->vendor->vendor_letter_footer_html; ?>
+		<?php if(!class_exists('VirtuemartViewInvoice')) require_once(VMPATH_SITE .DS. 'views'.DS.'invoice'.DS.'view.html.php');
+		echo VirtuemartViewInvoice::replaceVendorFields($this->vendor->vendor_letter_footer_html, $this->vendor); ?>
 		</body>
 		<?php
 } else {

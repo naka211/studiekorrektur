@@ -9,7 +9,7 @@ defined('_JEXEC') or die('Direct Access to ' . basename(__FILE__) . 'is not allo
  * @version $Id: amazon.php 8585 2014-11-25 11:11:13Z alatak $
  * @author Valérie Isaksen
  * @link http://www.virtuemart.net
- * @copyright Copyright (c) 2004 - February 20 2015 VirtueMart Team. All rights reserved.
+ * @copyright Copyright (c) 2004 - March 02 2015 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
@@ -326,7 +326,7 @@ class plgVmpaymentAmazon extends vmPSPlugin {
 		$config['accessKey'] = $this->_currentMethod->accessKey;
 		$config['secretKey'] = $this->_currentMethod->secretKey;
 		$config['applicationName'] = 'VirtueMart';
-		$config['applicationVersion'] = '3.0.6';
+		$config['applicationVersion'] = '3.0.6.2';
 		$config['region'] = $this->_currentMethod->region;
 		$config['environment'] = $this->_currentMethod->environment;
 
