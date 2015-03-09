@@ -71,7 +71,7 @@ JHtml::_('behavior.formvalidation');
 				<li class="page-scroll"><a href="#price">Priser</a></li>
 				<li class="page-scroll"><a href="#testimonials">Udtalelser</a></li>
 				<li class="page-scroll"><a href="#contact">Kontakt</a></li>
-				<li><a class="btn btnBooknow" href="bestilling.php">Bestil nu</a></li>
+				<li><a class="btn btnBooknow" href="index.php?option=com_virtuemart&view=virtuemart&Itemid=2">Bestil nu</a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse --> 
@@ -148,20 +148,20 @@ JHtml::_('behavior.formvalidation');
 <script src="<?php echo $tmpl;?>js/freelancer.js"></script>
 
 <script type="text/javascript">
-    $(document).ready(function(){
-        $('input[type="radio"]').click(function(){
-            if($(this).attr("value")=="en"){
-                $(".en").hide();
-                $(".dk").show();
+    jQuery(document).ready(function(){
+        jQuery('input[type="radio"]').click(function(){
+            if(jQuery(this).attr("value")=="en"){
+                jQuery(".en").hide();
+                jQuery(".dk").show();
             }
-            if($(this).attr("value")=="dk"){
-                $(".dk").hide();
-                $(".en").show();
+            if(jQuery(this).attr("value")=="dk"){
+                jQuery(".dk").hide();
+                jQuery(".en").show();
             }
         });
 
-        $('.btnChoose').click(function(){
-            var $this = $(this);
+        jQuery('.btnChoose').click(function(){
+            var $this = jQuery(this);
             $this.toggleClass('Valgt');
             if($this.hasClass('Valgt')){
                 $this.text('Vælg');
@@ -172,7 +172,7 @@ JHtml::_('behavior.formvalidation');
             }
         });
 
-		$('input#subscribe_email,input#email').on('change invalid', function() {
+		jQuery('input#subscribe_email,input#email').on('change invalid', function() {
 			var textfield = $(this).get(0);
 			textfield.setCustomValidity('');
 			
@@ -181,7 +181,7 @@ JHtml::_('behavior.formvalidation');
 			}
 		});
 		
-		$('input#name').on('change invalid', function() {
+		jQuery('input#name').on('change invalid', function() {
 			var textfield = $(this).get(0);
 			textfield.setCustomValidity('');
 			
@@ -190,7 +190,7 @@ JHtml::_('behavior.formvalidation');
 			}
 		});
 		
-		$('input#subject').on('change invalid', function() {
+		jQuery('input#subject').on('change invalid', function() {
 			var textfield = $(this).get(0);
 			textfield.setCustomValidity('');
 			
@@ -199,7 +199,7 @@ JHtml::_('behavior.formvalidation');
 			}
 		});
 		
-		$('textarea#content').on('change invalid', function() {
+		jQuery('textarea#content').on('change invalid', function() {
 			var textfield = $(this).get(0);
 			textfield.setCustomValidity('');
 			
