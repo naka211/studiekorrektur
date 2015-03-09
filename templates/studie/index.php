@@ -88,16 +88,16 @@ JHtml::_('behavior.formvalidation');
 					<div class="col-md-6 pad0">
 						<ul>
 							<li><a href="index.php">Forside</a></li>
-							<li><a href="#info">Info</a></li>
-							<li><a href="#price">Priser</a></li>
-							<li><a href="#testimonials">Udtalelser</a></li>
+							<li><a href="<?php echo JURI::base();?>#info">Info</a></li>
+							<li><a href="<?php echo JURI::base();?>#price">Priser</a></li>
+							<li><a href="<?php echo JURI::base();?>#testimonials">Udtalelser</a></li>
 						</ul>
 					</div>
 					<div class="col-md-6 pad0">
 						<ul>
-							<li><a href="#contact">Kontakt</a></li>
-							<li><a href="cookiepolicy.php">Cookiepolitik</a></li>
-							<li><a href="term.php">Betingelser</a></li>
+							<li><a href="<?php echo JURI::base();?>#contact">Kontakt</a></li>
+							<li><a href="index.php?option=com_content&view=article&id=2&Itemid=130">Cookiepolitik</a></li>
+							<li><a href="index.php?option=com_content&view=article&id=3&Itemid=131">Betingelser</a></li>
 						</ul>
 					</div>
 				</div>

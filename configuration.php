@@ -39,7 +39,7 @@ class JConfig {
 	public $smtppass = 'trung1986';
 	public $smtphost = 'smtp.gmail.com';
 	public $smtpsecure = 'tls';
-	public $smtpport = '465';
+	public $smtpport = '25';
 	public $caching = '0';
 	public $cache_handler = 'file';
 	public $cachetime = '15';
@@ -51,7 +51,7 @@ class JConfig {
 	public $robots = '';
 	public $sef = '1';
 	public $sef_rewrite = '0';
-	public $sef_suffix = '0';
+	public $sef_suffix = '1';
 	public $unicodeslugs = '0';
 	public $feed_limit = '10';
 	public $log_path = 'D:\\www\\htdocs\\studie/logs';
