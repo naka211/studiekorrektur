@@ -23,19 +23,19 @@ if( !class_exists( 'vmVersion' ) ) {
 		/** @var string Product */
 		static $PRODUCT = 'VirtueMart';
 		/** @var int Release Number */
-		static $RELEASE = '3.0.6';
+		static $RELEASE = '3.0.6.2';
 		/** @var string Development Status */
 		static $DEV_STATUS = 'MINOR';
 		/** @var string Codename */
 		static $CODENAME = 'Corvus';
 		/** @var string Date */
-		static $RELDATE = 'February 20 2015';
+		static $RELDATE = 'March 03 2015';
 		/** @var string Time */
-		static $RELTIME = '1543';
+		static $RELTIME = '1752';
 		/** @var string Timezone */
 		static $RELTZ = 'GMT';
 		/** @var string Revision */
-		static $REVISION = '8740';
+		static $REVISION = '8771';
 		/** @var string Copyright Text */
 		static $COPYRIGHT = 'Copyright (C) 2005-2014 VirtueMart Development Team  - All rights reserved.';
 		/** @var string URL */

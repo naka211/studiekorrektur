@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: edit.php 8643 2015-01-08 21:45:08Z Milbo $
+* @version $Id: edit.php 8768 2015-03-02 12:22:14Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -35,7 +35,7 @@ label.invalid {
 }
 </style>
 
-<?php $this->vmValidator(); ?>
+<?php vmJsApi::vmValidator(); ?>
 
 <h1><?php echo $this->page_title ?></h1>
 <?php echo shopFunctionsF::getLoginForm(false); ?>

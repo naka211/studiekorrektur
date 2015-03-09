@@ -8,13 +8,13 @@
  *
  * @author Max Milbers
  * @link http://www.virtuemart.net
- * @copyright Copyright (c) 2004 - 2010 VirtueMart Team. All rights reserved.
+ * @copyright Copyright (c) 2004 - 2015 VirtueMart Team. All rights reserved.
  * @license http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
  * VirtueMart is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: shopfunctionsf.php 8678 2015-02-01 20:30:47Z Milbo $
+ * @version $Id: shopfunctionsf.php 8767 2015-03-01 10:36:07Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -244,7 +244,7 @@ class shopFunctionsF {
 	/**
 	 * This generates the list when the user have different ST addresses saved
 	 *
-	 * @author Oscar van Eijk
+	 * @author Max Milbers
 	 */
 	static function generateStAddressList ($view, $userModel, $task) {
 
@@ -280,7 +280,6 @@ class shopFunctionsF {
 				$_shipTo[] = '&nbsp;&nbsp;<a href="'.JRoute::_ ('index.php?option=com_virtuemart&view=user&task=removeAddressST&virtuemart_user_id[]=' . $_addressList[$_i]->virtuemart_user_id . '&virtuemart_userinfo_id=' . $_addressList[$_i]->virtuemart_userinfo_id, $useXHTTML, $useSSL ). '" class="icon_delete">'.vmText::_('COM_VIRTUEMART_USER_DELETE_ST').'</a></li>';
 
 			}
-
 
 			$addLink = '<a href="' . JRoute::_ ('index.php?option=com_virtuemart&view=user&task=' . $task . '&new=1&addrtype=ST&virtuemart_user_id[]=' . $userModel->getId (), $useXHTTML, $useSSL) . '"><span class="vmicon vmicon-16-editadd"></span> ';
 			$addLink .= vmText::_ ('COM_VIRTUEMART_USER_FORM_ADD_SHIPTO_LBL') . ' </a>';
@@ -355,6 +354,41 @@ class shopFunctionsF {
 
 		$session = JFactory::getSession();
 		return $session->get( 'vmlastvisitedproductids', array(), 'vm' );
+	}
+
+	static public function sortLoadProductCustomsStockInd(&$products,$pModel){
+
+		$customfieldsModel = VmModel::getModel ('Customfields');
+		if (!class_exists ('vmCustomPlugin')) {
+			require(JPATH_VM_PLUGINS . DS . 'vmcustomplugin.php');
+		}
+		foreach($products as $i => $productItem){
+
+			if (!empty($productItem->customfields)) {
+				$product = clone($productItem);
+				$customfields = array();
+				foreach($productItem->customfields as $cu){
+					$customfields[] = clone ($cu);
+				}
+
+				$customfieldsSorted = array();
+				$customfieldsModel -> displayProductCustomfieldFE ($product, $customfields);
+				$product->stock = $pModel->getStockIndicator($product);
+				foreach ($customfields as $k => $custom) {
+					if (!empty($custom->layout_pos)  ) {
+						$customfieldsSorted[$custom->layout_pos][] = $custom;
+						unset($customfields[$k]);
+					}
+				}
+				$customfieldsSorted['normal'] = $customfields;
+				$product->customfieldsSorted = $customfieldsSorted;
+				unset($product->customfields);
+				$products[$i] = $product;
+			} else {
+				$productItem->stock = $pModel->getStockIndicator($productItem);
+				$products[$i] = $productItem;
+			}
+		}
 	}
 
 	static public function calculateProductRowsHeights($products,$currency,$products_per_row){
@@ -578,7 +612,7 @@ class shopFunctionsF {
 		$subject = (isset($view->subject)) ? $view->subject : vmText::_( 'COM_VIRTUEMART_DEFAULT_MESSAGE_SUBJECT' );
 		$mailer = JFactory::getMailer();
 		$mailer->addRecipient( $recipient );
-		$mailer->setSubject(  html_entity_decode( $subject) );
+		$mailer->setSubject(  html_entity_decode( $subject , ENT_COMPAT, 'UTF-8') );
 		$mailer->isHTML( VmConfig::get( 'order_mail_html', TRUE ) );
 		$mailer->setBody( $body );
 

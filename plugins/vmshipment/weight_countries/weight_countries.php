@@ -5,7 +5,7 @@ defined ('_JEXEC') or die('Restricted access');
 /**
  * Shipment plugin for weight_countries shipments, like regular postal services
  *
- * @version $Id: weight_countries.php 8635 2015-01-01 14:22:16Z Milbo $
+ * @version $Id: weight_countries.php 8764 2015-02-27 11:56:11Z Milbo $
  * @package VirtueMart
  * @subpackage Plugins - shipment
  * @copyright Copyright (C) 2004-2012 VirtueMart Team - All rights reserved.
@@ -104,7 +104,6 @@ class plgVmShipmentWeight_countries extends vmPSPlugin {
 	 */
 	function plgVmConfirmedOrder (VirtueMartCart $cart, $order) {
 
-	
 		if (!($method = $this->getVmPluginMethod ($order['details']['BT']->virtuemart_shipmentmethod_id))) {
 			return NULL; // Another method was selected, do nothing
 		}
@@ -117,8 +116,16 @@ class plgVmShipmentWeight_countries extends vmPSPlugin {
 		$values['shipment_name'] = $this->renderPluginName ($method);
 		$values['order_weight'] = $this->getOrderWeight ($cart, $method->weight_unit);
 		$values['shipment_weight_unit'] = $method->weight_unit;
-		$values['shipment_cost'] = $method->shipment_cost;
-		$values['shipment_package_fee'] = $method->package_fee;
+
+		$costs = $this->getCosts($cart,$method,$cart->cartPrices);
+		if(empty($costs)){
+			$values['shipment_cost'] = 0;
+			$values['shipment_package_fee'] = 0;
+		} else {
+			$values['shipment_cost'] = $method->shipment_cost;
+			$values['shipment_package_fee'] = $method->package_fee;
+		}
+
 		$values['tax_id'] = $method->tax_id;
 		$this->storePSPluginInternalData ($values);
 
@@ -209,7 +216,7 @@ class plgVmShipmentWeight_countries extends vmPSPlugin {
 
 		if($cart->STsameAsBT == 0){
 			$type = ($cart->ST == 0 ) ? 'BT' : 'ST';
-		}else{
+		} else {
 			$type = 'BT';
 		}
 

@@ -2,7 +2,7 @@
 if( !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not allowed.' );
 /**
 *
-* @version $Id: virtuemart.php 8619 2014-12-14 15:05:45Z Milbo $
+* @version $Id: virtuemart.php 8768 2015-03-02 12:22:14Z Milbo $
 * @package VirtueMart
 * @subpackage core
 * @author Max Milbers
@@ -51,7 +51,7 @@ if(VmConfig::get('shop_is_offline',0)){
 	$manage = vRequest::getCmd('manage',$session->get('manage', false,'vm'));
 	if(!$manage) $session->set('manage', 0,'vm');
 
-	$feViews = array('askquestion','cart','invoice','pdf','pluginresponse','productdetails','recommend','vendor');
+	$feViews = array('askquestion','cart','invoice','pdf','pluginresponse','productdetails','recommend','vendor','vmplg');
 	if($manage and !in_array($_controller,$feViews)){
 
 		$app = JFactory::getApplication();
@@ -81,10 +81,15 @@ if(VmConfig::get('shop_is_offline',0)){
 			$router->setMode(0);
 
 		} else {
+			$session->set('manage', 0,'vm');
 			$app->redirect('index.php?option=com_virtuemart', vmText::_('COM_VIRTUEMART_RESTRICTED_ACCESS') );
 		}
 		vRequest::setVar('tmpl','component') ;
 	} elseif($_controller) {
+			if($_controller!='productdetails'){
+				$session->set('manage', 0,'vm');
+				vRequest::setVar('manage','0');
+			}
 			vmJsApi::jQuery();
 			vmJsApi::jSite();
 			vmJsApi::cssSite();

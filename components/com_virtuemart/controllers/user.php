@@ -13,7 +13,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: user.php 8733 2015-02-19 11:35:27Z Milbo $
+ * @version $Id: user.php 8754 2015-02-24 13:48:29Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -195,6 +195,9 @@ class VirtueMartControllerUser extends JControllerLegacy
 			}
 
 			if($currentUser->guest!=1 or !$cartObj or ($currentUser->guest==1 and $register) ){
+
+				if($currentUser->guest==1 and $register) $userModel->setId(0);
+
 				$ret = $userModel->store($data);
 
 				if(($currentUser->guest==1 and $register) and VmConfig::get ('oncheckout_change_shopper')){

@@ -13,7 +13,7 @@
 * to the GNU General Public License, and as distributed it includes or
 * is derivative of works licensed under the GNU General Public License or
 * other free or open source software licenses.
-* @version $Id: manufacturer.php 8610 2014-12-02 18:53:19Z Milbo $
+* @version $Id: manufacturer.php 8754 2015-02-24 13:48:29Z Milbo $
 */
 
 // Check to ensure this file is included in Joomla!
@@ -120,7 +120,7 @@ class VirtueMartModelManufacturer extends VmModel {
 
 		static $_manufacturers = array();
 
-		$hash = $search.serialize($virtuemart_manufacturercategories_id).VmConfig::$vmlang.(int)$onlyPublished.(int)$this->_noLimit.(int)$getMedia;
+		$hash = $search.json_encode($virtuemart_manufacturercategories_id).VmConfig::$vmlang.(int)$onlyPublished.(int)$this->_noLimit.(int)$getMedia;
 
 		if (array_key_exists ($hash, $_manufacturers)) {
 			vmdebug('Return cached getManufacturers');

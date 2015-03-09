@@ -461,6 +461,9 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 							"payment_name" => $payment_name,
 							"response" => $response,
 							"order" => $order));
+					$cart->BT=0;
+					$cart->ST=0;
+					$cart->setCartIntoSession();
 					return $this->processConfirmedOrderPaymentResponse($returnValue, $cart, $order, $html, $payment_name, $new_status);
 				} else {
 					$new_status = $this->_currentMethod->status_canceled;
@@ -728,11 +731,13 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 			return false;
 		} else {
 			$this->_storePaypalInternalData( $paypal_data, $virtuemart_order_id, $payments[0]->virtuemart_paymentmethod_id, $order_number);
-			$paypalInterface->debugLog('order_number:' . $order_number . ' new_status:' . $order_history['order_status'], 'plgVmOnPaymentNotification', 'debug');
+			$paypalInterface->debugLog('plgVmOnPaymentNotification order_number:' . $order_number . ' new_status:' . $order_history['order_status'], 'plgVmOnPaymentNotification', 'debug');
 
 			$orderModel->updateStatusForOneOrder($virtuemart_order_id, $order_history, TRUE);
 			//// remove vmcart
 			if (isset($paypal_data['custom'])) {
+				$paypalInterface->debugLog('plgVmOnPaymentNotification empty cart '.$paypal_data['custom'], 'plgVmOnPaymentNotification', 'debug');
+
 				$this->emptyCart($paypal_data['custom'], $order_number);
 			}
 		}
@@ -980,7 +985,7 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 		}
 		$this->convert_condition_amount($activeMethod);
 
-		$address = (($cart->ST == 0) ? $cart->BT : $cart->ST);
+		$address = $cart->getST();
 
 		$amount = $this->getCartAmount($cart_prices);
 		$amount_cond = ($amount >= $activeMethod->min_amount AND $amount <= $activeMethod->max_amount
@@ -1236,10 +1241,8 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 			if ($this->checkConditions($cart, $this->_currentMethod, $cart->cartPrices)) {
 
 				$html = '';
-				$cart_prices = array();
-				$cart_prices['withTax'] = '';
-				$cart_prices['salesPrice'] = '';
-				$methodSalesPrice = $this->setCartPrices($cart, $cart_prices, $this->_currentMethod);
+				$cartPrices=$cart->cartPrices;
+				$methodSalesPrice = $this->setCartPrices($cart, $cartPrices, $this->_currentMethod);
 
 				$this->_currentMethod->$method_name = $this->renderPluginName($this->_currentMethod);
 				$html .= $this->getPluginHtml($this->_currentMethod, $selected, $methodSalesPrice);
@@ -1304,7 +1307,10 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 		// Here we only check for token, but should check for payer id ?
 		$paypalInterface->loadCustomerData();
 		$paypalInterface->getExtraPluginInfo($this->_currentMethod);
-
+		$expressCheckout = vRequest::getVar('expresscheckout', '');
+		if ($expressCheckout == 'cancel') {
+			return true;
+		}
 		if (!$paypalInterface->validate()) {
 			return false;
 		}
@@ -1333,26 +1339,24 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 		$action = vRequest::getCmd('action');
 		$virtuemart_paymentmethod_id = vRequest::getInt('pm');
 		//Load the method
-		if (!($this->_currentMethod = $this->getVmPluginMethod($virtuemart_paymentmethod_id))) {
+		if (!($currentMethod = $this->getVmPluginMethod($virtuemart_paymentmethod_id))) {
 			return NULL; // Another method was selected, do nothing
 		}
-		if (!$this->selectedThisElement($this->_currentMethod->payment_element)) {
+		if (!$this->selectedThisElement($currentMethod->payment_element)) {
 			return FALSE;
 		}
 		if ($action != 'SetExpressCheckout') {
 			return false;
 		}
-		$expressCheckout = vRequest::getVar('SetExpressCheckout', '');
 
-		if($expressCheckout=='done') {
 			if (!class_exists('VirtueMartCart')) {
 				require(VMPATH_SITE . DS . 'helpers' . DS . 'cart.php');
 			}
 			$cart = VirtueMartCart::getCart();
-			$cart->prepareCartData();
+			//$cart->prepareCartData();
 			$cart->virtuemart_paymentmethod_id = $virtuemart_paymentmethod_id;
 			$cart->setCartIntoSession();
-			//$this->_currentMethod = $currentMethod;
+			$this->_currentMethod = $currentMethod;
 			$paypalInterface = $this->_loadPayPalInterface();
 			$paypalInterface->setCart($cart);
 			$paypalInterface->setTotal($cart->cartPrices['billTotal']);
@@ -1367,17 +1371,7 @@ class plgVmPaymentPaypal extends vmPSPlugin {
 				$app = JFactory::getApplication();
 				$app->redirect(JRoute::_('index.php?option=com_virtuemart&view=cart&Itemid=' . vRequest::getInt('Itemid'), false));
 			}
-		}	elseif($expressCheckout=='cancel') {
-				$this->customerData->clear();
-				if (!class_exists('VirtueMartCart')) {
-					require(VMPATH_SITE . DS . 'helpers' . DS . 'cart.php');
-				}
-				$cart = VirtueMartCart::getCart();
-				$cart->virtuemart_paymentmethod_id = 0;
-				$cart->setCartIntoSession();
-				$app = JFactory::getApplication();
-				$app->redirect(JRoute::_('index.php?option=com_virtuemart&view=cart&Itemid=' . vRequest::getInt('Itemid'), false), vmText::_('VMPAYMENT_PAYPAL_PAYMENT_CANCELLED'));
-		}
+
 
 	}
 

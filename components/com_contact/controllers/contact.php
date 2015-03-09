@@ -170,7 +170,7 @@ class ContactControllerContact extends JControllerForm
 			}
 			else
 			{
-				$this->setRedirect(JRoute::_('index.php?option=com_contact&view=contact&id=' . $stub.'&layout=success', false), $msg);
+				$this->setRedirect(JRoute::_('index.php?option=com_contact&view=contact&id=' . $stub.'&layout=success&Itemid=1', false), $msg);
 			}
 	
 			return true;

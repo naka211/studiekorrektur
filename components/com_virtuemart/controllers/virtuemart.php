@@ -76,7 +76,7 @@ class VirtueMartControllerVirtuemart extends JControllerLegacy
         $data  = array('email'=>$email);
         $result = $mailchimp->mailchimp_subcriber($data, $mailchimp, $list_id);
    
-        $this->setRedirect(JRoute::_("index.php?option=com_contact&view=contact&id=1&layout=subscribe"));
+        $this->setRedirect(JRoute::_("index.php?option=com_contact&view=contact&id=1&layout=subscribe&Itemid=1"));
     }
 }
  //pure php no closing tag

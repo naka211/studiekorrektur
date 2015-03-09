@@ -13,7 +13,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: product.php 8733 2015-02-19 11:35:27Z Milbo $
+ * @version $Id: product.php 8762 2015-02-26 13:29:44Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -1150,10 +1150,29 @@ class VirtueMartModelProduct extends VmModel {
 
 					//We must first check if we come from another category, due the canoncial link we would have always the same catgory id for a product
 					//But then we would have wrong neighbored products / category and product layouts
-					$last_category_id = shopFunctionsF::getLastVisitedCategoryId ();
-					if ($last_category_id!==0 and in_array ($last_category_id, $product->categories)) {
-						$product->virtuemart_category_id = $last_category_id;
+					if(!isset($this->categoryId)){
+						static $menu = null;
+						if(!isset($menu)){
+							$app = JFactory::getApplication();
+							$menus	= $app->getMenu();
+							$menu = $menus->getActive();
+						}
+
+						$this->categoryId = vRequest::getInt('virtuemart_category_id', -1);
+						if($this->categoryId === -1 and !empty($menu->query['virtuemart_category_id'])){
+							$this->categoryId = $menu->query['virtuemart_category_id'];
+							//vRequest::setVar('virtuemart_category_id',$this->categoryId);
+						} else if ( $this->categoryId === -1){
+							$this->categoryId = ShopFunctionsF::getLastVisitedCategoryId();
+						}
+						//$last_category_id = shopFunctionsF::getLastVisitedCategoryId ();
+						if ($this->categoryId!==0 and in_array ($this->categoryId, $product->categories)) {
+							$product->virtuemart_category_id = $this->categoryId;
+						}
 					}
+
+
+
 				}
 
 				if(empty($product->virtuemart_category_id)){

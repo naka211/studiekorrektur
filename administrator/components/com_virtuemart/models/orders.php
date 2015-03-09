@@ -16,7 +16,7 @@
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
- * @version $Id: orders.php 8679 2015-02-02 17:23:43Z Milbo $
+ * @version $Id: orders.php 8745 2015-02-23 12:31:39Z Milbo $
  */
 
 // Check to ensure this file is included in Joomla!
@@ -266,8 +266,19 @@ $q = 'SELECT virtuemart_order_item_id, product_quantity, order_item_name,
 	public function getOrdersList($uid = 0, $noLimit = false)
 	{
 // 		vmdebug('getOrdersList');
+		$tUserInfos = $this->getTable('userinfos');
 		$this->_noLimit = $noLimit;
-		$select = " o.*, CONCAT_WS(' ',u.first_name,u.middle_name,u.last_name) AS order_name "
+
+		$concat = array();
+		if(property_exists($tUserInfos,'first_name'))  $concat[]= 'u.first_name';
+		if(property_exists($tUserInfos,'middle_name'))  $concat[]= 'u.middle_name';
+		if(property_exists($tUserInfos,'middle_name'))  $concat[]= 'u.last_name';
+		if(!empty($concat)){
+			$concatStr = "CONCAT_WS(' ',".implode(',',$concat).")";
+		} else {
+			$concatStr = 'o.order_number';
+		}
+		$select = " o.*, ".$concatStr." AS order_name "
 		.',u.email as order_email,pm.payment_name AS payment_method ';
 		$from = $this->getOrdersListQuery();
 

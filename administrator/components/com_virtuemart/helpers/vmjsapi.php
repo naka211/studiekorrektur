@@ -170,8 +170,9 @@ class vmJsApi{
 		$file = '/administrator/templates/system/css/system.css';
 		$document->addStyleSheet($file);
 
-		//Todo load BE standard template first
-		$file = '/administrator/templates/bluestork/css/template.css';
+		if(!class_exists('VmTemplate')) require(VMPATH_SITE.DS.'helpers'.DS.'vmtemplate.php');
+		$template = VmTemplate::getDefaultTemplate(1);
+		$file = '/administrator/templates/'.$template['template'].'/css/template.css';
 		$document->addStyleSheet($file);
 
 	}
@@ -497,7 +498,14 @@ class vmJsApi{
 		$jvalideForm = $name;
 	}
 
-	static public function vmValidator ($guest){
+	static public function vmValidator ($guest=null){
+
+		if(!isset($guest)){
+			$guest = JFactory::getUser()->guest;
+		}
+
+		// Implement Joomla's form validation
+		JHtml::_ ('behavior.formvalidation');
 
 		$regfields = array('username', 'name');
 		if($guest){
@@ -657,7 +665,15 @@ class vmJsApi{
 		if (empty($id)) {
 			$id = $name;
 		}
+		static $idUnique = array();
 		static $jDate;
+
+		if(!isset($idUnique[$id])){
+			$idUnique[$id] = 0;
+		}  else {
+			$counter = $idUnique[$id]++;
+			$id = $id.'-'.$counter;
+		}
 
 		$dateFormat = vmText::_('COM_VIRTUEMART_DATE_FORMAT_INPUT_J16');//="m/d/y"
 		$search  = array('m', 'd', 'Y');
@@ -758,8 +774,7 @@ class vmJsApi{
 		}
 
 		$url = 'index.php?option=com_virtuemart&view=virtuemart&task=keepalive';
-		//$refTime = 0.5;
 		vmJsApi::addJScript('keepAliveTime','var sessMin = '.$refTime.';var vmAliveUrl = "'.$url.'";var maxlps = "'.$maxlps.'";var minlps = "'.$minlps.'"',false,true);
-		vmJsApi::addJScript('vmkeepalive');
+		vmJsApi::addJScript('vmkeepalive',false, true, true);
 	}
 }

@@ -1175,9 +1175,30 @@ abstract class vmPSPlugin extends vmPlugin {
 		$name = vRequest::getHash ($config['session_name']);
 		$options['name'] = $name;
 		$sessionStorage = JSessionStorage::getInstance ($handler, $options);
+		$delete=false;
+		// we remove the session for unsecure unserialized PHP version
+		$phpVersion = phpversion();
+		if(version_compare ( $phpVersion , '5.4.0') >= 0){
+			if(version_compare ( $phpVersion , '5.4.38') == -1){
+				$delete = true;
+			} else if(version_compare ( $phpVersion , '5.5.0') >= 0) {
+				if(version_compare( $phpVersion, '5.5.22' ) == -1) {
+					$delete = true;
+				} else if(version_compare( $phpVersion, '5.6.0' )>=0) {
+					if(version_compare( $phpVersion, '5.6.6' ) == -1) {
+						$delete = true;
+					}
+				}
+			}
+		}
+
 
 		// The session store MUST be registered.
 		$sessionStorage->register ();
+		if ($delete) {
+			$sessionStorage->write ($session_id, NULL);
+			return;
+		}
 		// reads directly the session from the storage
 		$sessionStored = $sessionStorage->read ($session_id);
 		if (empty($sessionStored)) {
@@ -1187,20 +1208,14 @@ abstract class vmPSPlugin extends vmPlugin {
 
 		$vm_namespace = '__vm';
 		$cart_name = 'vmcart';
-		if (array_key_exists ($vm_namespace, $sessionStorageDecoded)) { // vm session is there
+		if (isset ($sessionStorageDecoded[$vm_namespace] )) { // vm session is there
 			$vm_sessionStorage = $sessionStorageDecoded[$vm_namespace];
-			if (array_key_exists ($cart_name, $vm_sessionStorage)) { // vm cart session is there
-				$sessionStorageCart = unserialize ($vm_sessionStorage[$cart_name]);
-				// only empty the cart if the order number is still there. If not there, it means that the cart has already been emptied.
-				if ($sessionStorageCart->order_number == $order_number) {
-					if (!class_exists ('VirtueMartCart')) {
-						require(VMPATH_SITE . DS . 'helpers' . DS . 'cart.php');
-					}
-					VirtueMartCart::emptyCartValues ($sessionStorageCart);
-					$sessionStorageDecoded[$vm_namespace][$cart_name] = serialize ($sessionStorageCart);
+			if (isset ($vm_sessionStorage[$cart_name])) { // vm cart session is there
+				unset($sessionStorageDecoded[$vm_namespace][$cart_name]);
+					//$sessionStorageDecoded[$vm_namespace][$cart_name] = json_encode ($cart);
 					$sessionStorageEncoded = self::session_encode ($sessionStorageDecoded);
 					$sessionStorage->write ($session_id, $sessionStorageEncoded);
-				}
+				//}
 			}
 		}
 	}
@@ -1212,6 +1227,7 @@ abstract class vmPSPlugin extends vmPlugin {
 
 		$decoded_session = array();
 		$offset = 0;
+
 		while ($offset < strlen ($session_data)) {
 			if (!strstr (substr ($session_data, $offset), "|")) {
 				return array();
@@ -1220,9 +1236,14 @@ abstract class vmPSPlugin extends vmPlugin {
 			$num = $pos - $offset;
 			$varname = substr ($session_data, $offset, $num);
 			$offset += $num + 1;
-			$data = unserialize (substr ($session_data, $offset));
+
+			$value = substr ($session_data, $offset);
+
+			if(!empty($value) && !is_int($value)){
+				$data = unserialize($value);
+			}
 			$decoded_session[$varname] = $data;
-			$offset += strlen (serialize ($data));
+			$offset += strlen (serialize($data));
 		}
 		return $decoded_session;
 	}
