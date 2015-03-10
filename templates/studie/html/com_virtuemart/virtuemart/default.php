@@ -1,6 +1,54 @@
 <?php
 defined('_JEXEC') or die('Restricted access');
 ?>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+		setProduct = function(e, id){
+			if(parseInt(id) == 1 && e.hasClass('btnUnChoose')){
+				jQuery("#premium_en").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
+				jQuery("#standard_en").removeClass('btnUnChoose').addClass('btnChoose').text('Valgt');
+				
+				jQuery("#premium_da").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
+				jQuery("#standard_da").removeClass('btnUnChoose').addClass('btnChoose').text('Valgt');
+			}
+			
+			if(parseInt(id) == 2 && e.hasClass('btnUnChoose')){
+				jQuery("#standard_en").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
+				jQuery("#premium_en").removeClass('btnUnChoose').addClass('btnChoose').text('Valgt');
+				
+				jQuery("#standard_da").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
+				jQuery("#premium_da").removeClass('btnUnChoose').addClass('btnChoose').text('Valgt');
+			}
+		};
+		
+		setCheckExpress = function(e, id){
+			if(e.hasClass('btnUnCheck')){
+				jQuery('#'+id).removeClass('btnUnCheck').addClass('btnCheck').text('Tilvalgt');
+			} else {
+				jQuery('#'+id).removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
+			}
+		}
+		
+		setCheckAbstract = function(e, id){
+			if(e.hasClass('btnUnCheck')){
+				jQuery('#'+id).removeClass('btnUnCheck').addClass('btnCheck').text('Valgt');
+			} else {
+				jQuery('#'+id).removeClass('btnCheck').addClass('btnUnCheck').text('Vælg');
+			}
+		}
+		/*jQuery('.btnChoose').click(function(){
+            var $this = jQuery(this);
+            $this.toggleClass('Valgt');
+            if($this.hasClass('Valgt')){
+                $this.text('Vælg');
+                $this.addClass('b2ecc71');
+            } else {
+                $this.text('Valgt');
+                $this.addClass('bfff');
+            }
+        });*/
+	});
+</script>
 <section class="main-content">
 	<div class="container">
 		<div class="row">
@@ -22,7 +70,7 @@ defined('_JEXEC') or die('Restricted access');
 						<p class="text-uppercase price3">Pris: 24,95 DKK</p>
 						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
 					</div>
-					<a class="btn btnChoose" href="#">Vælg</a>
+					<a class="btn btnUnChoose" onClick="setProduct(this, 1)" id="standard_en">Vælg</a>
 				</div>
 			</div>
 			<div class="col-md-4 padr0">
@@ -35,7 +83,7 @@ defined('_JEXEC') or die('Restricted access');
 						<p class="text-uppercase price3">Pris: 29,95 DKK</p>
 						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
 					</div>
-					<a class="btn btnChoose active" href="#">Valgt</a>
+					<a class="btn btnChoose" onClick="setProduct(this, 2)" id="premium_en">Valgt</a>
 				</div>
 			</div>
 			<div class="col-md-4 padr0">
@@ -47,7 +95,7 @@ defined('_JEXEC') or die('Restricted access');
 					<div class="w-price2">
 						<p class="text-uppercase price3">Pris: +50%</p>
 					</div>
-					<a class="btn btnChoose" href="#">Vælg</a>
+					<a class="btn btnUnCheck" onClick="setCheckExpress(this, 'express_en')" id="express_en">Tilvælg</a>
 				</div>
 			</div>
 		</div>
@@ -62,7 +110,7 @@ defined('_JEXEC') or die('Restricted access');
 						<p class="text-uppercase price3">Pris: 24,95 DKK</p>
 						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
 					</div>
-					<a class="btn btnChoose2" href="#">Vælg</a>
+					<a class="btn btnChoose2 btnUnChoose" onClick="setProduct(this, 1)" id="standard_da">Vælg</a>
 				</div>
 			</div>
 			<div class="col-md-3 padr0">
@@ -75,7 +123,7 @@ defined('_JEXEC') or die('Restricted access');
 						<p class="text-uppercase price3">Pris: 29,95 DKK</p>
 						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
 					</div>
-					<a class="btn btnChoose2 active" href="#">Vælg</a>
+					<a class="btn btnChoose2 btnChoose" onClick="setProduct(this, 2)" id="premium_da">Valgt</a>
 				</div>
 			</div>
 			<div class="col-md-3 padr0">
@@ -87,7 +135,7 @@ defined('_JEXEC') or die('Restricted access');
 					<div class="w-price">
 						<p class="text-uppercase price3">Pris: +50%</p>
 					</div>
-					<a class="btn btnChoose2" href="#">Tilvælg</a>
+					<a class="btn btnChoose2 btnUnCheck" onClick="setCheckExpress(this, 'express_da')" id="express_da">Tilvælg</a>
 				</div>
 			</div>
 			<div class="col-md-3 padr0">
@@ -98,7 +146,7 @@ defined('_JEXEC') or die('Restricted access');
 					<div class="w-price">
 						<p class="text-uppercase price3">Pris: 99 DKK</p>
 					</div>
-					<a class="btn btnChoose2" href="#">Tilvælg</a>
+					<a class="btn btnChoose2 btnUnCheck" onClick="setCheckAbstract(this, 'abstract')" id="abstract">Vælg</a>
 				</div>
 			</div>
 		</div>
