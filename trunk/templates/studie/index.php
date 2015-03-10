@@ -10,6 +10,7 @@ JHtml::_('behavior.formvalidation');
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 <script src="<?php echo $tmpl;?>js/jquery.js"></script>
+<script src="<?php echo $tmpl;?>js/jquery-migrate-1.2.1.min.js"></script>
 
 <?php unset($this->_scripts[JURI::root(true).'/media/jui/js/jquery.min.js']); ?>
 <?php unset($this->_scripts[JURI::root(true).'/media/jui/js/jquery-noconflict.js']); ?>
@@ -157,18 +158,6 @@ JHtml::_('behavior.formvalidation');
             if(jQuery(this).attr("value")=="dk"){
                 jQuery(".dk").hide();
                 jQuery(".en").show();
-            }
-        });
-
-        jQuery('.btnChoose').click(function(){
-            var $this = jQuery(this);
-            $this.toggleClass('Valgt');
-            if($this.hasClass('Valgt')){
-                $this.text('Vælg');
-                $this.addClass('b2ecc71');
-            } else {
-                $this.text('Valgt');
-                $this.addClass('bfff');
             }
         });
 
