@@ -21,11 +21,13 @@ defined('_JEXEC') or die('Restricted access');
 			}
 		};
 		
-		setCheckExpress = function(e, id){
+		setCheckExpress = function(e){
 			if(e.hasClass('btnUnCheck')){
-				jQuery('#'+id).removeClass('btnUnCheck').addClass('btnCheck').text('Tilvalgt');
+				jQuery('#express_en').removeClass('btnUnCheck').addClass('btnCheck').text('Tilvalgt');
+				jQuery('#express_da').removeClass('btnUnCheck').addClass('btnCheck').text('Tilvalgt');
 			} else {
-				jQuery('#'+id).removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
+				jQuery('#express_en').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
+				jQuery('#express_da').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
 			}
 		}
 		
@@ -95,7 +97,7 @@ defined('_JEXEC') or die('Restricted access');
 					<div class="w-price2">
 						<p class="text-uppercase price3">Pris: +50%</p>
 					</div>
-					<a class="btn btnUnCheck" onClick="setCheckExpress(this, 'express_en')" id="express_en">Tilvælg</a>
+					<a class="btn btnUnCheck" onClick="setCheckExpress(this)" id="express_en">Tilvælg</a>
 				</div>
 			</div>
 		</div>
@@ -135,7 +137,7 @@ defined('_JEXEC') or die('Restricted access');
 					<div class="w-price">
 						<p class="text-uppercase price3">Pris: +50%</p>
 					</div>
-					<a class="btn btnChoose2 btnUnCheck" onClick="setCheckExpress(this, 'express_da')" id="express_da">Tilvælg</a>
+					<a class="btn btnChoose2 btnUnCheck" onClick="setCheckExpress(this)" id="express_da">Tilvælg</a>
 				</div>
 			</div>
 			<div class="col-md-3 padr0">

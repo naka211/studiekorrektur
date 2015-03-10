@@ -97,8 +97,8 @@ JHtml::_('behavior.formvalidation');
 					<div class="col-md-6 pad0">
 						<ul>
 							<li><a href="<?php echo JURI::base();?>#contact">Kontakt</a></li>
-							<li><a href="index.php?option=com_content&view=article&id=2&Itemid=130">Cookiepolitik</a></li>
-							<li><a href="index.php?option=com_content&view=article&id=3&Itemid=131">Betingelser</a></li>
+							<li><a href="index.php?option=com_content&view=article&id=2&Itemid=131">Cookiepolitik</a></li>
+							<li><a href="index.php?option=com_content&view=article&id=3&Itemid=132">Betingelser</a></li>
 						</ul>
 					</div>
 				</div>
