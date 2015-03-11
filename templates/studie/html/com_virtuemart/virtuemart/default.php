@@ -3,6 +3,13 @@ defined('_JEXEC') or die('Restricted access');
 ?>
 <script type="text/javascript">
     jQuery(document).ready(function(){
+		formatMoney = function(num){
+			var p = num.toFixed(2).split(".");
+			return p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+				return  num + (i && !(i % 3) ? "." : "") + acc;
+			}, "") + "," + p[1];
+		}
+	
 		setProduct = function(e, id){
 			if(parseInt(id) == 1 && e.hasClass('btnUnChoose')){
 				jQuery("#premium_en").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
@@ -10,6 +17,15 @@ defined('_JEXEC') or die('Restricted access');
 				
 				jQuery("#premium_da").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
 				jQuery("#standard_da").removeClass('btnUnChoose').addClass('btnChoose').text('Valgt');
+				
+				if(jQuery("#express").val() == 1){
+					jQuery("#virtuemart_product_id").val("3");
+					jQuery("#price").val("37.425");
+				} else {
+					jQuery("#virtuemart_product_id").val("1");
+					jQuery("#price").val("24.95");
+				}
+				calPrice();
 			}
 			
 			if(parseInt(id) == 2 && e.hasClass('btnUnChoose')){
@@ -18,37 +34,87 @@ defined('_JEXEC') or die('Restricted access');
 				
 				jQuery("#standard_da").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
 				jQuery("#premium_da").removeClass('btnUnChoose').addClass('btnChoose').text('Valgt');
+				
+				if(jQuery("#express").val() == 1){
+					jQuery("#virtuemart_product_id").val("4");
+					jQuery("#price").val("44.925");
+				} else {
+					jQuery("#virtuemart_product_id").val("2");
+					jQuery("#price").val("29.95");
+				}
+				
+				calPrice();
 			}
 		};
 		
 		setCheckExpress = function(e){
+			var product_id = jQuery("#virtuemart_product_id").val();
 			if(e.hasClass('btnUnCheck')){
 				jQuery('#express_en').removeClass('btnUnCheck').addClass('btnCheck').text('Tilvalgt');
 				jQuery('#express_da').removeClass('btnUnCheck').addClass('btnCheck').text('Tilvalgt');
+				jQuery("#express").val("1");
+				
+				if(product_id == 1){
+					jQuery("#virtuemart_product_id").val("3");
+					jQuery("#price").val("37.425");
+					calPrice();
+				} else {
+					jQuery("#virtuemart_product_id").val("4");
+					jQuery("#price").val("44.925");
+					calPrice();
+				}
 			} else {
 				jQuery('#express_en').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
 				jQuery('#express_da').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
+				jQuery("#express").val("0");
+				
+				if(product_id == 3){
+					jQuery("#virtuemart_product_id").val("1");
+					jQuery("#price").val("24.95");
+					calPrice();
+				} else {
+					jQuery("#virtuemart_product_id").val("2");
+					jQuery("#price").val("29.95");
+					calPrice();
+				}
 			}
 		}
 		
 		setCheckAbstract = function(e, id){
 			if(e.hasClass('btnUnCheck')){
 				jQuery('#'+id).removeClass('btnUnCheck').addClass('btnCheck').text('Valgt');
+				jQuery("#abstract_flag").val("1");
+				
+				jQuery("#totalPrice").val(parseFloat(jQuery("#totalPrice").val()) + 99);
+				setTotalPriceTxt();
 			} else {
 				jQuery('#'+id).removeClass('btnCheck').addClass('btnUnCheck').text('Vælg');
+				jQuery("#abstract_flag").val("0");
+				
+				jQuery("#totalPrice").val(parseFloat(jQuery("#totalPrice").val()) - 99);
+				setTotalPriceTxt();
 			}
 		}
-		/*jQuery('.btnChoose').click(function(){
-            var $this = jQuery(this);
-            $this.toggleClass('Valgt');
-            if($this.hasClass('Valgt')){
-                $this.text('Vælg');
-                $this.addClass('b2ecc71');
-            } else {
-                $this.text('Valgt');
-                $this.addClass('bfff');
-            }
-        });*/
+		
+		calPrice = function(){
+			var words = jQuery("#words").val();
+			var pages = Math.ceil(parseFloat(words)/2400);
+			var price = jQuery("#price").val();
+			
+			jQuery("#pages_txt").text(pages);
+			jQuery("#quantity").val(pages);
+			setTotalPrice(pages, price);
+		}
+		
+		setTotalPrice = function(pages, price){
+			jQuery("#totalPrice").val(parseInt(pages)*parseFloat(price));
+			jQuery("#total_price_txt").text(formatMoney(parseInt(pages)*parseFloat(price))+" DKK");
+		}
+		
+		setTotalPriceTxt = function(){
+			var totalPrice = parseFloat(jQuery("#totalPrice").val());
+			jQuery("#total_price_txt").text(formatMoney(totalPrice)+" DKK");
+		}
 	});
 </script>
 <section class="main-content">
@@ -152,51 +218,52 @@ defined('_JEXEC') or die('Restricted access');
 				</div>
 			</div>
 		</div>
-
+		<form action="index.php" class="form-group">
 		<div class="row mt20">
 			<div class="col-md-2">
-				<form action="" class="form-group">
-					<label for=""><strong>Vælg sprog:</strong></label>
-					<div class="row">
-						<div class="col-md-6 col-xs-3">
-							<input type="radio" name="lang" checked value="en"> Dansk
-						</div>
-						<div class="col-md-6 col-xs-3 pad0">
-							<input type="radio" name="lang" value="dk"> Engelsk
-						</div>
+				<label for=""><strong>Vælg sprog:</strong></label>
+				<div class="row">
+					<div class="col-md-6 col-xs-3">
+						<input type="radio" name="lang" checked value="en"> Dansk
 					</div>
-				</form>
+					<div class="col-md-6 col-xs-3 pad0">
+						<input type="radio" name="lang" value="dk"> Engelsk
+					</div>
+				</div>
 			</div>
 			<div class="col-md-3">
-				<form action="" class="form-group">
-					<label for=""><strong>Indtast antal tegn inkl. mellemrum</strong></label>
-					<input type="text" class="form-control input">
-				</form>
+				<label for=""><strong>Indtast antal tegn inkl. mellemrum</strong></label>
+				<input type="text" class="form-control input" id="words" onBlur="calPrice();" value="0">
 			</div>
-			<div class="col-md-2">
-				<form action="" class="form-group">
-					<label for=""><strong>Antal normalsider:</strong></label>
-					<p>0</p>
-				</form>
+			<div class="col-md-2" style="text-align:center;">
+				<label for=""><strong>Antal normalsider:</strong></label>
+				<p id="pages_txt">0</p>
 			</div>
 			<div class="col-md-3">
-				<form action="" class="form-group">
-					<label for=""><strong>Leveringstidspunkt:</strong></label>
-					<p>Fre. d. 27. feb. 2015 kl. 14:00</p>
-				</form>
+				<label for=""><strong>Leveringstidspunkt:</strong></label>
+				<p id="delivery_time_txt">Fre. d. 27. feb. 2015 kl. 14:00</p>
 			</div>
 			<div class="col-md-2">
-				<form action="" class="form-group">
-					<label for=""><strong>Total pris:</strong></label>
-					<p>24.351,20 DKK</p>
-				</form>
+				<label for=""><strong>Total pris:</strong></label>
+				<p id="total_price_txt">0,00 DKK</p>
 			</div>
+			<input type="hidden" name="task" value="add"/>
+			<input type="hidden" value="com_virtuemart" name="option">
+			<input type="hidden" value="cart" name="view">
+			<input type="hidden" value="" name="virtuemart_product_id[]" id="virtuemart_product_id">
+			<input type="hidden" value="129" name="Itemid">
+			
+			<input type="hidden" id="price" value="29.95" />
+			<input type="hidden" id="totalPrice" value="0" />
+			<input type="hidden" value="0" name="quantity[]" id="quantity">
+			<input type="hidden" id="express" value="0" />
+			<input type="hidden" id="abstract_flag" value="0" />
 		</div>
 		<div class="row text-center">
 			<hr class="black">
 			<a class="btn btnAddcart" href="#myModal" data-toggle="modal" data-target="#smallModal">Læg bestilling i indkøbskurven</a>
 		</div>
-
+		</form>
 		<!-- Modal HTML -->
 		<div id="smallModal" class="modal fade">
 			<div class="modal-dialog">
