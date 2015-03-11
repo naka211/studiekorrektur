@@ -107,14 +107,28 @@ defined('_JEXEC') or die('Restricted access');
 		}
 		
 		setTotalPrice = function(pages, price){
-			jQuery("#totalPrice").val(parseInt(pages)*parseFloat(price));
-			jQuery("#total_price_txt").text(formatMoney(parseInt(pages)*parseFloat(price))+" DKK");
+			if(jQuery("#abstract_flag").val() == 1){
+				var totalPrice = parseInt(pages)*parseFloat(price) + 99;
+				jQuery("#totalPrice").val(totalPrice);
+			} else {
+				var totalPrice = parseInt(pages)*parseFloat(price);
+				jQuery("#totalPrice").val(totalPrice);
+			}
+			jQuery("#total_price_txt").text(formatMoney(parseFloat(jQuery("#totalPrice").val()))+" DKK");
 		}
 		
 		setTotalPriceTxt = function(){
 			var totalPrice = parseFloat(jQuery("#totalPrice").val());
 			jQuery("#total_price_txt").text(formatMoney(totalPrice)+" DKK");
 		}
+		
+		jQuery(".btnAddcart").click(function(){
+			if(jQuery("#quantity").val() < 10){
+				jQuery(".btnAddcart1").click();
+			} else {
+				alert("cho qua");
+			}
+		});
 	});
 </script>
 <section class="main-content">
@@ -218,7 +232,7 @@ defined('_JEXEC') or die('Restricted access');
 				</div>
 			</div>
 		</div>
-		<form action="index.php" class="form-group">
+		<form action="index.php" class="form-group" method="post" id="orderForm">
 		<div class="row mt20">
 			<div class="col-md-2">
 				<label for=""><strong>Vælg sprog:</strong></label>
@@ -261,7 +275,9 @@ defined('_JEXEC') or die('Restricted access');
 		</div>
 		<div class="row text-center">
 			<hr class="black">
-			<a class="btn btnAddcart" href="#myModal" data-toggle="modal" data-target="#smallModal">Læg bestilling i indkøbskurven</a>
+			<!--<a class="btn btnAddcart" href="#myModal" data-toggle="modal" data-target="#smallModal">Læg bestilling i indkøbskurven</a>-->
+			<a class="btn btnAddcart">Læg bestilling i indkøbskurven</a>
+			<a class="btnAddcart1" href="#myModal" data-toggle="modal" data-target="#smallModal"></a>
 		</div>
 		</form>
 		<!-- Modal HTML -->
