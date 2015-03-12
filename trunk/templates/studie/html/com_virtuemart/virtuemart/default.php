@@ -9,6 +9,12 @@ defined('_JEXEC') or die('Restricted access');
 				return  num + (i && !(i % 3) ? "." : "") + acc;
 			}, "") + "," + p[1];
 		}
+		
+		getDeliveryTime = function(day){
+			jQuery.post( "<?php echo JURI::base();?>index.php?option=com_virtuemart&controller=virtuemart&task=getTime&day="+day, function(date) {
+				jQuery( "#delivery_time_txt" ).text( date );
+			});
+		}
 	
 		setProduct = function(e, id){
 			if(parseInt(id) == 1 && e.hasClass('btnUnChoose')){
@@ -19,9 +25,19 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery("#standard_da").removeClass('btnUnChoose').addClass('btnChoose').text('Valgt');
 				
 				if(jQuery("#express").val() == 1){
+					if(jQuery("#quantity").val() < 20){
+						getDeliveryTime(1);
+					} else {
+						getDeliveryTime(2);
+					}
 					jQuery("#virtuemart_product_id").val("3");
 					jQuery("#price").val("37.425");
 				} else {
+					if(jQuery("#quantity").val() < 20){
+						getDeliveryTime(2);
+					} else {
+						getDeliveryTime(3);
+					}
 					jQuery("#virtuemart_product_id").val("1");
 					jQuery("#price").val("24.95");
 				}
@@ -36,13 +52,22 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery("#premium_da").removeClass('btnUnChoose').addClass('btnChoose').text('Valgt');
 				
 				if(jQuery("#express").val() == 1){
+					if(jQuery("#quantity").val() < 20){
+						getDeliveryTime(1);
+					} else {
+						getDeliveryTime(2);
+					}
 					jQuery("#virtuemart_product_id").val("4");
 					jQuery("#price").val("44.925");
 				} else {
+					if(jQuery("#quantity").val() < 20){
+						getDeliveryTime(2);
+					} else {
+						getDeliveryTime(3);
+					}
 					jQuery("#virtuemart_product_id").val("2");
 					jQuery("#price").val("29.95");
 				}
-				
 				calPrice();
 			}
 		};
@@ -63,6 +88,12 @@ defined('_JEXEC') or die('Restricted access');
 					jQuery("#price").val("44.925");
 					calPrice();
 				}
+				
+				if(jQuery("#quantity").val() < 20){
+					getDeliveryTime(1);
+				} else {
+					getDeliveryTime(2);
+				}
 			} else {
 				jQuery('#express_en').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
 				jQuery('#express_da').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
@@ -77,6 +108,12 @@ defined('_JEXEC') or die('Restricted access');
 					jQuery("#price").val("29.95");
 					calPrice();
 				}
+				
+				if(jQuery("#quantity").val() < 20){
+					getDeliveryTime(2);
+				} else {
+					getDeliveryTime(3);
+				}
 			}
 		}
 		
@@ -84,12 +121,18 @@ defined('_JEXEC') or die('Restricted access');
 			if(e.hasClass('btnUnCheck')){
 				jQuery('#'+id).removeClass('btnUnCheck').addClass('btnCheck').text('Valgt');
 				jQuery("#abstract_flag").val("1");
+				jQuery("#virtuemart_product_id1").val("5");
+				jQuery("#quantity1").val("1");
+				jQuery("#virtuemart_product_id1").attr("name", "virtuemart_product_id[]");
 				
 				jQuery("#totalPrice").val(parseFloat(jQuery("#totalPrice").val()) + 99);
 				setTotalPriceTxt();
 			} else {
 				jQuery('#'+id).removeClass('btnCheck').addClass('btnUnCheck').text('Vælg');
 				jQuery("#abstract_flag").val("0");
+				jQuery("#virtuemart_product_id1").val("0");
+				jQuery("#quantity1").val("0");
+				jQuery("#virtuemart_product_id1").attr("name", "");
 				
 				jQuery("#totalPrice").val(parseFloat(jQuery("#totalPrice").val()) - 99);
 				setTotalPriceTxt();
@@ -101,8 +144,22 @@ defined('_JEXEC') or die('Restricted access');
 			var pages = Math.ceil(parseFloat(words)/2400);
 			var price = jQuery("#price").val();
 			
+			if(pages < 20 && jQuery("#virtuemart_product_id").val()<3){
+				getDeliveryTime(2);
+			}
+			if(pages > 20 && jQuery("#virtuemart_product_id").val()<3){
+				getDeliveryTime(3);
+			}
+			if(pages < 20 && jQuery("#virtuemart_product_id").val()>=3){
+				getDeliveryTime(1);
+			}
+			if(pages > 20 && jQuery("#virtuemart_product_id").val()>=3){
+				getDeliveryTime(2);
+			}
+			
 			jQuery("#pages_txt").text(pages);
 			jQuery("#quantity").val(pages);
+			
 			setTotalPrice(pages, price);
 		}
 		
@@ -126,7 +183,7 @@ defined('_JEXEC') or die('Restricted access');
 			if(jQuery("#quantity").val() < 10){
 				jQuery(".btnAddcart1").click();
 			} else {
-				alert("cho qua");
+				jQuery("#orderForm").submit();
 			}
 		});
 	});
@@ -255,7 +312,7 @@ defined('_JEXEC') or die('Restricted access');
 			</div>
 			<div class="col-md-3">
 				<label for=""><strong>Leveringstidspunkt:</strong></label>
-				<p id="delivery_time_txt">Fre. d. 27. feb. 2015 kl. 14:00</p>
+				<p id="delivery_time_txt"></p>
 			</div>
 			<div class="col-md-2">
 				<label for=""><strong>Total pris:</strong></label>
@@ -264,12 +321,14 @@ defined('_JEXEC') or die('Restricted access');
 			<input type="hidden" name="task" value="add"/>
 			<input type="hidden" value="com_virtuemart" name="option">
 			<input type="hidden" value="cart" name="view">
-			<input type="hidden" value="" name="virtuemart_product_id[]" id="virtuemart_product_id">
+			<input type="hidden" value="2" name="virtuemart_product_id[]" id="virtuemart_product_id">
+			<input type="hidden" value="" name="" id="virtuemart_product_id1">
 			<input type="hidden" value="129" name="Itemid">
 			
 			<input type="hidden" id="price" value="29.95" />
 			<input type="hidden" id="totalPrice" value="0" />
 			<input type="hidden" value="0" name="quantity[]" id="quantity">
+			<input type="hidden" value="0" name="quantity[]" id="quantity1">
 			<input type="hidden" id="express" value="0" />
 			<input type="hidden" id="abstract_flag" value="0" />
 		</div>

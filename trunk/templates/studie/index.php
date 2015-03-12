@@ -79,6 +79,7 @@ JHtml::_('behavior.formvalidation');
 	</div>
 	<!-- /.container-fluid --> 
 </nav>
+<jdoc:include type="message" />
 <jdoc:include type="component" />
 <footer class="text-center">
 	<div class="footer-above">

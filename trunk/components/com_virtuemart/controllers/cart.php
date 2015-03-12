@@ -449,7 +449,15 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		}
 		$this->display();
 	}
-
+	
+	//T.Trung
+	function deleteCart() {
+		$cart = VirtueMartCart::getCart();
+		$cart->emptyCart();
+		$mainframe = JFactory::getApplication();
+		$mainframe->redirect(JRoute::_('index.php?option=com_virtuemart&view=virtuemart&Itemid=2'));
+	}
+	//T.Trung end
 }
 
 //pure php no Tag
