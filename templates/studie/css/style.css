@@ -211,12 +211,12 @@ a.btnEdit:hover {color: #2ecc71;}
 .btnRefresh {color: #2ecc71; padding: 5px 30px; border: 1px solid #2ecc71; background: #fff; -webkit-border-radius: 5px 5px 5px 5px; border-radius: 5px 5px 5px 5px; font-size: 14px;}
 .btnRefresh:hover {background: #2ecc71; color: #fff;}
 .table thead {margin-bottom: 10px;}
-.table th {background: #323232; color: #fff; font-weight: normal; padding: 8px 20px !important;}
+.table th {background: #323232; color: #fff; font-weight: normal; padding: 8px 12px !important;}
 .table tr {}
 .bor-b {border-bottom: 1px solid #e5e5e5;}
 .table tr td {padding: 12px !important;}
 .table input {border: 1px solid #e5e5e5; padding: 4.5px; width: 60%;}
-.input {background-color: #f8f8f8; border: solid 1px #d7d7d7; border-radius: 0; height: 38px; font-style: italic; font-size: 14px;}
+.input {background-color: #f8f8f8; border: solid 1px #d7d7d7; border-radius: 0; height: 38px; font-style: italic; font-size: 14px; margin-bottom:15px;}
 .input3 {background-color: #f8f8f8; border: solid 1px #d7d7d7; border-radius: 0; height: 38px; line-height: 38px;}
 .bor-l {border-left: 1px solid #d7d7d7; padding-left: 50px;}
 .pr40 {padding-right: 40px;}

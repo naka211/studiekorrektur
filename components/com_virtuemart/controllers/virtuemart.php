@@ -78,5 +78,12 @@ class VirtueMartControllerVirtuemart extends JControllerLegacy
    
         $this->setRedirect(JRoute::_("index.php?option=com_contact&view=contact&id=1&layout=subscribe&Itemid=1"));
     }
+	
+	function getTime(){
+		$day = JRequest::getVar('day');
+		setlocale(LC_TIME, array('da_DA.UTF-8','da_DA@euro','da_DA','danish'));
+		echo utf8_encode(strftime("%a. d. %d %b. %Y kl. %H:%M",strtotime('+'.$day.' day', time())));
+		die();
+	}
 }
  //pure php no closing tag
