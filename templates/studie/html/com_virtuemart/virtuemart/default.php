@@ -13,6 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 		getDeliveryTime = function(day){
 			jQuery.post( "<?php echo JURI::base();?>index.php?option=com_virtuemart&controller=virtuemart&task=getTime&day="+day, function(date) {
 				jQuery( "#delivery_time_txt" ).text( date );
+				jQuery("#delivery_date").val(date)
 			});
 		}
 	
@@ -295,10 +296,10 @@ defined('_JEXEC') or die('Restricted access');
 				<label for=""><strong>Vælg sprog:</strong></label>
 				<div class="row">
 					<div class="col-md-6 col-xs-3">
-						<input type="radio" name="lang" checked value="en"> Dansk
+						<input type="radio" name="lang" checked value="Dansk"> Dansk
 					</div>
 					<div class="col-md-6 col-xs-3 pad0">
-						<input type="radio" name="lang" value="dk"> Engelsk
+						<input type="radio" name="lang" value="Engelsk"> Engelsk
 					</div>
 				</div>
 			</div>
@@ -331,6 +332,7 @@ defined('_JEXEC') or die('Restricted access');
 			<input type="hidden" value="0" name="quantity[]" id="quantity1">
 			<input type="hidden" id="express" value="0" />
 			<input type="hidden" id="abstract_flag" value="0" />
+			<input type="hidden" id="delivery_date" value="" name="delivery_date" />
 		</div>
 		<div class="row text-center">
 			<hr class="black">

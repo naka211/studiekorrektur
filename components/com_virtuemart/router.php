@@ -384,6 +384,9 @@ function virtuemartParseRoute($segments) {
 		$vars['view'] = 'cart';
 		if(count($segments) > 1){ // prevent putting value of view variable into task variable by Viktor Jelinek
 			$vars['task'] = array_pop($segments);
+			//T.Trung
+			//$vars['layout'] = array_pop($segments);
+			//T.Trung end
 		}
 		return $vars;
 	}

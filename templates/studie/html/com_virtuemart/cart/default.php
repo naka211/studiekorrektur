@@ -1,6 +1,28 @@
 <?php 
 defined ('_JEXEC') or die('Restricted access');
+JHTML::_('behavior.formvalidator');
 ?>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+		jQuery('input').on('change invalid', function() {
+			var textfield = jQuery(this).get(0);
+			textfield.setCustomValidity('');
+			
+			if (!textfield.validity.valid) {
+			  textfield.setCustomValidity('Venligst udfylde dette felt');  
+			}
+		});
+		
+		jQuery('input#tos').on('change invalid', function() {
+			var textfield = jQuery(this).get(0);
+			textfield.setCustomValidity('');
+			
+			if (!textfield.validity.valid) {
+			  textfield.setCustomValidity('Tjek venligst dette felt');  
+			}
+		});
+	});
+</script>
 <section class="main-content">
 	<div class="container">
 		<div class="row">
@@ -32,7 +54,7 @@ defined ('_JEXEC') or die('Restricted access');
 							<?php foreach ($this->cart->products as $pkey => $prow) {?>
 							<tr class="bor-b">
 								<td><?php echo $prow->product_name;?></td>
-								<td class="text-center"><?php if($prow->virtuemart_product_id != 5)  echo $prow->quantity;?></td>
+								<td class="text-center"><?php if($prow->virtuemart_product_id != 5) echo $prow->quantity;?></td>
 								<td class="text-center"><?php if($prow->virtuemart_product_id != 5) echo $prow->prices['salesPrice'].' DKK';?></td>
 								<td class="text-right"><?php echo $this->currencyDisplay->createPriceDiv ('salesPrice', '', $prow->prices, FALSE, FALSE, $prow->quantity) ?></td>
 							</tr>
@@ -53,7 +75,7 @@ defined ('_JEXEC') or die('Restricted access');
 							</tr>
 							<?php if (!empty($this->cart->cartData['couponCode'])) { ?>
 							<tr class="bor-b">
-								<td colspan="2"><strong>Kupon:</strong></td>
+								<td colspan="2"><strong>Rabat:</strong></td>
 								<td colspan="2" class="text-right"><?php echo number_format($this->cart->pricesUnformatted['salesPriceCoupon'],2,',','.').' DKK'; ?></td>
 							</tr>
 							<?php }?>
@@ -66,45 +88,45 @@ defined ('_JEXEC') or die('Restricted access');
 				</div>
 				
 			</div>
-			<form method="post" id="checkoutForm" name="checkoutForm" action="<?php echo JRoute::_ ('index.php?option=com_virtuemart&view=cart' . $taskRoute, $this->useXHTML, $this->useSSL); ?>">
+			<form method="post" id="checkoutForm" name="checkoutForm" action="<?php echo JRoute::_ ('index.php?option=com_virtuemart&view=cart' . $taskRoute, $this->useXHTML, $this->useSSL); ?>" class="form-validate">
 				<div class="col-md-4 pl50">
 					<div class="row">
 						<h3 class="h3">Kontaktinformationer</h3>
 					</div>
 					<div class="row">
-						<input type="text" class="form-control input" placeholder="Fornavn *" name="first_name">
+						<input type="text" class="form-control input required" placeholder="Fornavn *" name="first_name" id="first_name">
 					</div>
 					<div class="row">
-						<input type="text" class="form-control input" placeholder="Efternavn *" name="last_name">
+						<input type="text" class="form-control input required" placeholder="Efternavn *" name="last_name">
 					</div>
 					<div class="row">
-						<input type="text" class="form-control input" placeholder="Adresse *" name="address_1">
+						<input type="text" class="form-control input required" placeholder="Adresse *" name="address_1">
 					</div>
 					<div class="row">
-						<input type="text" class="form-control input" placeholder="Postnr. *" name="zip">
+						<input type="text" class="form-control input required" placeholder="Postnr. *" name="zip" maxlength="4">
 					</div>
 					<div class="row">
-						<input type="text" class="form-control input" placeholder="By *" name="city">
+						<input type="text" class="form-control input required" placeholder="By *" name="city">
 					</div>
 					<div class="row">
-						<input type="text" class="form-control input" placeholder="Email *" name="email">
+						<input type="text" class="form-control input required validate-email" placeholder="Email *" name="email">
 					</div>
 					<div class="row">
-						<input type="text" class="form-control input" placeholder="Telefonnummer *" name="phone_1">
+						<input type="text" class="form-control input required" placeholder="Telefonnummer *" name="phone_1">
 					</div>
 					<div class="row">
-						<input type="checkbox" class="cb"> Accepter <a class="link" target="_blank" href="condition.php">handelsbetingelserne</a> <span class="red">*</span>
+						<input type="checkbox" class="cb required" name="tos" id="tos"> Accepter <a class="link" target="_blank" href="index.php?option=com_content&view=article&id=3&Itemid=132">handelsbetingelserne</a> <span class="red">*</span>
 					</div>
 				</div>
 			</div>
-			<input type='hidden' name='order_language' value='<?php echo $this->order_language; ?>'/>
-			<input type='hidden' name='task' value='updatecart'/>
+			<button type="submit" class="validate" id="submitBtn" style="display:none;">Submit form</button>
+			<input type='hidden' name='task' value='saveData'/>
 			<input type='hidden' name='option' value='com_virtuemart'/>
 			<input type='hidden' name='view' value='cart'/>
 		</form>
 		<div class="row text-center">
 			<hr class="black">
-			<a class="btn btnPayment" href="upload.php">Gå til upload af opgaven</a>
+			<a class="btn btnPayment" onClick="jQuery('#submitBtn').click();">Gå til upload af opgaven</a>
 		</div>
 
 	</div>
