@@ -221,6 +221,11 @@ class VirtueMartControllerCart extends JControllerLegacy {
 			$error = false;
 			$cart->add($virtuemart_product_ids,$error);
 			if (!$error) {
+				//T.Trung
+				$session = JFactory::getSession();
+				$session->set('lang', JRequest::getVar('lang'));
+				$session->set('delivery_date', JRequest::getVar('delivery_date'));
+				//T.Trung end
 				$msg = vmText::_('COM_VIRTUEMART_PRODUCT_ADDED_SUCCESSFULLY');
 				$type = '';
 			} else {
@@ -457,6 +462,77 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$mainframe = JFactory::getApplication();
 		$mainframe->redirect(JRoute::_('index.php?option=com_virtuemart&view=virtuemart&Itemid=2'));
 	}
+	
+	function saveData() {
+		$session = JFactory::getSession();
+		$session->set('first_name', JRequest::getVar('first_name'));
+		$session->set('last_name', JRequest::getVar('last_name'));
+		$session->set('address_1', JRequest::getVar('address_1'));
+		$session->set('zip', JRequest::getVar('zip'));
+		$session->set('city', JRequest::getVar('city'));
+		$session->set('email', JRequest::getVar('email'));
+		$session->set('phone_1', JRequest::getVar('phone_1'));
+		$mainframe = JFactory::getApplication();
+		$mainframe->redirect(JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=upload'));
+	}
+	
+	function processOrder() {
+		if (!class_exists('VirtueMartCart'))
+		require(VMPATH_SITE . DS . 'helpers' . DS . 'cart.php');
+		$cart = VirtueMartCart::getCart(false);
+		$cart -> prepareCartData();
+		
+		$enFile = $_FILES["english_file"];
+		$daFile = $_FILES["danish_file"];
+		
+		$time = time();
+		if($enFile){
+			$enFileName = $time."_".$enFile["name"];
+			$enFileDes = JPATH_BASE."/images/original_file/";
+			move_uploaded_file($enFile["tmp_name"], $enFileDes.$enFileName);
+		}
+		
+		$daFileName = $time."_".$daFile["name"];
+		$daFileDes = JPATH_BASE."/images/original_file/";
+		move_uploaded_file($daFile["tmp_name"], $daFileDes.$daFileName);
+			
+		$session = JFactory::getSession();
+		$cart->BT = array();
+		
+		$cart->BT['first_name'] = $session->get('first_name');
+		$cart->BT['last_name'] = $session->get('last_name');
+		$cart->BT['address_1'] = $session->get('address_1');
+		$cart->BT['zip'] = $session->get('zip');
+		$cart->BT['city'] = $session->get('city');
+		$cart->BT['email'] = $session->get('email');
+		$cart->BT['phone_1'] = $session->get('phone_1');
+		$cart->BT['comment'] = JRequest::getVar('comment');
+		if($enFileName){
+			$cart->BT['english_file'] = $enFileName;
+		}
+		$cart->BT['danish_file'] = $daFileName;
+		$cart->BT['language'] = $session->get('lang');
+		$cart->BT['delivery_date'] = $session->get('delivery_date');
+		
+		$cart->virtuemart_shipmentmethod_id = 1;
+		$cart->virtuemart_paymentmethod_id = 1;
+		$cart->STsameAsBT = 1;
+		$cart->tosAccepted = 1;
+		
+		
+		//T.Trung end
+		//print_r($cart);exit;
+		$cart->confirmDone();
+		
+		//T.Trung
+		$orderModel = VmModel::getModel('orders');
+		$order = $orderModel->getOrder($cart->virtuemart_order_id);
+		//print_r($order);exit;
+		
+		$mainframe = JFactory::getApplication();
+		$mainframe->redirect(JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=payment&virtuemart_order_id='.$cart->virtuemart_order_id));
+	}
+	
 	//T.Trung end
 }
 

@@ -161,6 +161,10 @@ JHtml::_('behavior.formvalidation');
                 jQuery(".en").show();
             }
         });
+		
+		jQuery('.input-upload').change(function () {
+        	jQuery(this).parent().find('.fakefile').val(jQuery(this).val());
+		});
 
 		jQuery('input#subscribe_email,input#email').on('change invalid', function() {
 			var textfield = $(this).get(0);

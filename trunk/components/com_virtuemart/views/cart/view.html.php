@@ -178,6 +178,12 @@ class VirtueMartViewCart extends VmView {
 			$order_language = $lang->getTag();
 			$this->assignRef('order_language',$order_language);
 		}
+		
+		//T.Trung
+		if(JRequest::getVar('layout1')){
+			$layoutName = JRequest::getVar('layout1');
+		}
+		//T.Trung end
 
 		$this->useSSL = VmConfig::get('useSSL', 0);
 		$this->useXHTML = false;

@@ -1026,7 +1026,7 @@ class VirtueMartCart {
 			}
 		}
 
-		$validUserDataCart = self::validateUserData('cartfields',$this->cartfields,$this->_redirect);
+		/*$validUserDataCart = self::validateUserData('cartfields',$this->cartfields,$this->_redirect);
 
 		if($validUserDataCart!==true){
 			if($this->_redirect){
@@ -1039,7 +1039,7 @@ class VirtueMartCart {
 			//Atm a bit dirty. We store this information in the BT order_userinfo, so we merge it here, it gives also
 			//the advantage, that plugins can easily deal with it.
 			//$this->BT = array_merge((array)$this->BT,(array)$this->cartfields);
-		}
+		}*/
 
 		//Show cart and checkout data overview
 		if($this->_redirected){

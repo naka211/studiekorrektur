@@ -352,3 +352,8 @@ input[type='file'] {opacity: 0;}
 	}
 	
 .invalid{border:1px solid red !important;}
+
+.eachRowUpload {overflow: hidden; position: relative; min-height: 42px;}
+.fakefile {width: 205px !important;}
+input.fakefile {position: absolute; top:0; border: solid 1px #d7d7d7; padding: 5px 10px; width: 100% !important; background: #f8f8f8 url(../img/icon-folder.png) no-repeat 98% center; font-style: italic;}
+.input-upload {width: 100% !important; opacity:0.0; position: absolute; top:0; cursor: pointer; padding: 5px 10px; }
