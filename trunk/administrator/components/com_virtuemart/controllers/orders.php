@@ -349,6 +349,33 @@ class VirtuemartControllerOrders extends VmController {
 		$this->setRedirect($editLink, $msg);
 	}
 
+	//T.Trung
+	function uploadFile(){
+		$enFile = $_FILES["english_edited_file"];
+		$daFile = $_FILES["danish_edited_file"];
+		
+		$time = time();
+		if($enFile){
+			$enFileName = $time."_".$enFile["name"];
+			$enFileDes = JPATH_ROOT."/images/edited_file/";
+			move_uploaded_file($enFile["tmp_name"], $enFileDes.$enFileName);
+		}
+		
+		$daFileName = $time."_".$daFile["name"];
+		$daFileDes = JPATH_ROOT."/images/edited_file/";
+		move_uploaded_file($daFile["tmp_name"], $daFileDes.$daFileName);
+		
+		$orderId = vRequest::getInt('orderId', '');
+		
+		$db = JFactory::getDBO();
+		$db->setQuery("UPDATE #__virtuemart_order_userinfos SET english_edited_file='".$enFileName."',  danish_edited_file='".$daFileName."' WHERE virtuemart_order_id=".$orderId." AND address_type = 'BT'");
+		$db->query();
+		
+		$editLink = 'index.php?option=com_virtuemart&view=orders&task=edit&virtuemart_order_id=' . $orderId;
+		$msg = "File(s) is uploaded!!";
+		$this->setRedirect($editLink, $msg);
+	}
+	//T.Trung end
 }
 // pure php no closing tag
 

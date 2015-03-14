@@ -495,7 +495,7 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$daFileName = $time."_".$daFile["name"];
 		$daFileDes = JPATH_BASE."/images/original_file/";
 		move_uploaded_file($daFile["tmp_name"], $daFileDes.$daFileName);
-			
+
 		$session = JFactory::getSession();
 		$cart->BT = array();
 		
