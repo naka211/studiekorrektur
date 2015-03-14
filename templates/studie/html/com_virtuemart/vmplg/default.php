@@ -70,7 +70,7 @@ $cart->emptyCart();
 						<?php if($order["details"]["BT"]->coupon_code){?>
 						<tr class="bor-b0">
 							<td colspan="2"><strong>Rabat</strong></td>
-							<td colspan="2" class="text-right"><strong><?php echo $order["details"]["BT"]->order_discount;?> DKK</strong></td>
+							<td colspan="2" class="text-right"><strong><?php echo $order["details"]["BT"]->coupon_discount;?> DKK</strong></td>
 						</tr>
 						<?php }?>
 						<tr class="bor-b">

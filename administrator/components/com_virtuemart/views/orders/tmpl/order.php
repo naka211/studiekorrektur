@@ -349,6 +349,10 @@ vmJsApi::addJScript( 'orderedit',"
 				echo '			</td>'."\n";
 				echo '			<td>'."\n";
 				echo '				'.$_field['formcode']."\n";
+				//T.Trung
+				if($_field["name"] == "BT_danish_file") echo '<a href="'.JURI::root().'images/original_file/'.$_field["value"].'">Download</a>';
+				if($_field["name"] == "BT_english_file") echo '<a href="'.JURI::root().'images/original_file/'.$_field["value"].'">Download</a>';
+				//T.Trung end
 				echo '			</td>'."\n";
 				echo '		</tr>'."\n"; //*/
 			/*	$fn = $_field['name'];
@@ -366,6 +370,7 @@ vmJsApi::addJScript( 'orderedit',"
 			?>
 
 		</table>
+		
 		</td>
 		<td width="50%" valign="top">
 		<table class="adminlist table">
@@ -402,7 +407,15 @@ vmJsApi::addJScript( 'orderedit',"
 		<input type="hidden" name="old_virtuemart_shipmentmethod_id" value="<?php echo $this->orderbt->virtuemart_shipmentmethod_id; ?>" />
 		<?php echo JHtml::_( 'form.token' ); ?>
 </form>
-
+<form action="index.php" method="post" enctype="multipart/form-data">
+	Danish edited file <input type="file" name="danish_edited_file" value="" /><br>
+	English edited file <input type="file" name="english_edited_file" value="" /><br>
+	<input type="submit" value="Upload" name="submit" />
+	<input type="hidden" name="option" value="com_virtuemart">
+	<input type="hidden" name="view" value="orders">
+	<input type="hidden" name="task" value="uploadFile">
+	<input type="hidden" name="orderId" value="<?php echo JRequest::getVar("virtuemart_order_id");?>" />
+</form>
 <table width="100%">
 	<tr>
 		<td colspan="2">
