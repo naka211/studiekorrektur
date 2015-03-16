@@ -67,7 +67,7 @@ JHtml::_('behavior.formvalidation');
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="hidden"><a href="#page-top"></a></li>
-				<li class="page-scroll active"><a href="#index">Forside</a></li>
+				<li class="page-scroll active"><a href="<?php echo JURI::base();?>#index">Forside</a></li>
 				<li class="page-scroll"><a href="#info">Info</a></li>
 				<li class="page-scroll"><a href="#price">Priser</a></li>
 				<li class="page-scroll"><a href="#testimonials">Udtalelser</a></li>
@@ -79,7 +79,7 @@ JHtml::_('behavior.formvalidation');
 	</div>
 	<!-- /.container-fluid --> 
 </nav>
-<jdoc:include type="message" />
+<!--<jdoc:include type="message" />-->
 <jdoc:include type="component" />
 <footer class="text-center">
 	<div class="footer-above">
@@ -152,11 +152,11 @@ JHtml::_('behavior.formvalidation');
 <script type="text/javascript">
     jQuery(document).ready(function(){
         jQuery('input[type="radio"]').click(function(){
-            if(jQuery(this).attr("value")=="en"){
+            if(jQuery(this).attr("value")=="Dansk"){
                 jQuery(".en").hide();
                 jQuery(".dk").show();
             }
-            if(jQuery(this).attr("value")=="dk"){
+            if(jQuery(this).attr("value")=="Engelsk"){
                 jQuery(".dk").hide();
                 jQuery(".en").show();
             }
