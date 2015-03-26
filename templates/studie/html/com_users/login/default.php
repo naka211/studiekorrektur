@@ -43,7 +43,7 @@ JHtml::_('behavior.formvalidation');
 						<div class="col-md-12 text-center">
 							<button class="btn btnHome validate">Login</button>
 						</div>
-						<input type="hidden" name="return" value="<?php echo base64_encode("index.php?option=com"); ?>" />
+						<input type="hidden" name="return" value="<?php echo base64_encode(JRoute::_("index.php?option=com_virtuemart&view=cart&layout1=orders&status=0")); ?>" />
 						<?php echo JHtml::_('form.token'); ?>
 						</form>
 					</div>
