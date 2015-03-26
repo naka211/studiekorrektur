@@ -377,3 +377,19 @@ input.fakefile {position: absolute; top:0; border: solid 1px #d7d7d7; padding: 5
 .frm-login h3 {color: #2ecc71;}
 .frm-login input {background-color: #f8f8f8; border: 1px solid #d7d7d7; border-radius: 0; font-size: 14px; font-style: italic; height: 35px;}
 .main {padding: 0;}
+
+.btnUpload {background: #2ecc71; color: #fff; padding: 10px 60px; display: block; margin-bottom: 10px;}
+.btnUpload:hover {color: #fff !important; opacity: 0.8; filter: alpha(opacity=80);}
+.btnUpload:focus {color: #fff;}
+.btnSendmail {background: #2ecc71; color: #fff; padding: 10px 60px; display: block; pointer-events: none; cursor: pointer;}
+.btnSendmail:hover {color: #fff !important; opacity: 0.8; filter: alpha(opacity=80);}
+.btnSendmail:focus {color: #fff;}
+.btnLogout:hover {color: #18bc9c;}
+.mg0 {margin: 0; padding: 0 15px;}
+.box-right a:hover {color: #18bc9c;}
+.box-right a.active {text-decoration: underline;}
+.panel-title p {margin-bottom: 0;}
+.panel-title a:hover {color: #18bc9c;}
+.fa-angle-right {display: block !important;}
+.btn-default {display: block;}
+.btnDownload:hover {color: #18bc9c;}
