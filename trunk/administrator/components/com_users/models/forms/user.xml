@@ -43,6 +43,17 @@
 			size="30"
 			validate="email"
 		/>
+		
+		<field name="orders" type="text"
+			description="Max orders per week"
+			label="Orders"
+			size="30"
+		/>
+		
+		<field name="lang" type="list" default="" label="Language group" description="">
+		  <option value="Dansk">Dansk</option>
+		  <option value="Engelsk">Engelsk</option>
+		</field>
 
 		<field
 			name="registerDate"
