@@ -10,6 +10,7 @@ if($layout == 'subscribe'){
         <br>
         Med venlig hilsen<br>
         Studiekorrektur</p>
+		<a class="btn btnHome" href="index.php">Til forside</a>
 	</div>
 </section>
 <?php }?>
@@ -20,6 +21,7 @@ if($layout == 'subscribe'){
 		<p>Kære bruger, <br>Tak for din henvendelse. Vi vil kontakte dig hurtigst muligt.<br><br>
         Med venlig hilsen<br>
         Studiekorrektur</p>
+		<a class="btn btnHome" href="index.php">Til forside</a>
 	</div>
 </section>
 <?php }?>

@@ -36,7 +36,7 @@ header .intro-text .skills{font-size:1.25em;font-weight:300}
 .navbar .navbar-nav{letter-spacing:1px; font-size: 16px;}
 .navbar .navbar-nav li a:focus{outline:0}
 .navbar-default,.navbar-inverse{border:0}
-section{padding: 40px 0}
+section{padding: 40px 0;}
 section h2{margin:0;font-size:3em}
 
 @media(max-width:767px) {
@@ -266,7 +266,7 @@ input[type='file'] {opacity: 0;}
 .mb0 {margin-bottom: 0;}
 .ml8p {margin-left: 8%;}
 .banner-fix {position: relative;}
-.banner-fix .caption {position: absolute; top: 35%; text-align: center; color: #fff; margin: 0 auto; width: 60%;}
+.banner-fix .caption {position: absolute; top: 35%; text-align: center; color: #fff; margin: 0 auto; width: 100%;}
 
 /*==========  Non-Mobile First Method  ==========*/
 
@@ -357,3 +357,23 @@ input[type='file'] {opacity: 0;}
 .fakefile {width: 205px !important;}
 input.fakefile {position: absolute; top:0; border: solid 1px #d7d7d7; padding: 5px 10px; width: 100% !important; background: #f8f8f8 url(../img/icon-folder.png) no-repeat 98% center; font-style: italic;}
 .input-upload {width: 100% !important; opacity:0.0; position: absolute; top:0; cursor: pointer; padding: 5px 10px; }
+
+.box2 {-webkit-border-radius: 5px 5px 5px 5px; border-radius: 5px 5px 5px 5px; width: 702px; margin-left: 19%;}
+.box2 h3 {color: #2ecc71;}
+.box2 input {height: 40px;}
+.close {font-size: 31px; position: absolute; top: 0; right: 5px; z-index: 99999;}
+.bor-b {border-bottom: 1px dotted #d7d7d7; margin-bottom: 10px;}
+.modal-dialog {margin-top: 100px;}
+.mt5 {margin-top: 5px;}
+.mt32 {margin-top: 32px;}
+.ml60 {margin-left: 60px;}
+
+.c2ecc71 {color: #2ecc71;}
+.order-item {border: 1px solid #d7d7d7; padding: 15px 0; margin-bottom: 15px;}
+.order-item a:hover {color: #2ecc71;}
+.cfd6740 {color: #fd6740;}
+.btnHome:hover {color: #fff !important;}
+.frm-login {border: 1px solid #2ecc71; padding: 30px 15px;}
+.frm-login h3 {color: #2ecc71;}
+.frm-login input {background-color: #f8f8f8; border: 1px solid #d7d7d7; border-radius: 0; font-size: 14px; font-style: italic; height: 35px;}
+.main {padding: 0;}

@@ -216,6 +216,7 @@ class VirtueMartControllerCart extends JControllerLegacy {
 			$mainframe->redirect('index.php', $msg, $type);
 		}
 		$cart = VirtueMartCart::getCart();
+		$cart->emptyCart();
 		if ($cart) {
 			$virtuemart_product_ids = vRequest::getInt('virtuemart_product_id');
 			$error = false;

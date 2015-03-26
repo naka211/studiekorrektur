@@ -7,11 +7,11 @@ $cart = VirtueMartCart::getCart();
 	<div class="container">
 		<div class="row">
 			<ul class="breadcrumb text-center">
-				<li><a>Bestilling</a></li>
-				<li><a>Indkøbskurv</a></li>
+				<li>Bestilling</li>
+				<li>Indkøbskurv</li>
 				<li class="active"><a>Upload</a></li>
-				<li><a>Betaling</a></li>
-				<li><a>Kvittering</a></li>
+				<li>Betaling</li>
+				<li>Kvittering</li>
 			</ul>
 		</div>
 		<form action="index.php" class="form-group" enctype="multipart/form-data" method="post">
@@ -25,7 +25,7 @@ $cart = VirtueMartCart::getCart();
 			<div class="col-md-6 pl50">
 				
 				<div class="row">
-					<label for=""><strong>Upload din opgave her</strong></label>
+					<label for=""><strong>Upload din opgave her i Word-format</strong></label>
 					<div class="eachRowUpload">
 						<input class="fakefile" type="text" placeholder="Der er ikke valgt nogen fil">
 						<input class="input-upload" type="file" name="danish_file">

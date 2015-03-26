@@ -301,7 +301,7 @@ class plgVMPaymentQuickpay extends vmPSPlugin
     * Parameters:
     *  None
     */
-    function plgVmOnPaymentNotification() {
+    function plgVmOnPaymentNotification() { 
         if (!class_exists('VirtueMartModelOrders')) {
             require (JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'orders.php');
         }
@@ -310,18 +310,19 @@ class plgVMPaymentQuickpay extends vmPSPlugin
 
         $order_number = $callbackData['ordernumber'];
 
+		$virtuemart_order_id = VirtueMartModelOrders::getOrderIdByOrderNumber($callbackData['ordernumber']);
         $virtuemart_paymentmethod_id = JRequest::getInt('pm', 0);
         if (!($method = $this->getVmPluginMethod($virtuemart_paymentmethod_id))) {
             return null; // Another method was selected, do nothing
         }
         // Remove prefix from ordernumber
-        $prefix = $method->prefix;
+        /*$prefix = $method->prefix;
         if ($prefix && preg_match('/' . $prefix . '/', $order_number)) {
             $order_number = str_replace($prefix, '', $order_number);
         }
         $order_number = intval($order_number);
 
-        $virtuemart_order_id = $order_number;
+        $virtuemart_order_id = $order_number;*/
 
         if (!$virtuemart_order_id) {
             return;
@@ -359,8 +360,7 @@ class plgVMPaymentQuickpay extends vmPSPlugin
         $return_context = $callbackDataGet['sessionid'];
         $response_fields['order_number'] = $order_number;
         $response_fields['virtuemart_order_id'] = $virtuemart_order_id;
-        $response_fields['virtuemart_paymentmethod_id'] = $payment->
-            virtuemart_paymentmethod_id;
+        $response_fields['virtuemart_paymentmethod_id'] = $payment->virtuemart_paymentmethod_id;
         $this->storePSPluginInternalData($response_fields, 'virtuemart_order_id', true);
 
         if ($callbackData['qpstat'] == "000") {
