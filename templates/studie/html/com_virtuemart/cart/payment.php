@@ -16,12 +16,12 @@ $msgtype = 'authorize';
 $merchant = '21218146';
 $language = 'da';
 $ordernumber = $order['details']['BT']->order_number;
-$amount = $order['details']['BT']->order_total * 100;
+$amount = round($order['details']['BT']->order_total,2)*100;
 
 $currency = 'DKK';
 $continueurl = $siteURL . 'index.php?option=com_virtuemart&view=vmplg&task=pluginResponseReceived&pm='.$pm.'&ordernumber='.$ordernumber.'&virtuemart_order_id='.$orderid;
 $cancelurl = $siteURL . 'index.php?option=com_virtuemart&view=vmplg&task=pluginUserPaymentCancel&on='.$ordernumber.'&pm='.$pm;
-$callbackurl = $siteURL . 'index.php?option=com_virtuemart&view=vmplg&task=pluginNotification&tmpl=component&sessionid='.$session->getId();
+$callbackurl = $siteURL . 'index.php?option=com_virtuemart&view=vmplg&task=pluginNotification&tmpl=component&pm='.$pm.'&sessionid='.$session->getId();
                 
 $autocapture = '0';
 //$cardtypelock = 'dankort, danske-dk, mastercard, mastercard-dk, american-express, american-express-dk, diners, diners-dk, edankort, fbg1886, jcb, mastercard-debet-dk, nordea-dk, visa, visa-dk, visa-electron, visa-electron-dk';
@@ -34,7 +34,7 @@ $md5check = md5($protocol . $msgtype . $merchant . $language . $ordernumber . $a
 
 <section class="main-content">
 	<div class="container">
-    Din ordre overfører til Quickpay.....
+    Vent et øjeblik.......
     </div>
     <form action="https://secure.quickpay.dk/form/" method="post" id="QuickpayForm">
     <input type="hidden" name="protocol" value="<?php echo $protocol ?>" />

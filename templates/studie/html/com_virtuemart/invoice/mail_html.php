@@ -21,6 +21,10 @@ defined('_JEXEC') or die('Restricted access');
             <tr>
                 <td style="border-bottom: none;">
                     <h2>Tak for din ordre </h2>
+					<p>Kære <?php echo $this->orderDetails["details"]["BT"]->first_name." ".$this->orderDetails["details"]["BT"]->last_name;?>,</p>
+                    <p>Tak for din ordre!<br>
+                    Vi har modtaget din bestilling og den uploadede fil.<br>
+                    Dit ordrenr. er <?php echo $this->orderDetails["details"]["BT"]->order_number;?> - du modtager også denne ordrebekræftelse på mail.</p>
                     <p>Sprog: <?php echo $this->orderDetails["details"]["BT"]->language;?></p>
                     <p>Leveringstidspunkt: <?php echo $this->orderDetails["details"]["BT"]->delivery_date;?></p>   
                 </td>

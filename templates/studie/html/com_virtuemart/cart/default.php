@@ -9,7 +9,7 @@ JHTML::_('behavior.formvalidator');
 			textfield.setCustomValidity('');
 			
 			if (!textfield.validity.valid) {
-			  textfield.setCustomValidity('Venligst udfylde dette felt');  
+			  textfield.setCustomValidity('Venligst udfyld dette felt');  
 			}
 		});
 		
@@ -27,11 +27,11 @@ JHTML::_('behavior.formvalidator');
 	<div class="container">
 		<div class="row">
 			<ul class="breadcrumb text-center">
-				<li><a>Bestilling</a></li>
+				<li>Bestilling</li>
 				<li class="active"><a>Indkøbskurv</a></li>
-				<li><a>Upload</a></li>
-				<li><a>Betaling</a></li>
-				<li><a>Kvittering</a></li>
+				<li>Upload</li>
+				<li>Betaling</li>
+				<li>Kvittering</li>
 			</ul>
 		</div>
 		<div class="row">
@@ -46,8 +46,8 @@ JHTML::_('behavior.formvalidator');
 							<tr>
 								<th width="45%">Produkt</th>
 								<th class="text-center" width="22%">Antal normalsider</th>
-								<th class="text-center" width="14%">Stk. Pris</th>
-								<th class="text-right" width="16%">Pris</th>
+								<th class="text-center" width="15%">Stk. Pris</th>
+								<th class="text-right" width="18%">Pris</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -55,7 +55,7 @@ JHTML::_('behavior.formvalidator');
 							<tr class="bor-b">
 								<td><?php echo $prow->product_name;?></td>
 								<td class="text-center"><?php if($prow->virtuemart_product_id != 5) echo $prow->quantity;?></td>
-								<td class="text-center"><?php if($prow->virtuemart_product_id != 5) echo $prow->prices['salesPrice'].' DKK';?></td>
+								<td class="text-center"><?php if($prow->virtuemart_product_id != 5) echo number_format($prow->prices['salesPrice'],2,',','.').' DKK';?></td>
 								<td class="text-right"><?php echo $this->currencyDisplay->createPriceDiv ('salesPrice', '', $prow->prices, FALSE, FALSE, $prow->quantity) ?></td>
 							</tr>
 							<?php }?>

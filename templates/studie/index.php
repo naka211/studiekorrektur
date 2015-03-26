@@ -51,6 +51,16 @@ JHtml::_('behavior.formvalidation');
     s.parentNode.insertBefore(wf, s);
   })(); 
 </script>
+
+<!--Start of Zopim Live Chat Script-->
+<script type="text/javascript">
+window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+_.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
+$.src='//v2.zopim.com/?2sKuBE0eITBTzA2hhy7UiEvnzRYwgmPU';z.t=+new Date;$.
+type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
+</script>
+<!--End of Zopim Live Chat Script-->
 </head>
 
 <body id="page-top" class="index">
@@ -64,6 +74,7 @@ JHtml::_('behavior.formvalidation');
 			<a class="navbar-brand" href="index.php"><img class="img-responsive" src="<?php echo $tmpl;?>img/logo.png" alt=""></a> </div>
 		
 		<!-- Collect the nav links, forms, and other content for toggling -->
+		<?php if(JRequest::getVar("Itemid") == 101){?>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="hidden"><a href="#page-top"></a></li>
@@ -75,6 +86,19 @@ JHtml::_('behavior.formvalidation');
 				<li><a class="btn btnBooknow" href="index.php?option=com_virtuemart&view=virtuemart&Itemid=2">Bestil nu</a></li>
 			</ul>
 		</div>
+		<?php } else {?>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="hidden"><a href="#page-top"></a></li>
+				<li class="page-scroll active"><a href="<?php echo JURI::base();?>#index">Forside</a></li>
+				<li class="page-scroll"><a href="<?php echo JURI::base();?>#info">Info</a></li>
+				<li class="page-scroll"><a href="<?php echo JURI::base();?>#price">Priser</a></li>
+				<li class="page-scroll"><a href="<?php echo JURI::base();?>#testimonials">Udtalelser</a></li>
+				<li class="page-scroll"><a href="<?php echo JURI::base();?>#contact">Kontakt</a></li>
+				<li><a class="btn btnBooknow" href="index.php?option=com_virtuemart&view=virtuemart&Itemid=2">Bestil nu</a></li>
+			</ul>
+		</div>
+		<?php }?>
 		<!-- /.navbar-collapse --> 
 	</div>
 	<!-- /.container-fluid --> 
@@ -151,22 +175,20 @@ JHtml::_('behavior.formvalidation');
 
 <script type="text/javascript">
     jQuery(document).ready(function(){
-        jQuery('input[type="radio"]').click(function(){
-            if(jQuery(this).attr("value")=="Dansk"){
-                jQuery(".en").hide();
-                jQuery(".dk").show();
-            }
-            if(jQuery(this).attr("value")=="Engelsk"){
-                jQuery(".dk").hide();
-                jQuery(".en").show();
-            }
-        });
-		
 		jQuery('.input-upload').change(function () {
         	jQuery(this).parent().find('.fakefile').val(jQuery(this).val());
 		});
+		
+		jQuery('input#subscribe_email').on('change invalid', function() {
+			var textfield = $(this).get(0);
+			textfield.setCustomValidity('');
+			
+			if (!textfield.validity.valid) {
+			  textfield.setCustomValidity('Venligst udfyld dette felt');  
+			}
+		});
 
-		jQuery('input#subscribe_email,input#email').on('change invalid', function() {
+		jQuery('input#email').on('change invalid', function() {
 			var textfield = $(this).get(0);
 			textfield.setCustomValidity('');
 			

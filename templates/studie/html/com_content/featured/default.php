@@ -2,16 +2,37 @@
 defined('_JEXEC') or die;
 $tmpl = JURI::base().'templates/studie/';
 ?>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+		formatMoney = function(num){
+			var p = num.toFixed(2).split(".");
+			return p[0].split("").reverse().reduce(function(acc, num, i, orig) {
+				return  num + (i && !(i % 3) ? "." : "") + acc;
+			}, "") + "," + p[1];
+		}
+		
+		openPopup = function(){
+			var wordNum = jQuery("#wordNum").val();
+			if(!wordNum){
+				alert("Indtast venligst det antal tegn inkl. mellemrum");
+				return false;
+			}
+			var pages = Math.ceil(parseFloat(wordNum)/2400);
+			jQuery(".pages").text(pages);
+			jQuery("#standard_price").text(formatMoney(pages*24.95)+' DKK');
+			jQuery("#premium_price").text(formatMoney(pages*29.95)+' DKK');
+			jQuery("#calBtn").click();
+		}
+    });
+</script>
 <section class="banner" id="index">
 	<div class="banner-fix"> <img class="img-responsive" src="<?php echo $tmpl;?>img/slider01.jpg" alt="">
-		<div class="container">
 			<div class="caption">
 				<!--<h3>Korrekturlæsning af opgaver og afhandlinger<br>
 					til markedets laveste priser!</h3>
 				<p class="mb30">- Hæv karakteren på din opgave uden at løfte en finger.</p>-->
 				{article 1}{introtext}{/article}
 			</div>
-		</div>
 	</div>
 </section>
 
@@ -19,7 +40,7 @@ $tmpl = JURI::base().'templates/studie/';
 <section class="hvordan">
 	<div class="container">
 		<div class="row mb20"> <img class="img-responsive hvordan-img" src="<?php echo $tmpl;?>img/info.png" alt=""> </div>
-		<div class="row text-center"> <a class="btn btnBooknow3" href="bestilling.php">Bestil nu</a> </div>
+		<div class="row text-center"> <a class="btn btnBooknow3" href="index.php?option=com_virtuemart&view=virtuemart&Itemid=2">Bestil nu</a> </div>
 	</div>
 </section>
 
@@ -118,6 +139,7 @@ $tmpl = JURI::base().'templates/studie/';
 		</div>
 		<ul class="pricing-list clearfix list-unstyled col-xs-offset-0 col-sm-offset-2">
 			<li class="pricing-table text-center no">
+				<a href="index.php?option=com_virtuemart&view=virtuemart&Itemid=2&p=standard" style="z-index:100;">
 				<div class="pricing-title bfd6740">
 					<h4 class="light">Standardkorrektur</h4>
 					<span class="caret-tomato"><i class="fa fa-caret-down fa-3x"></i></span> </div>
@@ -128,9 +150,11 @@ $tmpl = JURI::base().'templates/studie/';
 						pr. normalside á 2.400 tegn<br>
 						(inkl. mellemrum).</li>
 				</ul>
-				<div class="pricing-action"><a href="bestilling.php" class="btn btnBook4 bfd6740">Bestil nu</a></div>
+				<div class="pricing-action"><a href="index.php?option=com_virtuemart&view=virtuemart&Itemid=2&p=standard" class="btn btnBook4 bfd6740">Bestil nu</a></div>
+				</a>
 			</li>
 			<li class="pricing-table text-center focus">
+				<a href="index.php?option=com_virtuemart&view=virtuemart&Itemid=2&p=premium" style="z-index:100;">
 				<div class="pricing-title">
 					<h4 class="light">Premiumkorrektur</h4>
 					<span class="caret-green"><i class="fa fa-caret-down fa-3x"></i></span> </div>
@@ -147,12 +171,72 @@ $tmpl = JURI::base().'templates/studie/';
 							(inkl. mellemrum).</p>
 					</li>
 				</ul>
-				<div class="pricing-action"><a href="bestilling.php" class="btn btnBook4">Bestil nu</a></div>
+				<div class="pricing-action"><a href="index.php?option=com_virtuemart&view=virtuemart&Itemid=2&p=premium" class="btn btnBook4">Bestil nu</a></div>
+				</a>
 			</li>
 		</ul>
 		<div class="row">
-			<div class="text-center col-sm-12 col-lg-12">
-				<h3 class="mb0">Beregn din pris:</h3>
+			<div class="text-left box2 clearfix">
+				<div class="row">
+					<div class="col-md-12">
+						<h3>Beregn din pris: </h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<p><strong>Indtast antal tegn inkl. mellemrum</strong></p>
+						<input type="text" class="form-control input" id="wordNum">
+					</div>
+					<div class="col-md-6 pad0">
+						<a style="display:none;" id="calBtn" href="#myModal" data-toggle="modal">BEREGN PRIS</a>
+						<a class="btn btnBooknow3 mt32" onClick="openPopup();">BEREGN PRIS</a>
+					</div>
+				</div>
+				
+				<div id="myModal" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<div class="modal-body">
+								<div class="row bor-b">
+									<div class="col-md-4">
+										<p>Standardkorrektur</p>
+									</div>
+									<div class="col-md-4">
+										<form action="" class="form-group">
+											<label for=""><strong>Antal normalsider:</strong></label>
+											<p class="ml60 pages"></p>
+										</form>
+									</div>
+									<div class="col-md-4">
+										 <form action="" class="form-group">
+											<label for=""><strong>Total pris:</strong></label>
+											<p id="standard_price">24.351,20 DKK</p>
+										</form>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-4">
+										<p>Premiumkorrektur</p>
+									</div>
+									<div class="col-md-4">
+										<form action="" class="form-group">
+											<label for=""><strong>Antal normalsider:</strong></label>
+											<p class="ml60 pages"></p>
+										</form>
+									</div>
+									<div class="col-md-4">
+										 <form action="" class="form-group">
+											<label for=""><strong>Total pris:</strong></label>
+											<p id="premium_price">30.351,20 DKK</p>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -222,7 +306,7 @@ $tmpl = JURI::base().'templates/studie/';
 						<div class="col-md-12 form-group">
 							<?php
 							  require_once('recaptchalib.php');
-							  $publickey = "6LeznvkSAAAAAFtnSP0wmbHyPrp643iRsMuY9_Zw"; // you got this from the signup page
+							  $publickey = "6LehjgMTAAAAANt2O-hrqTtVEd9q_3n-ZwZ7nfWX"; // you got this from the signup page
 							  echo recaptcha_get_html($publickey);
 							?>
 						</div>

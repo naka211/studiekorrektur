@@ -45,7 +45,7 @@ class ContactControllerContact extends JControllerForm
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 		
 		require_once('recaptchalib.php');
-        $privatekey = "6LeznvkSAAAAAMeHLgMtr6pMZQMmHjg7R2zuo2a-";
+        $privatekey = "6LehjgMTAAAAAGMWMmmTgTEZn6md1B1spgEKXLD-";
         $resp = recaptcha_check_answer ($privatekey,
                                     $_SERVER["REMOTE_ADDR"],
                                     $_POST["recaptcha_challenge_field"],

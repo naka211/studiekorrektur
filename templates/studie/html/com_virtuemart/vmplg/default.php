@@ -12,14 +12,14 @@ if(!class_exists('VmModel'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'vmmo
 $orderModel=VmModel::getModel('orders');
 $order = $orderModel->getOrder($orderid);
 
-if($order['details']['BT']->order_status != "C"){
+/*if($order['details']['BT']->order_status != "C"){
 	if (!class_exists('VirtueMartModelOrders')) require( JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'orders.php' );
 	$modelOrder = VmModel::getModel('orders');	
 	$order1 = array();		
 	$order1['order_status'] = "C";
 	$order1['customer_notified'] =1;
 	$modelOrder->updateStatusForOneOrder($orderid, $order1, true);
-}
+}*/
 
 $query = "SELECT * FROM #__virtuemart_order_userinfos WHERE address_type = 'BT' AND virtuemart_order_id = ".$orderid;
 $db->setQuery($query);
@@ -33,10 +33,10 @@ $cart->emptyCart();
 	<div class="container">
 		<div class="row">
 			<ul class="breadcrumb text-center">
-				<li><a>Bestilling</a></li>
-				<li><a>Indkøbskurv</a></li>
-				<li><a>Upload</a></li>
-				<li><a>Betaling</a></li>
+				<li>Bestilling</li>
+				<li>Indkøbskurv</li>
+				<li>Upload</li>
+				<li>Betaling</li>
 				<li class="active"><a>Kvittering</a></li>
 			</ul>
 		</div>
@@ -46,7 +46,7 @@ $cart->emptyCart();
 				<p class="mb20">Kære <?php echo $BT_info->first_name." ".$BT_info->last_name;?>,</p>
 				<p>Tak for din ordre!<br>
 				Vi har modtaget din bestilling og den uploadede fil.<br>
-				Dit ordrenr. er 275 - du modtager også denne ordrebekræftelse på mail.</p>
+				Dit ordrenr. er <?php echo $order["details"]["BT"]->order_number;?> - du modtager også denne ordrebekræftelse på mail.</p>
 				<p>Sprog: <?php echo $BT_info->language;?></p>
 				<p>Leveringstidspunkt: <?php echo $BT_info->delivery_date;?></p>
 				<table class="table mt20">

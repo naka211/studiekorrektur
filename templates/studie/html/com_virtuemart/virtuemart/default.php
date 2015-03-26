@@ -3,6 +3,40 @@ defined('_JEXEC') or die('Restricted access');
 ?>
 <script type="text/javascript">
     jQuery(document).ready(function(){
+		<?php if(JRequest::getVar("p") == "standard"){?>
+			jQuery("#virtuemart_product_id").val(1);
+			jQuery("#price").val(24.95);
+			
+			jQuery("#premium_en").addClass('btnUnChoose').text('Vælg');
+			jQuery("#standard_en").addClass('btnChoose').text('Valgt');
+			
+			jQuery("#premium_da").addClass('btnUnChoose').text('Vælg');
+			jQuery("#standard_da").addClass('btnChoose').text('Valgt');
+		<?php } else {?>
+			jQuery("#virtuemart_product_id").val(2);
+			jQuery("#price").val(29.95);
+			
+			jQuery("#standard_en").addClass('btnUnChoose').text('Vælg');
+			jQuery("#premium_en").addClass('btnChoose').text('Valgt');
+			
+			jQuery("#standard_da").addClass('btnUnChoose').text('Vælg');
+			jQuery("#premium_da").addClass('btnChoose').text('Valgt');
+		<?php }?>
+		 jQuery('input[type="radio"]').click(function(){
+            if(jQuery(this).attr("value")=="Dansk"){
+                jQuery(".en").hide();
+                jQuery(".dk").show();
+            }
+            if(jQuery(this).attr("value")=="Engelsk"){
+                jQuery(".dk").hide();
+                jQuery(".en").show();
+				
+				if(jQuery("#abstract").hasClass('btnCheck')){
+					jQuery("#abstract").click();
+				}
+            }
+        });
+		
 		formatMoney = function(num){
 			var p = num.toFixed(2).split(".");
 			return p[0].split("").reverse().reduce(function(acc, num, i, orig) {
@@ -120,7 +154,7 @@ defined('_JEXEC') or die('Restricted access');
 		
 		setCheckAbstract = function(e, id){
 			if(e.hasClass('btnUnCheck')){
-				jQuery('#'+id).removeClass('btnUnCheck').addClass('btnCheck').text('Valgt');
+				jQuery('#'+id).removeClass('btnUnCheck').addClass('btnCheck').text('Tilvalgt');
 				jQuery("#abstract_flag").val("1");
 				jQuery("#virtuemart_product_id1").val("5");
 				jQuery("#quantity1").val("1");
@@ -129,7 +163,7 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery("#totalPrice").val(parseFloat(jQuery("#totalPrice").val()) + 99);
 				setTotalPriceTxt();
 			} else {
-				jQuery('#'+id).removeClass('btnCheck').addClass('btnUnCheck').text('Vælg');
+				jQuery('#'+id).removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
 				jQuery("#abstract_flag").val("0");
 				jQuery("#virtuemart_product_id1").val("0");
 				jQuery("#quantity1").val("0");
@@ -141,7 +175,8 @@ defined('_JEXEC') or die('Restricted access');
 		}
 		
 		calPrice = function(){
-			var words = jQuery("#words").val();
+			var words = parseFloat(jQuery("#words").val());
+			if(!words) words = 0;
 			var pages = Math.ceil(parseFloat(words)/2400);
 			var price = jQuery("#price").val();
 			
@@ -193,11 +228,11 @@ defined('_JEXEC') or die('Restricted access');
 	<div class="container">
 		<div class="row">
 			<ul class="breadcrumb text-center">
-				<li class="active"><a href="bestilling.php">Bestilling</a></li>
-				<li><a href="cart.php">Indkøbskurv</a></li>
-				<li><a href="upload.php">Upload</a></li>
-				<li><a href="payment.php">Betaling</a></li>
-				<li><a href="receipt.php">Kvittering</a></li>
+				<li class="active"><a>Bestilling</a></li>
+				<li>Indkøbskurv</li>
+				<li>Upload</li>
+				<li>Betaling</li>
+				<li>Kvittering</li>
 			</ul>
 		</div>
 		<div class="row en">
@@ -210,7 +245,7 @@ defined('_JEXEC') or die('Restricted access');
 						<p class="text-uppercase price3">Pris: 24,95 DKK</p>
 						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
 					</div>
-					<a class="btn btnUnChoose" onClick="setProduct(this, 1)" id="standard_en">Vælg</a>
+					<a class="btn" onClick="setProduct(this, 1)" id="standard_en">Vælg</a>
 				</div>
 			</div>
 			<div class="col-md-4 padr0">
@@ -223,7 +258,7 @@ defined('_JEXEC') or die('Restricted access');
 						<p class="text-uppercase price3">Pris: 29,95 DKK</p>
 						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
 					</div>
-					<a class="btn btnChoose" onClick="setProduct(this, 2)" id="premium_en">Valgt</a>
+					<a class="btn" onClick="setProduct(this, 2)" id="premium_en">Valgt</a>
 				</div>
 			</div>
 			<div class="col-md-4 padr0">
@@ -250,7 +285,7 @@ defined('_JEXEC') or die('Restricted access');
 						<p class="text-uppercase price3">Pris: 24,95 DKK</p>
 						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
 					</div>
-					<a class="btn btnChoose2 btnUnChoose" onClick="setProduct(this, 1)" id="standard_da">Vælg</a>
+					<a class="btn btnChoose2" onClick="setProduct(this, 1)" id="standard_da">Vælg</a>
 				</div>
 			</div>
 			<div class="col-md-3 padr0">
@@ -263,7 +298,7 @@ defined('_JEXEC') or die('Restricted access');
 						<p class="text-uppercase price3">Pris: 29,95 DKK</p>
 						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
 					</div>
-					<a class="btn btnChoose2 btnChoose" onClick="setProduct(this, 2)" id="premium_da">Valgt</a>
+					<a class="btn btnChoose2" onClick="setProduct(this, 2)" id="premium_da">Valgt</a>
 				</div>
 			</div>
 			<div class="col-md-3 padr0">
@@ -286,7 +321,7 @@ defined('_JEXEC') or die('Restricted access');
 					<div class="w-price">
 						<p class="text-uppercase price3">Pris: 99 DKK</p>
 					</div>
-					<a class="btn btnChoose2 btnUnCheck" onClick="setCheckAbstract(this, 'abstract')" id="abstract">Vælg</a>
+					<a class="btn btnChoose2 btnUnCheck" onClick="setCheckAbstract(this, 'abstract')" id="abstract">Tilvælg</a>
 				</div>
 			</div>
 		</div>
@@ -305,7 +340,7 @@ defined('_JEXEC') or die('Restricted access');
 			</div>
 			<div class="col-md-3">
 				<label for=""><strong>Indtast antal tegn inkl. mellemrum</strong></label>
-				<input type="text" class="form-control input" id="words" onBlur="calPrice();" value="0">
+				<input type="text" class="form-control input" id="words" onKeyUp="calPrice();" value="0">
 			</div>
 			<div class="col-md-2" style="text-align:center;">
 				<label for=""><strong>Antal normalsider:</strong></label>
