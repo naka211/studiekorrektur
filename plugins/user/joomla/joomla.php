@@ -118,7 +118,8 @@ class PlgUserJoomla extends JPlugin
 						'PLG_USER_JOOMLA_NEW_USER_EMAIL_BODY',
 						$user['name'],
 						$this->app->get('sitename'),
-						JUri::root(),
+						//JUri::root(),
+						JURI::root()."index.php?option=com_users&view=login",
 						$user['username'],
 						$user['password_clear']
 					);

@@ -219,6 +219,7 @@ class JUser extends JObject
 	public $orders = NULL;
 	public $orders_received = NULL;
 	public $lang = NULL;
+	public $ordering = NULL;
 
 	/**
 	 * Constructor activating the default information of the language

@@ -46,7 +46,7 @@
 		
 		<field name="orders" type="text"
 			description="Max orders per week"
-			label="Orders"
+			label="Max orders per week"
 			size="30"
 		/>
 		
@@ -54,6 +54,12 @@
 		  <option value="Dansk">Dansk</option>
 		  <option value="Engelsk">Engelsk</option>
 		</field>
+		
+		<field name="ordering" type="text"
+			description="Ordering"
+			label="Ordering"
+			size="30"
+		/>
 
 		<field
 			name="registerDate"

@@ -375,6 +375,87 @@ class VirtuemartControllerOrders extends VmController {
 		$msg = "File(s) is uploaded!!";
 		$this->setRedirect($editLink, $msg);
 	}
+	
+	function changeUser(){
+		$user_id = JRequest::getVar("user_id");
+		$curr_user = JRequest::getVar("curr_user_id");
+		if($user_id != $curr_user){
+			$app = JFactory::getApplication();
+			$mailfrom = $app->get('mailfrom');
+			$fromname = $app->get('fromname');
+			$sitename = $app->get('sitename');
+			
+			$user = JFactory::getUser($user_id);
+			
+			$orderid = JRequest::getVar('orderId');
+			$orderModel=VmModel::getModel('orders');
+			$order = $orderModel->getOrder($orderid);
+			
+			$html = '<html>
+    <head>
+	<style>
+        body {font-family: arial; font-size: 14px;}
+        .wrapper {width: 800px; margin: 0 auto;}
+        table {text-align: left; width: 100%; border-bottom: none;}
+        table thead {background-color: #323232; color: #fff;}
+        table thead th {padding: 10px 5px; text-align: left;}
+        table tr td {padding: 10px 5px; border-bottom: 1px solid #e5e5e5;}
+    </style>
+
+    </head>
+
+    <body>
+	<div class="wrapper">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td style="border-bottom: none;">
+                    <p>Dit ordrenr. er '.$order["details"]["BT"]->order_number.'</p>
+                    <p>Sprog: '.$order["details"]["BT"]->language.'</p>
+                    <p>Leveringstidspunkt: '.$order["details"]["BT"]->delivery_date.'</p>   
+                </td>
+            </tr>
+        </table>
+        <table cellpadding="0" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Produkt</th>
+                    <th class="text-center">Antal normalsider</th>
+                </tr>
+            </thead>
+            <tbody>';
+				foreach($order["items"] as $item){
+					if($item->virtuemart_product_id != 5){
+						$quantity = $item->product_quantity;
+					} else {
+						$quantity = '';
+					}
+                $html.= '<tr>
+                    <td>'. $item->order_item_name.'</td>
+					<td class="text-center">'.$quantity.'</td>
+                </tr>';
+				}
+				$html .= '
+            </tbody>
+        </table>
+    </div>
+    </body>
+</html>';
+			
+			$mail = JFactory::getMailer();
+			$mail->addRecipient($user->email);
+			$mail->setSender(array($mailfrom, $fromname));
+			$mail->setSubject('Bekræftet ordre '.$order['details']['BT']->order_number);
+			$mail->isHTML(true);
+			$mail->setBody($html);
+			$sent = $mail->Send();
+		}
+		
+		
+		$orderId = vRequest::getInt('orderId', '');
+		$editLink = 'index.php?option=com_virtuemart&view=orders&task=edit&virtuemart_order_id=' . $orderId;
+		$msg = "User is changed!!";
+		$this->setRedirect($editLink, $msg);
+	}
 	//T.Trung end
 }
 // pure php no closing tag
