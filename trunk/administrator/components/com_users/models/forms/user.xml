@@ -50,6 +50,15 @@
 			size="30"
 		/>
 		
+		<field name="orders_received"
+			type="text"
+			class="readonly"
+			readonly="true"
+			description="Received orders"
+			label="Received orders"
+			size="30"
+		/>
+		
 		<field name="lang" type="list" default="" label="Language group" description="">
 		  <option value="Dansk">Dansk</option>
 		  <option value="Engelsk">Engelsk</option>

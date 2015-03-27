@@ -1,6 +1,7 @@
 <?php 
 defined ('_JEXEC') or die('Restricted access');
 $user = JFactory::getUser();
+$db = JFactory::getDBO();
 //print_r($user);exit;
 if($user->guest){
 	echo "<script>location.href='".JURI::base()."index.php?option=com_users&view=login'</script>";
@@ -13,6 +14,13 @@ if(!JRequest::getVar("status")){
 } else {
 	$link = JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=orders&status=0');
 	$menuTxt = '<a href="'.$link.'">Igangværende</a> - <a class="active">Færdig</a>';
+}
+
+$query = "SELECT virtuemart_order_id FROM #__virtuemart_order_userinfos WHERE finish IS NULL AND freelance_id = ".$user->id." ORDER BY virtuemart_order_id DESC";
+$db->setQuery($query);
+$orders_arr = $db->loadObjectList();
+if($orders_arr){
+	$orderModel=VmModel::getModel('orders');
 }
 ?>
 <script type="text/javascript">
@@ -39,19 +47,23 @@ if(!JRequest::getVar("status")){
 
 		<div class="row">
 			<div class="panel-group" id="accordion">
+			
+				<?php foreach($orders_arr as $orderid){
+					$order = $orderModel->getOrder($orderid->virtuemart_order_id);
+				?>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
 								<div class="row">
 									<div class="col-md-3">
-										<p>Dit ordrenr. er 275</p>
+										<p>Dit ordrenr. er <?php echo $order['details']['BT']->order_number;?></p>
 									</div>
 									<div class="col-md-3">
-										<p>Sprog: Dansk</p>
+										<p>Sprog: <?php echo $order['details']['BT']->language;?></p>
 									</div>
 									<div class="col-md-4">
-										<p>Leveringstidspunkt: Fre. d. 27. feb. 2015 kl. 14:00</p>
+										<p>Leveringstidspunkt: <?php echo $order['details']['BT']->delivery_date;?></p>
 									</div>
 									<div class="col-md-2 text-right">
 										<p><i class="fa fa-angle-right fa-lg"></i></p>
@@ -67,40 +79,23 @@ if(!JRequest::getVar("status")){
 									<tr>
 										<th>Produkt</th>
 										<th class="text-center">Antal normalsider</th>
-										<th class="text-center">Stk. Pris</th>
-										<th class="text-right">Pris</th>
 									</tr>
 								</thead>
 								<tbody>
+									<?php foreach($order['items'] as $item){?>
 									<tr>
-										<td>Premiumkorrektur</td>
-										<td class="text-center">12</td>
-										<td class="text-center">29,95 DKK</td>
-										<td class="text-right">359,40 DKK</td>
+										<td><?php echo $item->order_item_name;?></td>
+										<td class="text-center"><?php if($item->virtuemart_product_id != 5)echo $item->product_quantity;?></td>
 									</tr>
-									<tr class="bor-b">
-										<td colspan="4">Ekspreslevering (+50%)</td>
-									</tr>
-									<tr class="bor-b">
-										<td>Engelsk abstract</td>
-										<td class="text-center"></td>
-										<td class="text-center"></td>
-										<td class="text-right">99 DKK</td>
-									</tr>
-									<tr class="bor-b0">
-										<td colspan="2"><strong>Rabat</strong></td>
-										<td colspan="2" class="text-right"><strong>- 15,20 DKK</strong></td>
-									</tr>
-									<tr class="bor-b">
-										<td colspan="2"><strong>Pris i alt (inkl. moms):</strong></td>
-										<td colspan="2" class="text-right"><strong>359,40 DKK</strong></td>
-									</tr>
+									<?php }?>
 								</tbody>
 							</table>
 							<div class="row">
 								<div class="col-md-8">
-									<p>Dansk: File navn: <a class="btnDownload" href="#">Download</a></p>
-									<p>English file: File navn:   <a class="btnDownload" href="#">Download</a></p>
+									<p>Word file: <?php echo $order['details']['BT']->danish_file;?> <a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->danish_file;?>">Download</a></p>
+									<?php if($order['details']['BT']->english_file){?>
+									<p>Abstract file: <?php echo $order['details']['BT']->english_file;?> <a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->english_file;?>">Download</a></p>
+									<?php }?>
 								</div>
 								<div class="col-md-4">
 									<p>File navn: <span>Premiumkorrektur</span></p>
@@ -114,6 +109,9 @@ if(!JRequest::getVar("status")){
 						</div>
 					</div>
 				</div>
+				<?php }?>
+				
+				
 			</div>
 		</div>
 	</div>
