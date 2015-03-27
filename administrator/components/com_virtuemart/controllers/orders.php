@@ -380,14 +380,22 @@ class VirtuemartControllerOrders extends VmController {
 		$user_id = JRequest::getVar("user_id");
 		$curr_user = JRequest::getVar("curr_user_id");
 		if($user_id != $curr_user){
+			$db = JFactory::getDBO();
 			$app = JFactory::getApplication();
 			$mailfrom = $app->get('mailfrom');
 			$fromname = $app->get('fromname');
 			$sitename = $app->get('sitename');
 			
 			$user = JFactory::getUser($user_id);
-			
 			$orderid = JRequest::getVar('orderId');
+			
+			$db->setQuery("UPDATE #__users SET orders_received = orders_received-1 WHERE id=".$curr_user);
+			$db->query();
+			$db->setQuery("UPDATE #__users SET orders_received = orders_received+1 WHERE id=".$user_id);
+			$db->query();
+			$db->setQuery("UPDATE #__virtuemart_order_userinfos SET freelance_id = ".$user_id." WHERE virtuemart_order_id=".$orderid);
+			$db->query();
+			
 			$orderModel=VmModel::getModel('orders');
 			$order = $orderModel->getOrder($orderid);
 			
