@@ -416,6 +416,30 @@ vmJsApi::addJScript( 'orderedit',"
 	<input type="hidden" name="task" value="uploadFile">
 	<input type="hidden" name="orderId" value="<?php echo JRequest::getVar("virtuemart_order_id");?>" />
 </form>
+<br>
+<?php 
+$db = JFactory::getDBO();
+$q = "SELECT u.id, u.name FROM #__users u INNER JOIN #__user_usergroup_map um ON u.id = um.user_id WHERE u.block = 0 AND um.group_id = 2";
+$db->setQuery($q);
+$users = $db->loadObjectList();
+
+$cur_user = $this->userfields['fields']['freelance_id']['value'];
+?>
+<form action="index.php" method="post">
+	<span style="display:block;">User</span> 
+	<select name="user_id">
+		<?php foreach($users as $user){?>
+		<option value="<?php echo $user->id;?>" <?php if($user->id == $cur_user) echo 'selected';?>><?php echo $user->name;?></option>
+		<?php }?>
+	</select>
+	<br />
+	<input type="submit" value="Change user" name="submit" />
+	<input type="hidden" name="option" value="com_virtuemart">
+	<input type="hidden" name="view" value="orders">
+	<input type="hidden" name="task" value="changeUser">
+	<input type="hidden" name="curr_user_id" value="<?php echo $cur_user;?>" />
+	<input type="hidden" name="orderId" value="<?php echo JRequest::getVar("virtuemart_order_id");?>" />
+</form>
 <table width="100%">
 	<tr>
 		<td colspan="2">
