@@ -2,6 +2,7 @@
 defined ('_JEXEC') or die('Restricted access');
 $user = JFactory::getUser();
 $db = JFactory::getDBO();
+JFactory::getDocument()->setTitle('Færdig');
 //print_r($user);exit;
 if($user->guest){
 	echo "<script>location.href='".JURI::base()."index.php?option=com_users&view=login'</script>";
@@ -10,7 +11,7 @@ if($user->guest){
 
 $pending_link = JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=pending');
 
-$query = "SELECT virtuemart_order_id FROM #__virtuemart_order_userinfos WHERE finish = 1 AND freelance_id = ".$user->id." ORDER BY virtuemart_order_id DESC";
+$query = "SELECT virtuemart_order_id FROM #__virtuemart_order_userinfos WHERE finish = 1 AND freelance_id = ".$user->id." ORDER BY virtuemart_order_id DESC LIMIT 0, 50";
 $db->setQuery($query);
 $orders_arr = $db->loadObjectList();
 if($orders_arr){
@@ -38,7 +39,9 @@ if($orders_arr){
 				</div>
 			</div>
 		</div>
-		<?php if($orders_arr){?>
+		<?php if($orders_arr){
+			$i=1;
+		?>
 		<div class="row">
 			<div class="panel-group" id="accordion">
 				<?php foreach($orders_arr as $orderid){
@@ -47,7 +50,7 @@ if($orders_arr){
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $i;?>">
 								<div class="row">
 									<div class="col-md-3">
 										<p>Dit ordrenr. er <?php echo $order['details']['BT']->order_number;?></p>
@@ -65,7 +68,7 @@ if($orders_arr){
 							</a>
 						</h4>
 					</div>
-					<div id="collapseOne" class="panel-collapse collapse">
+					<div id="collapse<?php echo $i;?>" class="panel-collapse collapse">
 						<div class="panel-body">
 							<table class="table mt20">
 								<thead>
@@ -86,7 +89,7 @@ if($orders_arr){
 						</div>
 					</div>
 				</div>
-				<?php }?>
+				<?php $i++;}?>
 			</div>
 		</div>
 		<?php } else {?>

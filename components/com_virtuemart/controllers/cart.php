@@ -534,6 +534,72 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$mainframe->redirect(JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=payment&virtuemart_order_id='.$cart->virtuemart_order_id));
 	}
 	
+	function uploadFile(){
+		$order_id = JRequest::getVar('order_id');
+		$daFile = $_FILES["danish_file"];
+		$enFile = $_FILES["english_file"];
+		
+		$time = time();
+		
+		$daFileName = $time."_".$daFile["name"];
+		$daFileDes = JPATH_BASE."/images/edited_file/";
+		move_uploaded_file($daFile["tmp_name"], $daFileDes.$daFileName);
+		
+		if($enFile){
+			$enFileName = $time."_".$enFile["name"];
+			$enFileDes = JPATH_BASE."/images/edited_file/";
+			move_uploaded_file($enFile["tmp_name"], $enFileDes.$enFileName);
+		}	
+		
+		$db = JFactory::getDBO();
+		$db->setQuery("UPDATE #__virtuemart_order_userinfos SET english_edited_file='".$enFileName."',  danish_edited_file='".$daFileName."' WHERE virtuemart_order_id=".$order_id." AND address_type = 'BT'");
+		$db->query();
+		
+		$mainframe = JFactory::getApplication();
+		$mainframe->redirect(JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=pending'));
+	}
+	
+	function sendEmail(){
+		$order_id = JRequest::getVar('order_id');
+		
+		$orderModel=VmModel::getModel('orders');
+		$order = $orderModel->getOrder($order_id);
+		
+		$db = JFactory::getDBO();
+		$db->setQuery("UPDATE #__virtuemart_order_userinfos SET finish = 1 WHERE virtuemart_order_id=".$order_id." AND address_type = 'BT'");
+		$db->query();
+		
+		
+		$html = '<html>
+    <body>
+	Dear '.$order['details']['BT']->first_name.' '.$order['details']['BT']->last_name.'<br><br>
+	This is your file(s) after it is edited. Please click below link to dowload:<br>
+	- Word fil: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->danish_edited_file.'">'.$order['details']['BT']->danish_edited_file.'</a>';
+		if(count($order['items'])>1){
+			$html .= '<br>- Abstract fil: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->english_edited_file.'">'.$order['details']['BT']->english_edited_file.'</a>';
+		}
+    $html .= '<br><br>
+			Med venlig hilsen<br>
+        Studiekorrektur
+	</body>
+</html>';
+		
+		$app = JFactory::getApplication();
+		$mailfrom = $app->get('mailfrom');
+		$fromname = $app->get('fromname');
+			
+		$mail = JFactory::getMailer();
+		$mail->addRecipient($order['details']['BT']->email);
+		$mail->setSender(array($mailfrom, $fromname));
+		$mail->setSubject('Redigeret fil fra Studiekorrektur');
+		$mail->isHTML(true);
+		$mail->setBody($html);
+		$sent = $mail->Send();
+			
+		$mainframe = JFactory::getApplication();
+		$mainframe->redirect(JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=pending'));
+	}
+	
 	//T.Trung end
 }
 

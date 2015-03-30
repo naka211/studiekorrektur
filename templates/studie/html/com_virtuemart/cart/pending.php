@@ -3,6 +3,7 @@ defined ('_JEXEC') or die('Restricted access');
 JHtml::_('behavior.formvalidation');
 $user = JFactory::getUser();
 $db = JFactory::getDBO();
+JFactory::getDocument()->setTitle('Igangværende');
 //print_r($user);exit;
 if($user->guest){
 	echo "<script>location.href='".JURI::base()."index.php?option=com_users&view=login'</script>";
@@ -55,12 +56,13 @@ input[type='file'] {opacity:1;}
 		<div class="row">
 			<div class="panel-group" id="accordion">
 				<?php foreach($orders_arr as $orderid){
-					$order = $orderModel->getOrder($orderid->virtuemart_order_id);
+					$order = $orderModel->getOrder($orderid->virtuemart_order_id);//print_r($order);exit;
+					$itemNum = count($order['items']);
 				?>
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+							<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $order['details']['BT']->virtuemart_order_id;?>">
 								<div class="row">
 									<div class="col-md-3">
 										<p>Dit ordrenr. er <?php echo $order['details']['BT']->order_number;?></p>
@@ -78,7 +80,7 @@ input[type='file'] {opacity:1;}
 							</a>
 						</h4>
 					</div>
-					<div id="collapseOne" class="panel-collapse collapse">
+					<div id="collapse<?php echo $order['details']['BT']->virtuemart_order_id;?>" class="panel-collapse collapse">
 						<div class="panel-body">
 							<table class="table mt20">
 								<thead>
@@ -97,26 +99,41 @@ input[type='file'] {opacity:1;}
 								</tbody>
 							</table>
 							<div class="row">
-								<div class="col-md-8">
+								<div class="col-md-6">
 									<p>Word file: <?php echo $order['details']['BT']->danish_file;?> <a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->danish_file;?>">Download</a></p>
 									<?php if($order['details']['BT']->english_file){?>
 									<p>Abstract file: <?php echo $order['details']['BT']->english_file;?> <a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->english_file;?>">Download</a></p>
 									<?php }?>
 								</div>
-								<div class="col-md-4">
+								<div class="col-md-6">
 									<form action="index.php" method="post" enctype="multipart/form-data" class="form-validate">
-									<p>Edited word fil: <span>Premiumkorrektur</span></p>
-									<input class="mb10 required" type="file" name="word_file">
-									<p>Edited abstract fil: <span>Premiumkorrektur</span></p>
-									<input  class="mb10 required" type="file" name="abstract_file">
+									<p>Edited word fil: <span><?php echo $order['details']['BT']->danish_edited_file;?></span></p>
+									<input class="mb10 required" type="file" name="danish_file">
+									<?php if($itemNum>1){?>
+									<p>Edited abstract fil: <span><?php echo $order['details']['BT']->english_edited_file;?></span></p>
+									<input  class="mb10 required" type="file" name="english_file">
+									<?php }?>
 									<!--<a class="btn btnUpload" href="#">Upload</a>-->
 									<button class="btn btnUpload validate">Upload</button>
 									<input type="hidden" name="option" value="com_virtuemart">
-									<input type="hidden" name="view" value="orders">
+									<input type="hidden" name="view" value="cart">
 									<input type="hidden" name="task" value="uploadFile">
-									<input type="hidden" name="orderId" value="<?php echo JRequest::getVar("virtuemart_order_id");?>" />
+									<input type="hidden" name="order_id" value="<?php echo $order['details']['BT']->virtuemart_order_id;?>" />
 									</form>
+									<?php 
+										$disable = true;
+										if($itemNum=1 && $order['details']['BT']->danish_edited_file){
+											$disable = false;
+										}
+										if($itemNum>1 && $order['details']['BT']->danish_edited_file && $order['details']['BT']->english_edited_file){
+											$disable = false;
+										}
+										if($disable){
+									?>
 									<a class="btn btn-default disabled" href="#">Send færdig opgave til kunden</a>
+									<?php } else {?>
+									<a class="btn btn-default" href="index.php?option=com_virtuemart&view=cart&task=sendEmail&order_id=<?php echo $order['details']['BT']->virtuemart_order_id;?>">Send færdig opgave til kunden</a>
+									<?php }?>
 								</div>
 							</div>
 						</div>
