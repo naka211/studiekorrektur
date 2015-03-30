@@ -1,5 +1,6 @@
 <?php 
 defined ('_JEXEC') or die('Restricted access');
+JHtml::_('behavior.formvalidation');
 $user = JFactory::getUser();
 $db = JFactory::getDBO();
 //print_r($user);exit;
@@ -8,13 +9,7 @@ if($user->guest){
 	exit;
 }
 
-if(!JRequest::getVar("status")){
-	$link = JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=orders&status=1');
-	$menuTxt = '<a class="active">Igangværende</a> - <a href="'.$link.'">Færdig</a>';
-} else {
-	$link = JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=orders&status=0');
-	$menuTxt = '<a href="'.$link.'">Igangværende</a> - <a class="active">Færdig</a>';
-}
+$finish_link = JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=finish');
 
 $query = "SELECT virtuemart_order_id FROM #__virtuemart_order_userinfos WHERE finish IS NULL AND freelance_id = ".$user->id." ORDER BY virtuemart_order_id DESC";
 $db->setQuery($query);
@@ -27,8 +22,20 @@ if($orders_arr){
     jQuery(document).ready(function(){
 		jQuery("nav.navbar").remove();
 		jQuery("footer").remove();
+		
+		jQuery('input').on('change invalid', function() {
+			var textfield = jQuery(this).get(0);
+			textfield.setCustomValidity('');
+			
+			if (!textfield.validity.valid) {
+			  textfield.setCustomValidity('Venligst udfyld dette felt');  
+			}
+		});
     });
 </script>
+<style>
+input[type='file'] {opacity:1;}
+</style>
 <section>
 	<div class="container text-center">
 		<a href="index.php"><img src="templates/studie/img/logo.png" alt=""></a>
@@ -40,14 +47,13 @@ if($orders_arr){
 			<div class="col-md-12 pad0">
 				<div class="pull-right text-right box-right">
 					<p>Velkommen <?php echo $user->name;?> - <a class="btnLogout" href="index.php?option=com_users&task=user.logout&return=<?php echo base64_encode(JRoute::_("index.php?option=com_users&view=login"));?>">Logout</a></p>
-					<p><?php echo $menuTxt;?></p>
+					<p><a class="active">Igangværende</a> - <a href="<?php echo $finish_link;?>">Færdig</a></p>
 				</div>
 			</div>
 		</div>
-
+		<?php if($orders_arr){?>
 		<div class="row">
 			<div class="panel-group" id="accordion">
-			
 				<?php foreach($orders_arr as $orderid){
 					$order = $orderModel->getOrder($orderid->virtuemart_order_id);
 				?>
@@ -83,7 +89,7 @@ if($orders_arr){
 								</thead>
 								<tbody>
 									<?php foreach($order['items'] as $item){?>
-									<tr>
+									<tr class="bor-b">
 										<td><?php echo $item->order_item_name;?></td>
 										<td class="text-center"><?php if($item->virtuemart_product_id != 5)echo $item->product_quantity;?></td>
 									</tr>
@@ -98,11 +104,18 @@ if($orders_arr){
 									<?php }?>
 								</div>
 								<div class="col-md-4">
-									<p>File navn: <span>Premiumkorrektur</span></p>
-									<input class="mb10" type="file">
-									<p>File navn: <span>Premiumkorrektur</span></p>
-									<input  class="mb10" type="file">
-									<a class="btn btnUpload" href="#">Upload</a>
+									<form action="index.php" method="post" enctype="multipart/form-data" class="form-validate">
+									<p>Edited word fil: <span>Premiumkorrektur</span></p>
+									<input class="mb10 required" type="file" name="word_file">
+									<p>Edited abstract fil: <span>Premiumkorrektur</span></p>
+									<input  class="mb10 required" type="file" name="abstract_file">
+									<!--<a class="btn btnUpload" href="#">Upload</a>-->
+									<button class="btn btnUpload validate">Upload</button>
+									<input type="hidden" name="option" value="com_virtuemart">
+									<input type="hidden" name="view" value="orders">
+									<input type="hidden" name="task" value="uploadFile">
+									<input type="hidden" name="orderId" value="<?php echo JRequest::getVar("virtuemart_order_id");?>" />
+									</form>
 									<a class="btn btn-default disabled" href="#">Send færdig opgave til kunden</a>
 								</div>
 							</div>
@@ -110,10 +123,11 @@ if($orders_arr){
 					</div>
 				</div>
 				<?php }?>
-				
-				
 			</div>
 		</div>
+		<?php } else {?>
+		Ingen opgaver!
+		<?php }?>
 	</div>
 </section>
 
