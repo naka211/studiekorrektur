@@ -132,7 +132,7 @@ input[type='file'] {opacity:1;}
 									?>
 									<a class="btn btn-default disabled" href="#">Send færdig opgave til kunden</a>
 									<?php } else {?>
-									<a class="btn btn-default" href="index.php?option=com_virtuemart&view=cart&task=sendEmail&order_id=<?php echo $order['details']['BT']->virtuemart_order_id;?>">Send færdig opgave til kunden</a>
+									<a class="btn btnSendmail" href="index.php?option=com_virtuemart&view=cart&task=sendEmail&order_id=<?php echo $order['details']['BT']->virtuemart_order_id;?>">Send færdig opgave til kunden</a>
 									<?php }?>
 								</div>
 							</div>

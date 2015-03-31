@@ -25,6 +25,108 @@ $query = "SELECT * FROM #__virtuemart_order_userinfos WHERE address_type = 'BT' 
 $db->setQuery($query);
 $BT_info = $db->loadObject();
 
+//Send email to freelance
+if(!$order["details"]["BT"]->freelance_id){
+	$query = "SELECT id, email, orders, orders_received FROM #__users WHERE block = 0 AND lang = '".$order['details']['BT']->language."' ORDER BY ordering";
+	$db->setQuery($query);
+	$users = $db->loadObjectList();
+	
+	foreach($users as $user){
+		if($user->orders_received < $user->orders){
+			$receiver = $user;
+			break;
+		}
+	}
+	if(!$receiver){
+		$query = "UPDATE #__users SET orders_received = 0 WHERE lang = '".$order['details']['BT']->language."'";
+		$db->setQuery($query);
+		$db->query();
+		
+		$query = "SELECT id, email, orders, orders_received FROM #__users WHERE block = 0 AND lang = '".$order['details']['BT']->language."' ORDER BY ordering";
+		$db->setQuery($query);
+		$users = $db->loadObjectList();
+		
+		foreach($users as $user){
+			if($user->orders_received < $user->orders){
+				$receiver = $user;
+				break;
+			}
+		}
+	}
+	
+	$html = '<html>
+		<head>
+		<style>
+			body {font-family: arial; font-size: 14px;}
+			.wrapper {width: 800px; margin: 0 auto;}
+			table {text-align: left; width: 100%; border-bottom: none;}
+			table thead {background-color: #323232; color: #fff;}
+			table thead th {padding: 10px 5px; text-align: left;}
+			table tr td {padding: 10px 5px; border-bottom: 1px solid #e5e5e5;}
+		</style>
+	
+		</head>
+	
+		<body>
+		<div class="wrapper">
+			<table cellpadding="0" cellspacing="0">
+				<tr>
+					<td style="border-bottom: none;">
+						<p>Dit ordrenr. er '.$order["details"]["BT"]->order_number.'</p>
+						<p>Sprog: '.$order["details"]["BT"]->language.'</p>
+						<p>Leveringstidspunkt: '.$order["details"]["BT"]->delivery_date.'</p>   
+					</td>
+				</tr>
+			</table>
+			<table cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th>Produkt</th>
+						<th class="text-center">Antal normalsider</th>
+					</tr>
+				</thead>
+				<tbody>';
+					foreach($order["items"] as $item){
+						if($item->virtuemart_product_id != 5){
+							$quantity = $item->product_quantity;
+						} else {
+							$quantity = '';
+						}
+					$html.= '<tr>
+						<td>'. $item->order_item_name.'</td>
+						<td class="text-center">'.$quantity.'</td>
+					</tr>';
+					}
+					$html .= '
+				</tbody>
+			</table>
+		</div>
+		</body>
+	</html>';
+			
+	$app = JFactory::getApplication();
+	$mailfrom = $app->get('mailfrom');
+	$fromname = $app->get('fromname');
+		
+	$mail = JFactory::getMailer();
+	$mail->addRecipient($receiver->email);
+	$mail->setSender(array($mailfrom, $fromname));
+	$mail->setSubject('Bekræftet ordre '.$order['details']['BT']->order_number);
+	$mail->isHTML(true);
+	$mail->setBody($html);
+	$sent = $mail->Send();
+	if($sent){
+		$query = "UPDATE #__users SET orders_received = orders_received + 1 WHERE id = '".$receiver->id."'";
+		$db->setQuery($query);
+		$db->query();
+		
+		$query = "UPDATE #__virtuemart_order_userinfos SET freelance_id = '".$receiver->id."' WHERE virtuemart_order_id = '".$order["details"]["BT"]->virtuemart_order_id."'";
+		$db->setQuery($query);
+		$db->query();
+	}
+}
+//End
+
 $cart = VirtueMartCart::getCart();
 $cart->emptyCart();
 ?>
