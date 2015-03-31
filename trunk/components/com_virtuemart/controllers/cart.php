@@ -600,6 +600,44 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$mainframe->redirect(JRoute::_('index.php?option=com_virtuemart&view=cart&layout1=pending'));
 	}
 	
+	function newWeek(){
+		$db = JFactory::getDBO();
+		$query = "SELECT COUNT(id) FROM #__users WHERE lang = 'Dansk' AND block = 0";
+		$db->setQuery($query);
+		$daUsersCount = $query->loadResult();
+		if($daUsersCount){
+			$this->resetOrder('Dansk', $daUsersCount);
+		}
+		
+		$query = "SELECT COUNT(id) FROM #__users WHERE lang = 'Engelsk' AND block = 0";
+		$db->setQuery($query);
+		$enUsersCount = $query->loadResult();
+		if($enUsersCount){
+			$this->resetOrder('Engelsk', $enUsersCount);
+		}
+	}
+	
+	function resetOrder($lang, $count){
+		$db = JFactory::getDBO();
+		
+		$query = "UPDATE #__users SET orders_received = 0 WHERE lang = '".$lang."' AND block = 0";
+		$db->setQuery($query);
+		$db->query();
+		
+		$query = "SELECT id, ordering FROM #__users WHERE block = 0 AND lang = '".$lang."' ORDER BY ordering";
+		$db->setQuery($query);
+		$users = $db->loadObjectList();
+		foreach($users as $user){
+			if($user->ordering == 1){
+				$ordering = $count;
+			} else {
+				$ordering = $user->ordering - 1;
+			}
+			$query = "UPDATE #__users SET ordering = ".$ordering." WHERE id = '".$user->id."'";
+			$db->setQuery($query);
+			$db->query();
+		}
+	}
 	//T.Trung end
 }
 
