@@ -604,17 +604,18 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$db = JFactory::getDBO();
 		$query = "SELECT COUNT(id) FROM #__users WHERE lang = 'Dansk' AND block = 0";
 		$db->setQuery($query);
-		$daUsersCount = $query->loadResult();
+		$daUsersCount = $db->loadResult();
 		if($daUsersCount){
 			$this->resetOrder('Dansk', $daUsersCount);
 		}
 		
 		$query = "SELECT COUNT(id) FROM #__users WHERE lang = 'Engelsk' AND block = 0";
 		$db->setQuery($query);
-		$enUsersCount = $query->loadResult();
+		$enUsersCount = $db->loadResult();
 		if($enUsersCount){
 			$this->resetOrder('Engelsk', $enUsersCount);
 		}
+		die('ok');
 	}
 	
 	function resetOrder($lang, $count){
