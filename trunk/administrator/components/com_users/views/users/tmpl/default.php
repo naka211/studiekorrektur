@@ -45,6 +45,12 @@ $loggeduser = JFactory::getUser();
 							<?php echo JHtml::_('searchtools.sort', 'COM_USERS_HEADING_NAME', 'a.name', $listDirn, $listOrder); ?>
 						</th>
 						<th width="10%" class="nowrap center">
+							<?php echo JHtml::_('searchtools.sort', 'Language group', 'a.lang', $listDirn, $listOrder); ?>
+						</th>
+						<th width="10%" class="nowrap center">
+							<?php echo JHtml::_('searchtools.sort', 'Freelancer number', 'a.ordering', $listDirn, $listOrder); ?>
+						</th>
+						<th width="10%" class="nowrap center">
 							<?php echo JHtml::_('searchtools.sort', 'JGLOBAL_USERNAME', 'a.username', $listDirn, $listOrder); ?>
 						</th>
 						<th width="5%" class="nowrap center">
@@ -59,12 +65,12 @@ $loggeduser = JFactory::getUser();
 						<th width="15%" class="nowrap center hidden-phone">
 							<?php echo JHtml::_('searchtools.sort', 'JGLOBAL_EMAIL', 'a.email', $listDirn, $listOrder); ?>
 						</th>
-						<th width="10%" class="nowrap center hidden-phone">
+						<!--<th width="10%" class="nowrap center hidden-phone">
 							<?php echo JHtml::_('searchtools.sort', 'COM_USERS_HEADING_LAST_VISIT_DATE', 'a.lastvisitDate', $listDirn, $listOrder); ?>
 						</th>
 						<th width="10%" class="nowrap center hidden-phone">
 							<?php echo JHtml::_('searchtools.sort', 'COM_USERS_HEADING_REGISTRATION_DATE', 'a.registerDate', $listDirn, $listOrder); ?>
-						</th>
+						</th>-->
 						<th width="1%" class="nowrap center hidden-phone">
 							<?php echo JHtml::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 						</th>
@@ -116,6 +122,12 @@ $loggeduser = JFactory::getUser();
 							<?php endif; ?>
 						</td>
 						<td class="center">
+							<?php echo $this->escape($item->lang); ?>
+						</td>
+						<td class="center">
+							<?php echo $this->escape($item->ordering); ?>
+						</td>
+						<td class="center">
 							<?php echo $this->escape($item->username); ?>
 						</td>
 						<td class="center">
@@ -144,7 +156,7 @@ $loggeduser = JFactory::getUser();
 						<td class="center hidden-phone">
 							<?php echo JStringPunycode::emailToUTF8($this->escape($item->email)); ?>
 						</td>
-						<td class="center hidden-phone">
+						<!--<td class="center hidden-phone">
 							<?php if ($item->lastvisitDate != '0000-00-00 00:00:00'):?>
 								<?php echo JHtml::_('date', $item->lastvisitDate, 'Y-m-d H:i:s'); ?>
 							<?php else:?>
@@ -153,7 +165,7 @@ $loggeduser = JFactory::getUser();
 						</td>
 						<td class="center hidden-phone">
 							<?php echo JHtml::_('date', $item->registerDate, 'Y-m-d H:i:s'); ?>
-						</td>
+						</td>-->
 						<td class="center hidden-phone">
 							<?php echo (int) $item->id; ?>
 						</td>

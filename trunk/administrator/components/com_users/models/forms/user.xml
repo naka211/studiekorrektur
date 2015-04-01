@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 	<fieldset name="user_details">
+		<field name="lang" type="list" default="" label="Language group" description="">
+		  <option value="Dansk">Dansk</option>
+		  <option value="Engelsk">Engelsk</option>
+		</field>
+		
+		<field name="ordering" type="text"
+			description="Freelancer number"
+			label="Freelancer number"
+			required="true"
+			size="30"
+		/>
+		
 		<field name="name" type="text"
 			description="COM_USERS_USER_FIELD_NAME_DESC"
 			label="COM_USERS_USER_FIELD_NAME_LABEL"
@@ -52,24 +64,11 @@
 		
 		<field name="orders_received"
 			type="text"
-			class="readonly"
-			readonly="true"
 			description="Received orders"
 			label="Received orders"
 			size="30"
 		/>
 		
-		<field name="lang" type="list" default="" label="Language group" description="">
-		  <option value="Dansk">Dansk</option>
-		  <option value="Engelsk">Engelsk</option>
-		</field>
-		
-		<field name="ordering" type="text"
-			description="Ordering"
-			label="Ordering"
-			size="30"
-		/>
-
 		<field
 			name="registerDate"
 			type="calendar"
