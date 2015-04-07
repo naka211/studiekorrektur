@@ -124,6 +124,7 @@ type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
 							<li><a href="<?php echo JURI::base();?>#contact">Kontakt</a></li>
 							<li><a href="index.php?option=com_content&view=article&id=2&Itemid=131">Cookiepolitik</a></li>
 							<li><a href="index.php?option=com_content&view=article&id=3&Itemid=132">Betingelser</a></li>
+							<li><a href="index.php?option=com_content&view=category&layout=blog&id=8&Itemid=134">Blog</a></li>
 						</ul>
 					</div>
 				</div>
@@ -153,7 +154,7 @@ type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<p class="pull-left">© <a href="index.php">Studiekorrektur.dk</a> 2015 &nbsp;&nbsp;CVR: 35321330 - All Right Reserved.</p>
+					<p class="pull-left">{article 4}{text}{/article}</p>
 					<p class="full-right text-right">Design af <a target="_blank" href="http://mywebcreations.dk/">My Web Creations</a></p>
 				</div>
 			</div>

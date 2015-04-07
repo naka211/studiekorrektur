@@ -179,12 +179,12 @@ $tmpl = JURI::base().'templates/studie/';
 			<div class="text-left box2 clearfix">
 				<div class="row">
 					<div class="col-md-12">
-						<h3>Beregn din pris: </h3>
+						<h3>Beregn din pris </h3>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-6">
-						<p><strong>Indtast antal tegn inkl. mellemrum</strong></p>
+						<p class="f20" style="margin-bottom:2px;">Indtast antal tegn inkl. mellemrum</p>
 						<input type="text" class="form-control input" id="wordNum">
 					</div>
 					<div class="col-md-6 pad0">

@@ -104,6 +104,7 @@ input[type='file'] {opacity:1;}
 									<?php if($order['details']['BT']->english_file){?>
 									<p>Abstract file: <?php echo $order['details']['BT']->english_file;?> <a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->english_file;?>">Download</a></p>
 									<?php }?>
+									<p><strong>Kommentar</strong>: <?php echo $order["details"]["BT"]->comment;?></p>
 								</div>
 								<div class="col-md-6">
 									<form action="index.php" method="post" enctype="multipart/form-data" class="form-validate">
@@ -130,9 +131,9 @@ input[type='file'] {opacity:1;}
 										}
 										if($disable){
 									?>
-									<a class="btn btn-default disabled" href="#">Send færdig opgave til kunden</a>
+									<a class="btn btn-default disabled" href="#">Indsend færdig opgave</a>
 									<?php } else {?>
-									<a class="btn btnSendmail" href="index.php?option=com_virtuemart&view=cart&task=sendEmail&order_id=<?php echo $order['details']['BT']->virtuemart_order_id;?>">Send færdig opgave til kunden</a>
+									<a class="btn btnSendmail" href="index.php?option=com_virtuemart&view=cart&task=sendEmail&order_id=<?php echo $order['details']['BT']->virtuemart_order_id;?>">Indsend færdig opgave</a>
 									<?php }?>
 								</div>
 							</div>

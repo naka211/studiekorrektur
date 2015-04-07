@@ -419,7 +419,8 @@ class VirtuemartControllerOrders extends VmController {
                 <td style="border-bottom: none;">
                     <p>Dit ordrenr. er '.$order["details"]["BT"]->order_number.'</p>
                     <p>Sprog: '.$order["details"]["BT"]->language.'</p>
-                    <p>Leveringstidspunkt: '.$order["details"]["BT"]->delivery_date.'</p>   
+                    <p>Leveringstidspunkt: '.$order["details"]["BT"]->delivery_date.'</p>
+					<p>Kommentar: '.$order["details"]["BT"]->comment.'</p>   
                 </td>
             </tr>
         </table>
@@ -444,6 +445,13 @@ class VirtuemartControllerOrders extends VmController {
 				}
 				$html .= '
             </tbody>
+        </table>
+		<table cellpadding="0" cellspacing="0">
+            <tr>
+                <td style="border-bottom: none;">
+                    <p>Du kan se opgaven ved at login til din profil her: <a href="'.JURI::root().'index.php/login.html">'.JURI::root().'index.php/login.html</a></p>
+                </td>
+            </tr>
         </table>
     </div>
     </body>

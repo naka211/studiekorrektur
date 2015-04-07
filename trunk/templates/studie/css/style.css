@@ -359,7 +359,7 @@ input.fakefile {position: absolute; top:0; border: solid 1px #d7d7d7; padding: 5
 .input-upload {width: 100% !important; opacity:0.0; position: absolute; top:0; cursor: pointer; padding: 5px 10px; }
 
 .box2 {-webkit-border-radius: 5px 5px 5px 5px; border-radius: 5px 5px 5px 5px; width: 702px; margin-left: 19%;}
-.box2 h3 {color: #2ecc71;}
+/*.box2 h3 {color: #2ecc71;}*/
 .box2 input {height: 40px;}
 .close {font-size: 31px; position: absolute; top: 0; right: 5px; z-index: 99999;}
 .bor-b {border-bottom: 1px dotted #d7d7d7; margin-bottom: 10px;}
@@ -393,3 +393,60 @@ input.fakefile {position: absolute; top:0; border: solid 1px #d7d7d7; padding: 5
 .fa-angle-right {display: block !important;}
 .btn-default {display: block; width:50%;}
 .btnDownload:hover {color: #18bc9c;}
+
+.pagination {
+    clear: both;
+    display: block;
+    padding-bottom: 15px;
+}
+.pagination ul {
+}
+.pagination li {
+    display: inline-block;
+    list-style: outside none none;
+}
+.pagination a {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #8b8b8b;
+    border-color: #dddddd;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px 1px 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    float: left;
+    font-family: Arial,sans-serif;
+    line-height: 24px;
+    min-width: 30px;
+    padding: 2px;
+    text-decoration: none;
+}
+.pagination li.active a, .pagination a:hover {
+    background: none repeat scroll 0 0 #037861;
+    text-decoration: none;
+}
+.pagination li.disabled a {
+    background: none repeat scroll 0 0 #cacaca;
+}
+.pagination a i {
+    font-family: Arial,Helvetica,sans-serif;
+}
+.pagination .icon-first::after {
+    content: "<<";
+}
+.pagination .icon-previous::after {
+    content: "<";
+}
+.pagination .icon-next::after {
+    content: ">";
+}
+.pagination .icon-last::after {
+    content: ">>";
+}
+
+.article a:hover {color: #18bc9c;}
+ul.list-article {list-style: none; padding-left: 0;}
+ul.list-article li {margin-bottom: 15px; border-bottom: 1px dotted #ccc;}

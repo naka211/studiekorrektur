@@ -2,7 +2,23 @@
 defined ('_JEXEC') or die('Restricted access');
 $cart = VirtueMartCart::getCart();
 //print_r($cart);exit;
+JHTML::_('behavior.formvalidator');
 ?>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+		jQuery('input').on('change invalid', function() {
+			var textfield = jQuery(this).get(0);
+			textfield.setCustomValidity('');
+			
+			if (!textfield.validity.valid) {
+			  textfield.setCustomValidity('Venligst upload en word-fil');  
+			}
+		});
+	});
+</script>
+<style>
+input[type='file'] {opacity:1;}
+</style>
 <section class="main-content">
 	<div class="container">
 		<div class="row">
@@ -14,7 +30,7 @@ $cart = VirtueMartCart::getCart();
 				<li>Kvittering</li>
 			</ul>
 		</div>
-		<form action="index.php" class="form-group" enctype="multipart/form-data" method="post">
+		<form action="index.php" class="form-group form-validate" enctype="multipart/form-data" method="post">
 		<div class="row">
 			<div class="col-md-6 pr40">
 				<div class="row">
@@ -27,16 +43,16 @@ $cart = VirtueMartCart::getCart();
 				<div class="row">
 					<label for=""><strong>Upload din opgave her i Word-format</strong></label>
 					<div class="eachRowUpload">
-						<input class="fakefile" type="text" placeholder="Der er ikke valgt nogen fil">
-						<input class="input-upload" type="file" name="danish_file">
+						<!--<input class="fakefile" type="text" placeholder="Der er ikke valgt nogen fil">-->
+						<input class="input-upload required" type="file" name="danish_file">
 					</div>
 				</div>
 				<?php if(count($cart->products) > 1){?>
 				<div class="row">
 					<label for=""><strong>Upload dit abstract her</strong></label>
 					<div class="eachRowUpload">
-						<input class="fakefile" type="text" placeholder="Der er ikke valgt nogen fil">
-						<input class="input-upload" type="file" name="english_file">
+						<!--<input class="fakefile" type="text" placeholder="Der er ikke valgt nogen fil">-->
+						<input class="input-upload required" type="file" name="english_file">
 					</div>
 				</div>
 				<?php }?>

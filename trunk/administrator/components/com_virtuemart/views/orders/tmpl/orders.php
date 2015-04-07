@@ -31,6 +31,21 @@ $styleDateCol = 'style="width:5%;min-width:110px"';
 					<td align="left" width="100%">
 						<?php echo $this->displayDefaultViewSearch ('COM_VIRTUEMART_ORDER_PRINT_NAME'); ?>
 						<?php echo vmText::_ ('COM_VIRTUEMART_ORDERSTATUS') . ':' . $this->lists['state_list']; ?>
+						<!--T.Trung-->
+						User freelancer
+						<?php 
+						$db = JFactory::getDBO();
+						$q = "SELECT u.id, u.name FROM #__users u INNER JOIN #__user_usergroup_map um ON u.id = um.user_id WHERE u.block = 0 AND um.group_id = 2";
+						$db->setQuery($q);
+						$users = $db->loadObjectList();
+						?>
+						<select name="freelance_id" onChange="this.form.submit();">
+							<option value="0">Please select</option>
+							<?php foreach($users as $user){?>
+							<option value="<?php echo $user->id?>" <?php if($this->freelance_id == $user->id) echo 'selected';?>><?php echo $user->name?></option>
+							<?php }?>
+						</select>
+						<!--T.Trung end-->
 					</td>
 				</tr>
 			</table>

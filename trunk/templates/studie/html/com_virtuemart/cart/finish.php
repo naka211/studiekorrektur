@@ -86,6 +86,7 @@ if($orders_arr){
 									<?php }?>
 								</tbody>
 							</table>
+							<p><strong>Kommentar</strong>: <?php echo $order["details"]["BT"]->comment;?></p> 
 						</div>
 					</div>
 				</div>
