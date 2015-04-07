@@ -187,6 +187,11 @@ class VirtuemartViewOrders extends VmViewAdmin {
 			$orderslist = $model->getOrdersList();
 
 			$this->assignRef('orderstatuses', $orderStates);
+			
+			//T.Trung
+			$freelance_id = JRequest::getVar('freelance_id', '');
+			$this->assignRef('freelance_id', $freelance_id);
+			//T.Trung end
 
 			if(!class_exists('CurrencyDisplay'))require(VMPATH_ADMIN.DS.'helpers'.DS.'currencydisplay.php');
 

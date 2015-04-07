@@ -565,6 +565,11 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$orderModel=VmModel::getModel('orders');
 		$order = $orderModel->getOrder($order_id);
 		
+		$order1 = array();		
+		$order1['order_status'] = "S";
+		$order1['customer_notified'] = 0;
+		$orderModel->updateStatusForOneOrder($order_id, $order1, true);
+		
 		$db = JFactory::getDBO();
 		$db->setQuery("UPDATE #__virtuemart_order_userinfos SET finish = 1 WHERE virtuemart_order_id=".$order_id." AND address_type = 'BT'");
 		$db->query();
@@ -572,15 +577,19 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		
 		$html = '<html>
     <body>
-	Dear '.$order['details']['BT']->first_name.' '.$order['details']['BT']->last_name.'<br><br>
-	This is your file(s) after it is edited. Please click below link to dowload:<br>
-	- Word fil: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->danish_edited_file.'">'.$order['details']['BT']->danish_edited_file.'</a>';
+	Kære '.$order['details']['BT']->first_name.' '.$order['details']['BT']->last_name.',<br><br>
+	Hermed fremsendes din opgave i korrekturlæst form. Der er vedhæftet links til download af to dokumenter – hhv. et med korrektionstegn, hvor du kan se og godkende alle rettelserne enkeltvist, samt et dokument uden korrektionstegn med alle rettelserne implementeret, klar til aflevering.<br><br>
+	Link til korrekturlæst opgave: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->danish_edited_file.'">'.$order['details']['BT']->danish_edited_file.'</a>';
 		if(count($order['items'])>1){
-			$html .= '<br>- Abstract fil: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->english_edited_file.'">'.$order['details']['BT']->english_edited_file.'</a>';
+			$html .= '<br>Link til korrekturlæst abstract: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->english_edited_file.'">'.$order['details']['BT']->english_edited_file.'</a>';
 		}
     $html .= '<br><br>
-			Med venlig hilsen<br>
-        Studiekorrektur
+			Tak fordi du valgte Studiekorrektur.dk – vi krydser fingrer for en høj karakter!<br><br>
+			De bedste hilsener,<br>
+			Teamet bag Studiekorrektur.dk<br>
+			<img src="'.JURI::base().'templates/studie/img/logo.png" /><br>
+			Tlf.: +45 3029 6044<br>
+			Website: <a href="www.studiekorrektur.dk">www.studiekorrektur.dk</a>
 	</body>
 </html>';
 		
@@ -591,7 +600,7 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$mail = JFactory::getMailer();
 		$mail->addRecipient($order['details']['BT']->email);
 		$mail->setSender(array($mailfrom, $fromname));
-		$mail->setSubject('Redigeret fil fra Studiekorrektur');
+		$mail->setSubject('Korrekturlæst dokument retur, ordre '.$order['details']['BT']->order_number);
 		$mail->isHTML(true);
 		$mail->setBody($html);
 		$sent = $mail->Send();

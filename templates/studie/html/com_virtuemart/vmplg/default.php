@@ -74,7 +74,8 @@ if(!$order["details"]["BT"]->freelance_id){
 					<td style="border-bottom: none;">
 						<p>Dit ordrenr. er '.$order["details"]["BT"]->order_number.'</p>
 						<p>Sprog: '.$order["details"]["BT"]->language.'</p>
-						<p>Leveringstidspunkt: '.$order["details"]["BT"]->delivery_date.'</p>   
+						<p>Leveringstidspunkt: '.$order["details"]["BT"]->delivery_date.'</p>
+						<p>Kommentar: '.$order["details"]["BT"]->comment.'</p>
 					</td>
 				</tr>
 			</table>
@@ -99,6 +100,13 @@ if(!$order["details"]["BT"]->freelance_id){
 					}
 					$html .= '
 				</tbody>
+			</table>
+			<table cellpadding="0" cellspacing="0">
+				<tr>
+					<td style="border-bottom: none;">
+						<p>Du kan se opgaven ved at login til din profil her: <a href="'.JURI::base().'index.php/login.html">'.JURI::base().'index.php/login.html</a></p>
+					</td>
+				</tr>
 			</table>
 		</div>
 		</body>

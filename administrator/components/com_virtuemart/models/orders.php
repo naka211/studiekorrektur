@@ -340,6 +340,13 @@ $q = 'SELECT virtuemart_order_item_id, product_quantity, order_item_name,
 		if ($order_status_code and $order_status_code!=-1){
 			$where[] = ' o.order_status = "'.$order_status_code.'" ';
 		}
+		
+		//T.Trung
+		$freelance_id = vRequest::getString('freelance_id', false);
+		if ($freelance_id){
+			$where[] = ' u.freelance_id = "'.$freelance_id.'" ';
+		}
+		//T.Trung end
 
 		if (count ($where) > 0) {
 			$whereString = ' WHERE (' . implode (' AND ', $where) . ') ';

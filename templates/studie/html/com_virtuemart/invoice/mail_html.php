@@ -27,6 +27,7 @@ defined('_JEXEC') or die('Restricted access');
                     Dit ordrenr. er <?php echo $this->orderDetails["details"]["BT"]->order_number;?> - du modtager også denne ordrebekræftelse på mail.</p>
                     <p>Sprog: <?php echo $this->orderDetails["details"]["BT"]->language;?></p>
                     <p>Leveringstidspunkt: <?php echo $this->orderDetails["details"]["BT"]->delivery_date;?></p>   
+					<p>Kommentar: <?php echo $this->orderDetails["details"]["BT"]->comment;?></p> 
                 </td>
             </tr>
         </table>
