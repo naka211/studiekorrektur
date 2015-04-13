@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension version="2.5" type="plugin" group="vmshopper" method="upgrade">
+    <name>VMSHOPPER_ORDERNUMBER</name>
+    <creationDate>2013-01-09</creationDate>
+    <author>Reinhold Kainhofer</author>
+    <authorEmail>office@open-tools.net</authorEmail>
+    <authorUrl>http://www.open-tools.net/</authorUrl>
+    <copyright>Copyright (C) 2012-2014 Reinhold Kainhofer. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPLv3</license>
+    <version>2.1</version>
+    <releaseDate>2014-12-07</releaseDate>
+    <releaseType>Minor update</releaseType>
+    <downloadUrl>http://www.open-tools.net/virtuemart-2-extensions/vm2-ordernumber-plugin.html</downloadUrl>
+
+    <description>VMSHOPPER_ORDERNUMBER_DESC</description>
+
+    <files>
+        <filename plugin="ordernumber">ordernumber.php</filename>
+        <filename>ordernumber.script.php</filename>
+        <filename>index.html</filename>
+        <folder>language</folder>
+        <folder>fields</folder>
+        <folder>ordernumber</folder>
+    </files>
+    <scriptfile>ordernumber.script.php</scriptfile>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_vmshopper_ordernumber.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_vmshopper_ordernumber.sys.ini</language>
+        <language tag="de-DE">de-DE/de-DE.plg_vmshopper_ordernumber.ini</language>
+        <language tag="de-DE">de-DE/de-DE.plg_vmshopper_ordernumber.sys.ini</language>
+    </languages>
+    <!-- Joomla 2.5 & 3.0 config -->
+    <config>
+        <fields name="params" addfieldpath="/plugins/vmshopper/ordernumber/fields">
+            <fieldset name="ordernumbers" label="PLG_ORDERNUMBER_FIELDSET_ORDERNUMBER">
+                <field name="order_options" type="spacer" label="PLG_ORDERNUMBER_ORDERNR" />
+                <field name="customize_order_number" type="radio" default="0" class="btn-group btn-group-yesno" label="PLG_ORDERNUMBER_ORDERNR_CUSTOMIZE" description="PLG_ORDERNUMBER_ORDERNR_CUSTOMIZE_DESC">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="order_number_format" type="text" default="Order-[year][month]-#" label="PLG_ORDERNUMBER_ORDERNR_FMT" description="PLG_ORDERNUMBER_ORDERNR_FMT_DESC"/>
+                <field name="order_number_padding" type="integer" default="1" label="PLG_ORDERNUMBER_ORDERNR_PADDING" description="PLG_ORDERNUMBER_ORDERNR_PADDING_DESC"  first="1" last="10" step="1" />
+                <field name="order_number_global" type="radio" default="0" label="PLG_ORDERNUMBER_ORDERNR_COUNTER" description="PLG_ORDERNUMBER_ORDERNR_COUNTER_DESC">
+                    <option value="1">PLG_ORDERNUMBER_COUNTER_GLOBAL</option>
+                    <option value="0">PLG_ORDERNUMBER_COUNTER_PERFORMAT</option>
+                </field>
+                <field name="order_number_allcounters" type="VmOrdernumberCounters" label="PLG_ORDERNUMBER_ORDERNR_ALLCOUNTERS" countertype="0" />
+
+                <field name="password_options" type="spacer" label="PLG_ORDERNUMBER_PASSWD" />
+                <field name="customize_order_password" type="radio" default="0" class="btn-group btn-group-yesno" label="PLG_ORDERNUMBER_PASSWD_CUSTOMIZE" description="PLG_ORDERNUMBER_PASSWD_CUSTOMIZE_DESC">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="order_password_format" type="text" default="p_[randomHex5]" label="PLG_ORDERNUMBER_PASSWD_FMT" description="PLG_ORDERNUMBER_PASSWD_FMT_DESC"/>
+            </fieldset>
+
+            <fieldset name="invoicenumbers" label="PLG_ORDERNUMBER_FIELDSET_INVOICENUMBER">
+                <field name="invoice_options" type="spacer" label="PLG_ORDERNUMBER_INVOICENR" />
+                <field name="customize_invoice_number" type="radio" default="0" class="btn-group btn-group-yesno" label="PLG_ORDERNUMBER_INVOICENR_CUSTOMIZE" description="PLG_ORDERNUMBER_INVOICENR_CUSTOMIZE_DESC">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="invoice_number_format" type="text" default="[year]-#" label="PLG_ORDERNUMBER_INVOICENR_FMT" description="PLG_ORDERNUMBER_INVOICENR_FMT_DESC"/>
+                <field name="invoice_number_padding" type="integer" default="1" label="PLG_ORDERNUMBER_INVOICENR_PADDING" description="PLG_ORDERNUMBER_INVOICENR_PADDING_DESC"  first="1" last="10" step="1" />
+                <field name="invoice_number_global" type="radio" default="0" label="PLG_ORDERNUMBER_INVOICENR_COUNTER" description="PLG_ORDERNUMBER_INVOICENR_COUNTER_DESC">
+                    <option value="1">PLG_ORDERNUMBER_COUNTER_GLOBAL</option>
+                    <option value="0">PLG_ORDERNUMBER_COUNTER_PERFORMAT</option>
+                </field>
+                <field name="invoice_number_allcounters" type="VmOrdernumberCounters" label="PLG_ORDERNUMBER_ORDERNR_ALLCOUNTERS" countertype="1" />
+            </fieldset>
+
+            <fieldset name="customernumbers" label="PLG_ORDERNUMBER_FIELDSET_CUSTOMERNUMBER">
+                <field name="customer_options" type="spacer" label="PLG_ORDERNUMBER_CUSTOMERNR" />
+                <field name="customize_customer_number" type="radio" default="0" class="btn-group btn-group-yesno" label="PLG_ORDERNUMBER_CUSTOMERNR_CUSTOMIZE" description="PLG_ORDERNUMBER_CUSTOMERNR_CUSTOMIZE_DESC">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                </field>
+                <field name="customer_number_format" type="text" default="#" label="PLG_ORDERNUMBER_CUSTOMERNR_FMT" description="PLG_ORDERNUMBER_CUSTOMERNR_FMT_DESC"/>
+                <field name="customer_number_padding" type="integer" default="5" label="PLG_ORDERNUMBER_CUSTOMERNR_PADDING" description="PLG_ORDERNUMBER_CUSTOMERNR_PADDING_DESC"  first="1" last="10" step="1" />
+                <field name="customer_number_global" type="radio" default="1" label="PLG_ORDERNUMBER_CUSTOMERNR_COUNTER" description="PLG_ORDERNUMBER_CUSTOMERNR_COUNTER_DESC">
+                    <option value="1">PLG_ORDERNUMBER_COUNTER_GLOBAL</option>
+                    <option value="0">PLG_ORDERNUMBER_COUNTER_PERFORMAT</option>
+                </field>
+                <field name="customer_number_allcounters" type="VmOrdernumberCounters" label="PLG_ORDERNUMBER_ORDERNR_ALLCOUNTERS" countertype="2" />
+            </fieldset>
+        </fields>
+    </config>
+    
+</extension>

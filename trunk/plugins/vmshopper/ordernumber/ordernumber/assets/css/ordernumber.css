@@ -1,0 +1,33 @@
+td.counter_value {
+    text-align: center;
+}
+
+table.vmordernumber-countertable {
+    border: 1px solid #888888;
+}
+
+table.vmordernumber-countertable.table-striped tbody > tr:nth-child(odd) > th {
+    background: #E0E0E0;
+}
+.vmordernumber-btn {
+    cursor: pointer;
+}
+
+col.counter_type, th.counter_type, td.counter_type {
+    display:none;
+}
+
+fieldset table.vmordernumber-countertable img {
+    padding: 0;
+    margin: 0;    
+}
+div.ordernumber-ajax-loading, div.vmordernumber-counter-addbtn {
+    display: inline;
+}
+div.ordernumber-ajax-loading, div.ordernumber-ajax-loading img.vmordernumber-btn {
+    position: relative;
+    top: 0; left: 0;
+}
+div.ordernumber-ajax-loading img {
+    z-index:0;
+}
