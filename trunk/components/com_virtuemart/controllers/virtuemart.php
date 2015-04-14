@@ -82,7 +82,7 @@ class VirtueMartControllerVirtuemart extends JControllerLegacy
 	function getTime(){
 		$day = JRequest::getVar('day');
 		setlocale(LC_TIME, array('da_DA.UTF-8','da_DA@euro','da_DA','danish'));
-		echo utf8_encode(strftime("%a. d. %d %b. %Y kl. %H:%M",strtotime('+'.$day.' day', time())));
+		echo utf8_encode(strftime("%a. d. %d %b. %Y ",strtotime('+'.$day.' weekdays')).strftime("kl. %H:%M",strtotime('+'.$day.' days')));
 		die();
 	}
 }

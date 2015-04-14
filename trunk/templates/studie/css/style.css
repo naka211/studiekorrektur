@@ -201,8 +201,8 @@ ul.breadcrumb li:first-child {padding-left: 0;}
 .btnAddcart:active {color: #fff;}
 .btnAddcart:focus {color: #fff;}
 .en {display: none;}
-.dk h3 {font-size: 20px;}
-.dk .box {min-height: 380px;}
+.en h3 {font-size: 20px;}
+.en .box {min-height: 380px;}
 a.btnEdit {color: #2ecc71; margin-top: 10px; font-size: 16px;}
 a.btnEdit:hover {color: #2ecc71;}
 .btnPayment {background: #2ecc71; color: #fff; padding: 10px 200px;}
