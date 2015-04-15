@@ -60,10 +60,12 @@ $styleDateCol = 'style="width:5%;min-width:110px"';
 			<th width="8%"><?php echo $this->sort ('order_number', 'COM_VIRTUEMART_ORDER_LIST_NUMBER')  ?></th>
 			<th width="26%"><?php echo $this->sort ('order_name', 'COM_VIRTUEMART_ORDER_PRINT_NAME')  ?></th>
 			<th width="18%"><?php echo $this->sort ('order_email', 'COM_VIRTUEMART_EMAIL')  ?></th>
-			<th width="18%"><?php echo $this->sort ('payment_method', 'COM_VIRTUEMART_ORDER_PRINT_PAYMENT_LBL')  ?></th>
+			<!--<th width="18%"><?php echo $this->sort ('payment_method', 'COM_VIRTUEMART_ORDER_PRINT_PAYMENT_LBL')  ?></th>-->
 			<th style="min-width:110px;width:5%;"><?php echo vmText::_ ('COM_VIRTUEMART_PRINT_VIEW'); ?></th>
 			<th class="admin-dates"><?php echo $this->sort ('created_on', 'COM_VIRTUEMART_ORDER_CDATE')  ?></th>
-			<th class="admin-dates"><?php echo $this->sort ('modified_on', 'COM_VIRTUEMART_ORDER_LIST_MDATE')  ?></th>
+			<!--<th class="admin-dates"><?php echo $this->sort ('modified_on', 'COM_VIRTUEMART_ORDER_LIST_MDATE')  ?></th>-->
+			<th class="admin-dates">Product</th>
+			<th width="18%">Quantity</th>
 			<th><?php echo $this->sort ('order_status', 'COM_VIRTUEMART_STATUS')  ?></th>
 			<th style="min-width:130px;width:5%;"><?php echo vmText::_ ('COM_VIRTUEMART_ORDER_LIST_NOTIFY'); ?></th>
 			<th width="10%"><?php echo $this->sort ('order_total', 'COM_VIRTUEMART_TOTAL')  ?></th>
@@ -77,9 +79,11 @@ $styleDateCol = 'style="width:5%;min-width:110px"';
 			$i = 0;
 			$k = 0;
 			$keyword = vRequest::getCmd ('keyword');
-;
+			$orderModel=VmModel::getModel('orders');
+		
 			foreach ($this->orderslist as $key => $order) {
 				$checked = JHtml::_ ('grid.id', $i, $order->virtuemart_order_id);
+				$orderDetails = $orderModel->getOrder($order->virtuemart_order_id);
 				?>
 			<tr class="row<?php echo $k; ?>">
 				<!-- Checkbox -->
@@ -106,7 +110,7 @@ $styleDateCol = 'style="width:5%;min-width:110px"';
 					?>
 				</td>
 				<!-- Payment method -->
-				<td><?php echo $order->payment_method; ?></td>
+				<!--<td><?php echo $order->payment_method; ?></td>-->
 				<!-- Print view -->
 				<?php
 				/* Print view URL */
@@ -138,7 +142,8 @@ $styleDateCol = 'style="width:5%;min-width:110px"';
 				<!-- Order date -->
 				<td><?php echo vmJsApi::date ($order->created_on, 'LC2', TRUE); ?></td>
 				<!-- Last modified -->
-				<td><?php echo vmJsApi::date ($order->modified_on, 'LC2', TRUE); ?></td>
+				<td><?php echo $orderDetails['items'][0]->order_item_name; ?></td>
+				<td><?php if($orderDetails['items'][0]->virtuemart_product_id != 5) echo $orderDetails['items'][0]->product_quantity; ?></td>
 				<!-- Status -->
 				<td style="position:relative;">
 					<?php echo JHtml::_ ('select.genericlist', $this->orderstatuses, "orders[" . $order->virtuemart_order_id . "][order_status]", 'class="orderstatus_select"', 'order_status_code', 'order_status_name', $order->order_status, 'order_status' . $i, TRUE); ?>
