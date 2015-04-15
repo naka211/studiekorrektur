@@ -450,3 +450,11 @@ input.fakefile {position: absolute; top:0; border: solid 1px #d7d7d7; padding: 5
 .article a:hover {color: #18bc9c;}
 ul.list-article {list-style: none; padding-left: 0;}
 ul.list-article li {margin-bottom: 15px; border-bottom: 1px dotted #ccc;}
+.input4 {
+    border-radius: 0;
+    margin-bottom: 10px;
+}
+.txta {
+    border-radius: 0;
+    margin-bottom: 10px;
+}

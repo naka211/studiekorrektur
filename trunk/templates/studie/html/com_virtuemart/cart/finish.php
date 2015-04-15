@@ -34,8 +34,8 @@ if($orders_arr){
 		<div class="row">
 			<div class="col-md-12 pad0">
 				<div class="pull-right text-right box-right">
-					<p>Velkommen <?php echo $user->name;?> - <a class="btnLogout" href="index.php?option=com_users&task=user.logout&return=<?php echo base64_encode(JRoute::_("index.php?option=com_users&view=login"));?>">Logout</a></p>
-					<p><a href="<?php echo $pending_link;?>">Igangværende</a> - <a class="active">Færdig</a></p>
+					<p>Welcome <?php echo $user->name;?> - <a class="btnLogout" href="index.php?option=com_users&task=user.logout&return=<?php echo base64_encode(JRoute::_("index.php?option=com_users&view=login"));?>">Logout</a></p>
+					<p><a href="<?php echo $pending_link;?>">In progress</a> - <a class="active">Completed</a></p>
 				</div>
 			</div>
 		</div>
@@ -73,8 +73,8 @@ if($orders_arr){
 							<table class="table mt20">
 								<thead>
 									<tr>
-										<th>Produkt</th>
-										<th class="text-center">Antal normalsider</th>
+										<th>Product</th>
+										<th class="text-center">No. of standard pages</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -86,7 +86,7 @@ if($orders_arr){
 									<?php }?>
 								</tbody>
 							</table>
-							<p><strong>Kommentar</strong>: <?php echo $order["details"]["BT"]->comment;?></p> 
+							<p><strong>Comments</strong>: <?php echo $order["details"]["BT"]->comment;?></p> 
 						</div>
 					</div>
 				</div>
@@ -94,7 +94,7 @@ if($orders_arr){
 			</div>
 		</div>
 		<?php } else {?>
-		Ingen opgaver!
+		No tasks!
 		<?php }?>
 	</div>
 </section>

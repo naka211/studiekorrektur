@@ -47,7 +47,7 @@ input[type='file'] {opacity:1;}
 						<input class="input-upload required" type="file" name="danish_file">
 					</div>
 				</div>
-				<?php if(count($cart->products) > 1){?>
+				<?php /*if(count($cart->products) > 1){?>
 				<div class="row">
 					<label for=""><strong>Upload dit abstract her</strong></label>
 					<div class="eachRowUpload">
@@ -55,7 +55,7 @@ input[type='file'] {opacity:1;}
 						<input class="input-upload required" type="file" name="english_file">
 					</div>
 				</div>
-				<?php }?>
+				<?php }*/?>
 			</div>
 		</div>
 		<div class="row text-center mb300">
