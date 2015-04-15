@@ -32,6 +32,21 @@ if($orders_arr){
 			  textfield.setCustomValidity('Venligst udfyld dette felt');  
 			}
 		});
+		
+		loadLink = function(id){
+			//jQuery("#downloadLink").css("display", "none");
+			jQuery("#downloadLink").html('<img src="<?php echo JURI::base();?>images/loading.gif">');
+			jQuery.ajax({
+			  	method: "POST",
+			  	url: "<?php echo JURI::base();?>index.php?option=com_virtuemart&view=cart&task=loadLink",
+			  	data: {id: id}
+			}).done(function( result ) {
+				if(result){
+					jQuery("#downloadLink").html('');
+					jQuery("#download"+id).css("display", "block");
+				}
+			});
+		}
     });
 </script>
 <style>
@@ -47,8 +62,8 @@ input[type='file'] {opacity:1;}
 		<div class="row">
 			<div class="col-md-12 pad0">
 				<div class="pull-right text-right box-right">
-					<p>Velkommen <?php echo $user->name;?> - <a class="btnLogout" href="index.php?option=com_users&task=user.logout&return=<?php echo base64_encode(JRoute::_("index.php?option=com_users&view=login"));?>">Logout</a></p>
-					<p><a class="active">Igangværende</a> - <a href="<?php echo $finish_link;?>">Færdig</a></p>
+					<p>Welcome <?php echo $user->name;?> - <a class="btnLogout" href="index.php?option=com_users&task=user.logout&return=<?php echo base64_encode(JRoute::_("index.php?option=com_users&view=login"));?>">Logout</a></p>
+					<p><a class="active">Igangværende</a> - <a href="<?php echo $finish_link;?>">Completed</a></p>
 				</div>
 			</div>
 		</div>
@@ -85,8 +100,8 @@ input[type='file'] {opacity:1;}
 							<table class="table mt20">
 								<thead>
 									<tr>
-										<th>Produkt</th>
-										<th class="text-center">Antal normalsider</th>
+										<th>Product</th>
+										<th class="text-center">No. of standard pages</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -100,20 +115,22 @@ input[type='file'] {opacity:1;}
 							</table>
 							<div class="row">
 								<div class="col-md-6">
-									<p>Word file: <?php echo $order['details']['BT']->danish_file;?> <a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->danish_file;?>">Download</a></p>
-									<?php if($order['details']['BT']->english_file){?>
-									<p>Abstract file: <?php echo $order['details']['BT']->english_file;?> <a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->english_file;?>">Download</a></p>
+									<?php if(!$order['details']['BT']->downloaded){?>
+									<a id="downloadLink" class="btnDownload" href="javascript:void(0);" onClick="loadLink(<?php echo $order['details']['BT']->virtuemart_order_id;?>)">Click here to view download link</a>
+									<p>File name: <?php echo $order['details']['BT']->danish_file;?> <span id="download<?php echo $order['details']['BT']->virtuemart_order_id;?>" style="display:none;"><a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->danish_file;?>">Download</a></span></p>
+									<?php } else {?>
+									<p>File name: <?php echo $order['details']['BT']->danish_file;?> <a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->danish_file;?>">Download</a></p>
 									<?php }?>
-									<p><strong>Kommentar</strong>: <?php echo $order["details"]["BT"]->comment;?></p>
+									<p><strong>Comments</strong>: <?php echo $order["details"]["BT"]->comment;?></p>
 								</div>
 								<div class="col-md-6">
 									<form action="index.php" method="post" enctype="multipart/form-data" class="form-validate">
 									<p>Edited word fil: <span><?php echo $order['details']['BT']->danish_edited_file;?></span></p>
 									<input class="mb10 required" type="file" name="danish_file">
-									<?php if($itemNum>1){?>
-									<p>Edited abstract fil: <span><?php echo $order['details']['BT']->english_edited_file;?></span></p>
-									<input  class="mb10 required" type="file" name="english_file">
-									<?php }?>
+									<p>How many corrections total:</p>
+									<input class="form-control input4 required" type="text" name="correct_words" value="<?php echo $order['details']['BT']->correct_words;?>">
+									<p>Comments:</p>
+									<textarea class="form-control txta" name="freelance_comment"><?php echo $order['details']['BT']->freelance_comment;?></textarea>
 									<!--<a class="btn btnUpload" href="#">Upload</a>-->
 									<button class="btn btnUpload validate">Upload</button>
 									<input type="hidden" name="option" value="com_virtuemart">
@@ -126,14 +143,11 @@ input[type='file'] {opacity:1;}
 										if($itemNum=1 && $order['details']['BT']->danish_edited_file){
 											$disable = false;
 										}
-										if($itemNum>1 && $order['details']['BT']->danish_edited_file && $order['details']['BT']->english_edited_file){
-											$disable = false;
-										}
 										if($disable){
 									?>
-									<a class="btn btn-default disabled" href="#">Indsend færdig opgave</a>
+									<a class="btn btn-default disabled" href="#">Send final document to customer</a>
 									<?php } else {?>
-									<a class="btn btnSendmail" href="index.php?option=com_virtuemart&view=cart&task=sendEmail&order_id=<?php echo $order['details']['BT']->virtuemart_order_id;?>">Indsend færdig opgave</a>
+									<a class="btn btnSendmail" href="index.php?option=com_virtuemart&view=cart&task=sendEmail&order_id=<?php echo $order['details']['BT']->virtuemart_order_id;?>">Send final document to customer</a>
 									<?php }?>
 								</div>
 							</div>
@@ -144,7 +158,7 @@ input[type='file'] {opacity:1;}
 			</div>
 		</div>
 		<?php } else {?>
-		Ingen opgaver!
+		No tasks!
 		<?php }?>
 	</div>
 </section>

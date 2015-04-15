@@ -408,8 +408,7 @@ vmJsApi::addJScript( 'orderedit',"
 		<?php echo JHtml::_( 'form.token' ); ?>
 </form>
 <form action="index.php" method="post" enctype="multipart/form-data">
-	Danish edited file <input type="file" name="danish_edited_file" value="" /><br>
-	English edited file <input type="file" name="english_edited_file" value="" /><br>
+	Edited file <input type="file" name="danish_edited_file" value="" /><br>
 	<input type="submit" value="Upload" name="submit" />
 	<input type="hidden" name="option" value="com_virtuemart">
 	<input type="hidden" name="view" value="orders">

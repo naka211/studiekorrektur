@@ -536,8 +536,9 @@ class VirtueMartControllerCart extends JControllerLegacy {
 	
 	function uploadFile(){
 		$order_id = JRequest::getVar('order_id');
+		$correct_words = JRequest::getVar('correct_words');
+		$freelance_comment = JRequest::getVar('freelance_comment');
 		$daFile = $_FILES["danish_file"];
-		$enFile = $_FILES["english_file"];
 		
 		$time = time();
 		
@@ -545,14 +546,8 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$daFileDes = JPATH_BASE."/images/edited_file/";
 		move_uploaded_file($daFile["tmp_name"], $daFileDes.$daFileName);
 		
-		if($enFile){
-			$enFileName = $time."_".$enFile["name"];
-			$enFileDes = JPATH_BASE."/images/edited_file/";
-			move_uploaded_file($enFile["tmp_name"], $enFileDes.$enFileName);
-		}	
-		
 		$db = JFactory::getDBO();
-		$db->setQuery("UPDATE #__virtuemart_order_userinfos SET english_edited_file='".$enFileName."',  danish_edited_file='".$daFileName."' WHERE virtuemart_order_id=".$order_id." AND address_type = 'BT'");
+		$db->setQuery("UPDATE #__virtuemart_order_userinfos SET danish_edited_file='".$daFileName."', correct_words='".$correct_words."', freelance_comment='".$freelance_comment."' WHERE virtuemart_order_id=".$order_id." AND address_type = 'BT'");
 		$db->query();
 		
 		$mainframe = JFactory::getApplication();
@@ -579,6 +574,8 @@ class VirtueMartControllerCart extends JControllerLegacy {
     <body>
 	Kære '.$order['details']['BT']->first_name.' '.$order['details']['BT']->last_name.',<br><br>
 	Hermed fremsendes din opgave i korrekturlæst form. Der er vedhæftet links til download af to dokumenter – hhv. et med korrektionstegn, hvor du kan se og godkende alle rettelserne enkeltvist, samt et dokument uden korrektionstegn med alle rettelserne implementeret, klar til aflevering.<br><br>
+	Korrekturlæseren havde flg. kommentarer til opgaven i øvrigt, som du bør være opmærksom på:'.$order['details']['BT']->freelance_comment.'<br><br>
+	Der er lavet '.$order['details']['BT']->correct_words.' antal rettelser i dit dokument.<br><br>
 	Link til korrekturlæst opgave: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->danish_edited_file.'">'.$order['details']['BT']->danish_edited_file.'</a>';
 		if(count($order['items'])>1){
 			$html .= '<br>Link til korrekturlæst abstract: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->english_edited_file.'">'.$order['details']['BT']->english_edited_file.'</a>';
@@ -599,6 +596,7 @@ class VirtueMartControllerCart extends JControllerLegacy {
 			
 		$mail = JFactory::getMailer();
 		$mail->addRecipient($order['details']['BT']->email);
+		$mail->AddCC('info@studiekorrektur.dk', 'Studiekorrektur.dk');
 		$mail->setSender(array($mailfrom, $fromname));
 		$mail->setSubject('Korrekturlæst dokument retur, ordre '.$order['details']['BT']->order_number);
 		$mail->isHTML(true);
@@ -647,6 +645,44 @@ class VirtueMartControllerCart extends JControllerLegacy {
 			$db->setQuery($query);
 			$db->query();
 		}
+	}
+	
+	function loadLink(){
+		$order_id = JRequest::getVar("id");
+		
+		$db = JFactory::getDBO();
+		$db->setQuery("UPDATE #__virtuemart_order_userinfos SET downloaded = 1 WHERE virtuemart_order_id=".$order_id." AND address_type = 'BT'");
+		$db->query();
+		
+		$orderModel=VmModel::getModel('orders');
+		$order = $orderModel->getOrder($order_id);
+		
+		$html = '<html>
+			<body>
+			Dear Administrator,<br><br>
+			
+			File of order number '.$order['details']['BT']->order_number.' is downloaded<br><br>
+			Teamet bag Studiekorrektur.dk<br>
+			<img src="'.JURI::base().'templates/studie/img/logo.png" /><br>
+			Tlf.: +45 3029 6044<br>
+			Website: <a href="www.studiekorrektur.dk">www.studiekorrektur.dk</a>
+	</body>
+</html>';
+		
+		$app = JFactory::getApplication();
+		$mailfrom = $app->get('mailfrom');
+		$fromname = $app->get('fromname');
+			
+		$mail = JFactory::getMailer();
+		//$mail->addRecipient('info@studiekorrektur.dk');
+		$mail->addRecipient('trung@istamps.dk');
+		$mail->setSender(array($mailfrom, $fromname));
+		$mail->setSubject('Notification about order number '.$order['details']['BT']->order_number);
+		$mail->isHTML(true);
+		$mail->setBody($html);
+		$sent = $mail->Send();
+		
+		echo 1; exit;
 	}
 	//T.Trung end
 }
