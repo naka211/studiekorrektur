@@ -32,7 +32,7 @@ JHtml::_('behavior.formvalidation');
 						<div class="col-md-12">
 							<h3 class="text-center">Login</h3>
 							<div class="form-group">
-								<label for="inputEmail">Brugernavn</label>
+								<label for="inputEmail">Username</label>
 								<input type="text" class="form-control required" name="username">
 							</div>
 							<div class="form-group">

@@ -53,10 +53,10 @@ if($orders_arr){
 							<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $i;?>">
 								<div class="row">
 									<div class="col-md-3">
-										<p>Dit ordrenr. er <?php echo $order['details']['BT']->order_number;?></p>
+										<p>Order number is <?php echo $order['details']['BT']->order_number;?></p>
 									</div>
 									<div class="col-md-3">
-										<p>Sprog: <?php echo $order['details']['BT']->language;?></p>
+										<p>Language: <?php echo $order['details']['BT']->language;?></p>
 									</div>
 									<div class="col-md-4">
 										<p>Leveringstidspunkt: <?php echo $order['details']['BT']->delivery_date;?></p>

@@ -572,19 +572,18 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		
 		$html = '<html>
     <body>
-	Kære '.$order['details']['BT']->first_name.' '.$order['details']['BT']->last_name.',<br><br>
-	Hermed fremsendes din opgave i korrekturlæst form. Der er vedhæftet links til download af to dokumenter – hhv. et med korrektionstegn, hvor du kan se og godkende alle rettelserne enkeltvist, samt et dokument uden korrektionstegn med alle rettelserne implementeret, klar til aflevering.<br><br>
-	Korrekturlæseren havde flg. kommentarer til opgaven i øvrigt, som du bør være opmærksom på:'.$order['details']['BT']->freelance_comment.'<br><br>
-	Der er lavet '.$order['details']['BT']->correct_words.' antal rettelser i dit dokument.<br><br>
+	Kære '.$order['details']['BT']->first_name.' '.$order['details']['BT']->last_name.',<br><br><br>
+	Hermed fremsendes din opgave i korrekturlæst form. Der er vedhæftet links til download af to dokumenter – hhv. et med korrektionstegn, hvor du kan se og godkende alle rettelserne enkeltvist, samt et dokument uden korrektionstegn med alle rettelserne implementeret, klar til aflevering.<br><br>';
+	if($order['details']['BT']->freelance_comment){
+		$html .= 'Korrekturlæseren havde flg. kommentarer til opgaven i øvrigt, som du bør være opmærksom på:<br>'.$order['details']['BT']->freelance_comment.'<br><br>';
+	}
+	$html .= 'Der er lavet '.$order['details']['BT']->correct_words.' antal rettelser i dit dokument.<br><br>
 	Link til korrekturlæst opgave: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->danish_edited_file.'">'.$order['details']['BT']->danish_edited_file.'</a>';
-		if(count($order['items'])>1){
-			$html .= '<br>Link til korrekturlæst abstract: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->english_edited_file.'">'.$order['details']['BT']->english_edited_file.'</a>';
-		}
     $html .= '<br><br>
 			Tak fordi du valgte Studiekorrektur.dk – vi krydser fingrer for en høj karakter!<br><br>
 			De bedste hilsener,<br>
-			Teamet bag Studiekorrektur.dk<br>
-			<img src="'.JURI::base().'templates/studie/img/logo.png" /><br>
+			Teamet bag Studiekorrektur.dk<br><br>
+			<img src="'.JURI::base().'templates/studie/img/logo.png" /><br><br>
 			Tlf.: +45 3029 6044<br>
 			Website: <a href="www.studiekorrektur.dk">www.studiekorrektur.dk</a>
 	</body>
@@ -594,9 +593,12 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$mailfrom = $app->get('mailfrom');
 		$fromname = $app->get('fromname');
 			
+		$user = JFactory::getUser(108);
+		
 		$mail = JFactory::getMailer();
 		$mail->addRecipient($order['details']['BT']->email);
-		$mail->AddCC('info@studiekorrektur.dk', 'Studiekorrektur.dk');
+		//$mail->AddCC('info@studiekorrektur.dk', 'Studiekorrektur.dk');
+		$mail->addRecipient($user->email, 'Studiekorrektur.dk');
 		$mail->setSender(array($mailfrom, $fromname));
 		$mail->setSubject('Korrekturlæst dokument retur, ordre '.$order['details']['BT']->order_number);
 		$mail->isHTML(true);
@@ -672,10 +674,12 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$app = JFactory::getApplication();
 		$mailfrom = $app->get('mailfrom');
 		$fromname = $app->get('fromname');
+		
+		$user = JFactory::getUser(108);
 			
 		$mail = JFactory::getMailer();
 		//$mail->addRecipient('info@studiekorrektur.dk');
-		$mail->addRecipient('trung@istamps.dk');
+		$mail->addRecipient($user->email);
 		$mail->setSender(array($mailfrom, $fromname));
 		$mail->setSubject('Notification about order number '.$order['details']['BT']->order_number);
 		$mail->isHTML(true);

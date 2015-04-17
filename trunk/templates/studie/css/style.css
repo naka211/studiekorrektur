@@ -156,7 +156,8 @@ ul.pricing-list li.focus:hover {box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); curso
 border:none 5px #000000; -moz-border-radius-topleft: 5px; -moz-border-radius-topright:5px; -moz-border-radius-bottomleft:5px; -moz-border-radius-bottomright:5px; -webkit-border-top-left-radius:5px;
 -webkit-border-top-right-radius:5px; -webkit-border-bottom-left-radius:5px; -webkit-border-bottom-right-radius:5px; border-top-left-radius:5px; border-top-right-radius:5px;
 border-bottom-left-radius:5px; border-bottom-right-radius:5px; }
-.icon-people {background-color: #ebebeb; -webkit-box-shadow: inset 0 0 0 2px rgba(255,255,255,.75); -moz-box-shadow: inset 0 0 0 2px rgba(255,255,255,.75); box-shadow: inset 0 0 0 2px rgba(255,255,255,.75); position: absolute; top: -60px; left: 30px; border-radius: 50%; width: 80%;}
+/*.icon-people {background-color: #ebebeb; -webkit-box-shadow: inset 0 0 0 2px rgba(255,255,255,.75); -moz-box-shadow: inset 0 0 0 2px rgba(255,255,255,.75); box-shadow: inset 0 0 0 2px rgba(255,255,255,.75); position: absolute; top: -60px; left: 30px; border-radius: 50%; width: 80%;}*/
+.icon-people {position: absolute; top: -60px; left: 30px; }
 .icon-open {background: url(../img/icon-open.png) no-repeat; width: 22px; height: 20px; position: absolute; top: 10px; left: 10px;}
 .icon-close {background: url(../img/icon-close.png) no-repeat; width: 22px; height: 20px; position: absolute; bottom: 10px; right: 10px;}
 .testimonials {min-height: 360px;}
@@ -268,89 +269,6 @@ input[type='file'] {opacity: 0;}
 .banner-fix {position: relative;}
 .banner-fix .caption {position: absolute; top: 35%; text-align: center; color: #fff; margin: 0 auto; width: 100%;}
 
-/*==========  Non-Mobile First Method  ==========*/
-
-	@media (min-width: 1200px){
-		.container {width: 1080px;}
-	}
-
-    /* Large Devices, Wide Screens */
-    @media only screen and (max-width : 1200px) {
-		
-    }
-
-    /* Medium Devices, Desktops */
-    @media only screen and (max-width : 992px) {
-
-    }
-
-    /* Small Devices, Tablets */
-    @media only screen and (max-width : 768px) {
-		.mce_feature {text-align: center; margin-bottom: 10px;}
-		.banner h3 {font-size: 16px;}
-		.info h4 {margin-top: 10px;}
-		.carousel-caption {top: 5%;}
-		.banner p {font-size: 13px;}
-		.icon-people {position: relative; width: 32%; left: 39%;}
-		.post {text-align: center;}
-		ul.pricing-list li {width: 100%; padding-left: 0; box-shadow: none; margin-bottom: 10px; border-radius: 0;}
-		ul.pricing-list li:hover {box-shadow: none; top: 0;}
-		ul.pricing-list li.no {left: 0;}
-		ul.pricing-list li.focus {box-shadow: none; top: 0;}
-		.pricing-title {border-radius: 0;}
-		.bor-l2 {padding-left: 10px;}
-		.newsletter input {width: 79%;}
-		.banner {margin-top: 21px;}
-		.btnBooknow {margin-top: 10px;}
-		.w100p {width: 100%;}
-		.footer-below p {text-align: center;}
-		.box {margin-bottom: 10px;}
-		.down2 {top: -16px !important;}
-		.down1 {top: -16px !important;}
-		.pr40 {padding-right: 20px;}
-		.pl50 {padding-left: 20px; padding-right: 20px;}
-		.btnPayment {padding: 10px 0; display: block;}
-		a.btnEdit {margin-bottom: 10px;}
-		.h3- {font-size: 20px; bottom: -10px; position: relative;}
-		h3, .h3 {font-size: 20px;}
-		.padr0 {padding-right: 15px;}
-		.hvordan-img {margin: 0;}
-		.ml8p {margin-left: 0;}
-		.pl0 {padding-left: 15px;}
-		.banner-fix .caption {top: 10%; width: 100%;}
-		.banner-fix .caption h3 {font-size: 20px;}
-    }
-
-    /* Extra Small Devices, Phones */ 
-    @media only screen and (max-width : 480px) {
-		
-    }
-
-    /* Custom, iPhone Retina */ 
-    @media only screen and (max-width : 320px) {
-        .navbar-brand {width: 80%;}
-        .nav > li {padding: 0 10px;}
-    }
-
-	@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-		.container {width: 100%;}
-		.carousel-caption h3 {font-size: 10px;}
-		.banner {margin-top: 21px;}
-		table {display: block;}
-		.pl50 {padding-left: 30px; padding-right: 30px;}
-		.bor-l2 {padding-left: 10px; border: none; }
-		.pr40 {padding-right: 30px; padding-left: 10px;}
-		a.btnEdit {margin-bottom: 10px;}
-		.btnPayment {display: block; padding: 10px;}
-		h3 {font-size: 22px;}
-		ul.pricing-list li.no {right: 0;}
-		ul.pricing-list li {width: 100%; margin-bottom: 10px;}
-		.contact h3 {font-size: 22px;}
-		.testimonials p, .contact p {font-size: 16px;}
-		.btnBooknow {left: -7px;}
-		.icon-people {width: 60%; position: relative; left: 20%;}
-	}
-	
 .invalid{border:1px solid red !important;}
 
 .eachRowUpload {overflow: hidden; position: relative; min-height: 42px;}
@@ -458,3 +376,93 @@ ul.list-article li {margin-bottom: 15px; border-bottom: 1px dotted #ccc;}
     border-radius: 0;
     margin-bottom: 10px;
 }
+.disabled {z-index: 1000; background-color: lightgrey; opacity: 0.6; pointer-events: none;}
+.disabled .btnChoose2 {background: lightgrey; border-color: #808b96; color: #808b96;}
+
+/*==========  Non-Mobile First Method  ==========*/
+
+	@media (min-width: 1200px){
+		.container {width: 1080px;}
+	}
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (max-width : 1200px) {
+		
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (max-width : 992px) {
+
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (max-width : 768px) {
+		.mce_feature {text-align: center; margin-bottom: 10px;}
+		.banner h3 {font-size: 16px;}
+		.info h4 {margin-top: 10px;}
+		.carousel-caption {top: 5%;}
+		.banner p {font-size: 13px;}
+		.icon-people {position: relative; width: 32%; left: 39%;}
+		.post {text-align: center;}
+		ul.pricing-list li {width: 100%; padding-left: 0; box-shadow: none; margin-bottom: 10px; border-radius: 0;}
+		ul.pricing-list li:hover {box-shadow: none; top: 0;}
+		ul.pricing-list li.no {left: 0;}
+		ul.pricing-list li.focus {box-shadow: none; top: 0;}
+		.pricing-title {border-radius: 0;}
+		.bor-l2 {padding-left: 10px;}
+		.newsletter input {width: 79%;}
+		.banner {margin-top: 21px;}
+		.btnBooknow {margin-top: 10px;}
+		.w100p {width: 100%;}
+		.footer-below p {text-align: center;}
+		.box {margin-bottom: 10px;}
+		.down2 {top: -16px !important;}
+		.down1 {top: -16px !important;}
+		.pr40 {padding-right: 20px;}
+		.pl50 {padding-left: 20px; padding-right: 20px;}
+		.btnPayment {padding: 10px 0; display: block;}
+		a.btnEdit {margin-bottom: 10px;}
+		.h3- {font-size: 20px; bottom: -10px; position: relative;}
+		h3, .h3 {font-size: 20px;}
+		.padr0 {padding-right: 15px;}
+		.hvordan-img {margin: 0;}
+		.ml8p {margin-left: 0;}
+		.pl0 {padding-left: 15px;}
+		.banner-fix .caption {top: 10%; width: 100%;}
+		.banner-fix .caption h3 {font-size: 20px;}
+		
+		.box2 {width: 100%; margin: 0 auto;}
+		  .btnBooknow3 {display: block;}
+		  .box2 {width: 100%; padding: 0 20px;}
+    }
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (max-width : 480px) {
+		
+    }
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (max-width : 320px) {
+        .navbar-brand {width: 80%;}
+        .nav > li {padding: 0 10px;}
+    }
+
+	@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+		.container {width: 100%;}
+		.carousel-caption h3 {font-size: 10px;}
+		.banner {margin-top: 21px;}
+		table {display: block;}
+		.pl50 {padding-left: 30px; padding-right: 30px;}
+		.bor-l2 {padding-left: 10px; border: none; }
+		.pr40 {padding-right: 30px; padding-left: 10px;}
+		a.btnEdit {margin-bottom: 10px;}
+		.btnPayment {display: block; padding: 10px;}
+		h3 {font-size: 22px;}
+		ul.pricing-list li.no {right: 0;}
+		ul.pricing-list li {width: 100%; margin-bottom: 10px;}
+		.contact h3 {font-size: 22px;}
+		.testimonials p, .contact p {font-size: 16px;}
+		.btnBooknow {left: -7px;}
+		.icon-people {width: 60%; position: relative; left: 20%;}
+		.testimonials p, .contact p {font-size: 16px; line-height: 1.8em;}
+	}
