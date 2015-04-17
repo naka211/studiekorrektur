@@ -63,7 +63,7 @@ input[type='file'] {opacity:1;}
 			<div class="col-md-12 pad0">
 				<div class="pull-right text-right box-right">
 					<p>Welcome <?php echo $user->name;?> - <a class="btnLogout" href="index.php?option=com_users&task=user.logout&return=<?php echo base64_encode(JRoute::_("index.php?option=com_users&view=login"));?>">Logout</a></p>
-					<p><a class="active">Igangværende</a> - <a href="<?php echo $finish_link;?>">Completed</a></p>
+					<p><a class="active">In progress</a> - <a href="<?php echo $finish_link;?>">Completed</a></p>
 				</div>
 			</div>
 		</div>
@@ -80,10 +80,10 @@ input[type='file'] {opacity:1;}
 							<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $order['details']['BT']->virtuemart_order_id;?>">
 								<div class="row">
 									<div class="col-md-3">
-										<p>Dit ordrenr. er <?php echo $order['details']['BT']->order_number;?></p>
+										<p>Order number is <?php echo $order['details']['BT']->order_number;?></p>
 									</div>
 									<div class="col-md-3">
-										<p>Sprog: <?php echo $order['details']['BT']->language;?></p>
+										<p>Language: <?php echo $order['details']['BT']->language;?></p>
 									</div>
 									<div class="col-md-4">
 										<p>Leveringstidspunkt: <?php echo $order['details']['BT']->delivery_date;?></p>

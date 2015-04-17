@@ -28,7 +28,7 @@ $autocapture = '0';
 $cardtypelock = '';
 $testmode = 1;
 $splitpayment = 0;
-$md5word = '24a9b705ee7d64f5bbd26033ab3bb25e1990aab9a3c4137a9e8d9efc6fbd9526';
+$md5word = 'Ds3F4Xk2xt7LZ59RKb1v26zdh8S8MJ48596qwI1f2i3T76B9Ul35V59a68e4N71r';
 $md5check = md5($protocol . $msgtype . $merchant . $language . $ordernumber . $amount . $currency . $continueurl . $cancelurl . $callbackurl . $autocapture . $cardtypelock . $testmode. $splitpayment . $md5word);
 ?>
 

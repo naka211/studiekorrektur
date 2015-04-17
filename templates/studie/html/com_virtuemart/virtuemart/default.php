@@ -59,23 +59,23 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery("#premium_da").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
 				jQuery("#standard_da").removeClass('btnUnChoose').addClass('btnChoose').text('Valgt');
 				
-				jQuery('#abstract').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
+				jQuery('#abstract').removeClass('btnCheck').addClass('btnUnCheck').text('Vælg');
 				jQuery("#words").prop( "disabled", false );
 				
 				if(jQuery("#express").val() == 1){
-					if(jQuery("#quantity").val() < 20){
+					/*if(jQuery("#quantity").val() < 20){
 						getDeliveryTime(1);
 					} else {
 						getDeliveryTime(2);
-					}
+					}*/
 					jQuery("#virtuemart_product_id").val("3");
 					jQuery("#price").val("37.425");
 				} else {
-					if(jQuery("#quantity").val() < 20){
+					/*if(jQuery("#quantity").val() < 20){
 						getDeliveryTime(2);
 					} else {
 						getDeliveryTime(3);
-					}
+					}*/
 					jQuery("#virtuemart_product_id").val("1");
 					jQuery("#price").val("24.95");
 				}
@@ -89,23 +89,23 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery("#standard_da").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
 				jQuery("#premium_da").removeClass('btnUnChoose').addClass('btnChoose').text('Valgt');
 				
-				jQuery('#abstract').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
+				jQuery('#abstract').removeClass('btnCheck').addClass('btnUnCheck').text('Vælg');
 				jQuery("#words").prop( "disabled", false );
 				
 				if(jQuery("#express").val() == 1){
-					if(jQuery("#quantity").val() < 20){
-						getDeliveryTime(1);
-					} else {
-						getDeliveryTime(2);
-					}
+					//if(jQuery("#quantity").val() < 20){
+//						getDeliveryTime(1);
+//					} else {
+//						getDeliveryTime(2);
+//					}
 					jQuery("#virtuemart_product_id").val("4");
 					jQuery("#price").val("44.925");
 				} else {
-					if(jQuery("#quantity").val() < 20){
+					/*if(jQuery("#quantity").val() < 20){
 						getDeliveryTime(2);
 					} else {
 						getDeliveryTime(3);
-					}
+					}*/
 					jQuery("#virtuemart_product_id").val("2");
 					jQuery("#price").val("29.95");
 				}
@@ -118,7 +118,7 @@ defined('_JEXEC') or die('Restricted access');
 			if(e.hasClass('btnUnCheck')){
 				jQuery('#express_en').removeClass('btnUnCheck').addClass('btnCheck').text('Tilvalgt');
 				jQuery('#express_da').removeClass('btnUnCheck').addClass('btnCheck').text('Tilvalgt');
-				jQuery('#abstract').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
+				jQuery('#abstract').removeClass('btnCheck').addClass('btnUnCheck').text('Vælg');
 				jQuery("#words").prop( "disabled", false );
 				jQuery("#express").val("1");
 				
@@ -132,11 +132,11 @@ defined('_JEXEC') or die('Restricted access');
 					calPrice();
 				}
 				
-				if(jQuery("#quantity").val() < 20){
+				/*if(jQuery("#quantity").val() < 20){
 					getDeliveryTime(1);
 				} else {
 					getDeliveryTime(2);
-				}
+				}*/
 			} else {
 				jQuery('#express_en').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
 				jQuery('#express_da').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
@@ -152,17 +152,17 @@ defined('_JEXEC') or die('Restricted access');
 					calPrice();
 				}
 				
-				if(jQuery("#quantity").val() < 20){
+				/*if(jQuery("#quantity").val() < 20){
 					getDeliveryTime(2);
 				} else {
 					getDeliveryTime(3);
-				}
+				}*/
 			}
 		}
 		
 		setCheckAbstract = function(e, id){
 			if(e.hasClass('btnUnCheck')){
-				jQuery('#'+id).removeClass('btnUnCheck').addClass('btnCheck').text('Tilvalgt');
+				jQuery('#'+id).removeClass('btnUnCheck').addClass('btnCheck').text('Fravælg');
 				
 				jQuery("#standard_en").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
 				jQuery("#premium_en").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
@@ -171,6 +171,8 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery("#standard_da").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
 				jQuery("#premium_da").removeClass('btnChoose').addClass('btnUnChoose').text('Vælg');
 				jQuery('#express_da').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
+				
+				jQuery(".productDisabled").addClass("disabled");
 				
 				getDeliveryTime(2);
 				
@@ -184,7 +186,11 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery("#totalPrice").val(99);
 				setTotalPriceTxt();
 			} else {
-				jQuery('#'+id).removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
+				jQuery('#'+id).removeClass('btnCheck').addClass('btnUnCheck').text('Vælg');
+				jQuery("#words").prop( "disabled", false );
+				jQuery(".productDisabled").removeClass("disabled");
+				jQuery("#premium_en").click();
+				
 				jQuery("#abstract_flag").val("0");
 				jQuery("#virtuemart_product_id").val("0");
 				jQuery("#quantity").val("0");
@@ -293,7 +299,7 @@ defined('_JEXEC') or die('Restricted access');
 
 		<div class="row en">
 			<div class="col-md-3 padr0">
-				<div class="box">
+				<div class="box productDisabled">
 					<i class="fa fa-caret-down fa-3x down2"></i>
 					<h3>Standardkorrektur</h3>
 					<p>Korrektur på stavning og tegnsætning.</p>
@@ -305,7 +311,7 @@ defined('_JEXEC') or die('Restricted access');
 				</div>
 			</div>
 			<div class="col-md-3 padr0">
-				<div class="box">
+				<div class="box productDisabled">
 					<i class="fa fa-caret-down fa-3x down2"></i>
 					<h3>Premiumkorrektur</h3>
 					<p>Korrektur på stavning og tegnsætning.<br>
@@ -318,7 +324,7 @@ defined('_JEXEC') or die('Restricted access');
 				</div>
 			</div>
 			<div class="col-md-3 padr0">
-				<div class="box">
+				<div class="box productDisabled">
 					<i class="fa fa-caret-down fa-3x down2"></i>
 					<h3>Ekspreslevering <sup>(+50%)</sup></h3>
 					<p>Under 20 sider: Leveringstid 1 arbejdsdag<br>
@@ -333,11 +339,13 @@ defined('_JEXEC') or die('Restricted access');
 				<div class="box">
 					<i class="fa fa-caret-down fa-3x down2"></i>
 					<h3>Engelsk abstract</h3>
-					<p>Vi sørger for også at læse korrektur på dit engelske abstract.</p>
+					<p>Vi sørger for at læse korrektur på dit engelske abstract.</p>
+					<p>Fast pris for op til 3 normalsiders abstract.</p>
+					<p>Bestilles som separat ordre til dit danske speciale.</p>
 					<div class="w-price">
 						<p class="text-uppercase price3">Pris: 99 DKK</p>
 					</div>
-					<a class="btn btnChoose2 btnUnCheck" onClick="setCheckAbstract(this, 'abstract')" id="abstract">Tilvælg</a>
+					<a class="btn btnChoose2 btnUnCheck" onClick="setCheckAbstract(this, 'abstract')" id="abstract">Vælg</a>
 				</div>
 			</div>
 		</div>
