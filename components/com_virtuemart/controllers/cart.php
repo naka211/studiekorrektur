@@ -539,6 +539,7 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$correct_words = JRequest::getVar('correct_words');
 		$freelance_comment = JRequest::getVar('freelance_comment');
 		$daFile = $_FILES["danish_file"];
+		$enFile = $_FILES["english_file"];
 		
 		$time = time();
 		
@@ -546,8 +547,12 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$daFileDes = JPATH_BASE."/images/edited_file/";
 		move_uploaded_file($daFile["tmp_name"], $daFileDes.$daFileName);
 		
+		$enFileName = $time."_".$enFile["name"];
+		$enFileDes = JPATH_BASE."/images/edited_file/";
+		move_uploaded_file($enFile["tmp_name"], $enFileDes.$enFileName);
+		
 		$db = JFactory::getDBO();
-		$db->setQuery("UPDATE #__virtuemart_order_userinfos SET danish_edited_file='".$daFileName."', correct_words='".$correct_words."', freelance_comment='".$freelance_comment."' WHERE virtuemart_order_id=".$order_id." AND address_type = 'BT'");
+		$db->setQuery("UPDATE #__virtuemart_order_userinfos SET danish_edited_file='".$daFileName."',  english_edited_file='".$enFileName."', correct_words='".$correct_words."', freelance_comment='".$freelance_comment."' WHERE virtuemart_order_id=".$order_id." AND address_type = 'BT'");
 		$db->query();
 		
 		$mainframe = JFactory::getApplication();
@@ -572,14 +577,15 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		
 		$html = '<html>
     <body>
-	Kære '.$order['details']['BT']->first_name.' '.$order['details']['BT']->last_name.',<br><br><br>
+	Kære '.$order['details']['BT']->first_name.' '.$order['details']['BT']->last_name.',<br><br>
 	Hermed fremsendes din opgave i korrekturlæst form. Der er vedhæftet links til download af to dokumenter – hhv. et med korrektionstegn, hvor du kan se og godkende alle rettelserne enkeltvist, samt et dokument uden korrektionstegn med alle rettelserne implementeret, klar til aflevering.<br><br>';
 	if($order['details']['BT']->freelance_comment){
 		$html .= 'Korrekturlæseren havde flg. kommentarer til opgaven i øvrigt, som du bør være opmærksom på:<br>'.$order['details']['BT']->freelance_comment.'<br><br>';
 	}
 	$html .= 'Der er lavet '.$order['details']['BT']->correct_words.' antal rettelser i dit dokument.<br><br>
-	Link til korrekturlæst opgave: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->danish_edited_file.'">'.$order['details']['BT']->danish_edited_file.'</a>';
-    $html .= '<br><br>
+	Link til korrekturlæst opgave med korrektionstegn: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->danish_edited_file.'">'.$order['details']['BT']->danish_edited_file.'</a><br><br>
+	Link til korrekturlæst opgave uden korrektionstegn: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->english_edited_file.'">'.$order['details']['BT']->english_edited_file.'</a><br><br>';
+    $html .= '
 			Tak fordi du valgte Studiekorrektur.dk – vi krydser fingrer for en høj karakter!<br><br>
 			De bedste hilsener,<br>
 			Teamet bag Studiekorrektur.dk<br><br>

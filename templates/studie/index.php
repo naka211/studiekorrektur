@@ -61,6 +61,16 @@ $.src='//v2.zopim.com/?2sKuBE0eITBTzA2hhy7UiEvnzRYwgmPU';z.t=+new Date;$.
 type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
 </script>
 <!--End of Zopim Live Chat Script-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53727674-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </head>
 
 <body id="page-top" class="index">
@@ -71,7 +81,7 @@ type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header page-scroll">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-			<a class="navbar-brand" href="index.php"><img class="img-responsive" src="<?php echo $tmpl;?>img/logo.png" alt=""></a> </div>
+			<a class="navbar-brand" href=""><img class="img-responsive" src="<?php echo $tmpl;?>img/logo.png" alt=""></a> </div>
 		
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<?php if(JRequest::getVar("Itemid") == 101){?>
@@ -113,7 +123,7 @@ type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
 					<h3>Studiekorrektur</h3>
 					<div class="col-md-6 pad0">
 						<ul>
-							<li><a href="index.php">Forside</a></li>
+							<li><a href="">Forside</a></li>
 							<li><a href="<?php echo JURI::base();?>#info">Info</a></li>
 							<li><a href="<?php echo JURI::base();?>#price">Priser</a></li>
 							<li><a href="<?php echo JURI::base();?>#testimonials">Udtalelser</a></li>

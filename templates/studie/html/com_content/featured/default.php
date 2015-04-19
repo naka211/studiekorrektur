@@ -4,6 +4,11 @@ $tmpl = JURI::base().'templates/studie/';
 ?>
 <script type="text/javascript">
     jQuery(document).ready(function(){
+		jQuery('#myCarousel').carousel({
+			pause: true,
+			interval: false
+        });
+		
 		formatMoney = function(num){
 			var p = num.toFixed(2).split(".");
 			return p[0].split("").reverse().reduce(function(acc, num, i, orig) {
@@ -53,7 +58,7 @@ $tmpl = JURI::base().'templates/studie/';
 				<hgroup>
 					<h3>Info om Studiekorrektur.dk</h3>
 					<p class="f18">Vi tilbyder korrekturlæsning på både dansk og engelsk - prisen er den samme!<br>
-						Bemærk - minimumsbestilling på 10 sider.</p>
+						Bemærk, minimumsbestilling på 10 normalsider a 2.400 tegn inkl. mellemrum.</p>
 				</hgroup>
 			</div>
 		</div>
@@ -74,7 +79,7 @@ $tmpl = JURI::base().'templates/studie/';
 					<div class="col-sm-10 col-lg-10 pad0">
 						<h4>Leveringstid</h4>
 						<p>Behandling af op til 20 sider: 2-3 arbejdsdage<br>
-							Behandling af 20 sider og op efter: 3-4 arbejdsdage<br>
+							Behandling af 20 sider og opefter: 3-4 arbejdsdage<br>
 							Akut korrekturlæsning: 1-2 arbejdsdage (mod et gebyr på 50%)</p>
 					</div>
 				</div>
@@ -86,7 +91,7 @@ $tmpl = JURI::base().'templates/studie/';
 					<div class="col-sm-2 col-lg-2"> <i class="fa fa-file-text fa-4x mt10"></i> </div>
 					<div class="col-sm-10 col-lg-10 pl0">
 						<h4>Det færdige produkt</h4>
-						<p>Ved levering efter endt korrekturlæsning får du som kunde 1 Word-dokument retur, hvor du enten kan godkende alle rettelserne med 1 klik eller godkende dem enkeltvist.</p>
+						<p>Ved levering efter endt korrekturlæsning får du som kunde et Word-dokument retur, hvor du enten kan godkende alle rettelserne med et klik eller godkende dem enkeltvist.</p>
 					</div>
 				</div>
 			</div>
@@ -118,7 +123,7 @@ $tmpl = JURI::base().'templates/studie/';
 					<div class="col-sm-2 col-lg-2"> <i class="fa fa-info-circle fa-4x mt10"></i> </div>
 					<div class="col-sm-10 col-lg-10 pad0">
 						<h4>Om os</h4>
-						<p>Teamet bag Studiekorrektur.dk består af professionelle freelance korrekturlæsere med ma.nge års erfaring samt stifterne Jacob Cuculiza og Alexander Ilkjær, hvoraf de to sidstnævnte kun står for salg og markedsføring, mens korrekturlæsningen overlades til de professionelle.</p>
+						<p>Teamet bag Studiekorrektur.dk består af professionelle freelance korrekturlæsere med mange års erfaring samt stifterne Jacob Cuculiza og Alexander Ilkjær. Det to sidstnævnte står kun for salg og markedsføring, mens korrekturlæsningen overlades til de professionelle.</p>
 					</div>
 				</div>
 			</div>
@@ -147,7 +152,7 @@ $tmpl = JURI::base().'templates/studie/';
 				<ul class="pricing-features list-unstyled clearfix">
 					<li><strong>Korrektur på stavning og tegnsætning.</strong></li>
 					<li>Pris kun 24,95 DKK<br>
-						pr. normalside á 2.400 tegn<br>
+						pr. normalside a 2.400 tegn<br>
 						(inkl. mellemrum).</li>
 				</ul>
 				<div class="pricing-action"><a href="index.php?option=com_virtuemart&view=virtuemart&Itemid=2&p=standard" class="btn btnBook4 bfd6740">Bestil nu</a></div>
@@ -167,7 +172,7 @@ $tmpl = JURI::base().'templates/studie/';
 					</li>
 					<li>
 						<p>Pris kun 29,95 DKK<br>
-							pr. normalside á 2.400 tegn<br>
+							pr. normalside a 2.400 tegn<br>
 							(inkl. mellemrum).</p>
 					</li>
 				</ul>
@@ -250,14 +255,89 @@ $tmpl = JURI::base().'templates/studie/';
 				<p>Nedenfor kan du se, hvad andre kunder synes om Studiekorrektur.dk.</p>
 			</div>
 		</div>
-		<div class="row post"> <span class="icon-open"></span> <span class="icon-close"></span>
-			<div class="col-sm-2 col-lg-2">
-				<div class="text-center icon-people"> <img class="img-circle" src="<?php echo $tmpl;?>img/men.png" alt=""> </div>
+		<div class="row post">
+			<span class="icon-open"></span>
+			<span class="icon-close"></span>
+
+			<div id="myCarousel" class="carousel slide" data-interval="3000" data-ride="carousel">
+				<!-- Carousel indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+					<li data-target="#myCarousel" data-slide-to="3"></li>
+				</ol>
+				<!-- Carousel items -->
+				<div class="carousel-inner">
+					<div class="active item">
+						<div class="people">
+							<div class="text-center icon-people">
+								<img class="img-circle" src="<?php echo $tmpl;?>img/men.png" alt="">
+							</div>
+							<div class="office">
+								<p><strong>Jens K.</strong></p>
+								<p>HD(r)-studerende</p>
+							</div>
+						</div>
+						<div class="info-people">
+							<p>Studiekorrektur stod for gennemgående korrekturlæsning ifm. min afsluttende afhandling på 2. del af
+							HD-uddannelsen i regnskab, som resulterede i et 12-tal!</p>
+						</div>
+					</div>
+					<div class="item">
+						<div class="people">
+							<div class="text-center icon-people">
+								<img class="img-circle" src="<?php echo $tmpl;?>img/women.png" alt="">
+							</div>
+							<div class="office">
+								<p><strong>Kristoffer P.</strong></p>
+								<p>Cand.merc.-studerende</p>
+							</div>
+						</div>
+						<div class="info-people">
+							<p>Jeg har med stor tilfredshed benyttet Studiekorrekturs services til både mellemstore opgaver og større afhandlinger.
+							Korrekturlæsningen har uden tvivl påvirket mine karakterer positivt!</p>
+						</div>
+					</div>
+					<div class="item">
+						<div class="people">
+							<div class="text-center icon-people">
+								<img class="img-circle" src="<?php echo $tmpl;?>img/men.png" alt="">
+							</div>
+							<div class="office">
+								<p><strong>Camilla C.</strong></p>
+								<p>Cand.jur.-studerende</p>
+							</div>
+						</div>
+						<div class="info-people">
+							<p>Da jeg skrev min bachelor på jurastudiet, sørgede teamet hos Studiekorrektur for at læse korrektur på min afhandling. Det var utrolig nemt, og det har klart påvirket min karakter i den rigtige retning, at opgaven stod fejlfri og strømlinet. Jeg vil ikke tøve med at bruge Studiekorrektur igen ved aflevering af mit kandidat speciale!</p>
+						</div>
+					</div>
+					<div class="item">
+						<div class="people">
+							<div class="text-center icon-people">
+								<img class="img-circle" src="<?php echo $tmpl;?>img/women.png" alt="">
+							</div>
+							<div class="office">
+								<p><strong>Cecilie M.</strong></p>
+								<p>HHX 3. års-studerende</p>
+							</div>
+						</div>
+						<div class="info-people">
+							<p>Ved udarbejdelsen af min SRP i 3.g sørgede Studiekorrektur for at korrekturlæse opgaven. Det har bestemt haft god
+							indvirkning på karakteren, der vægter som et tilsvarende A-fag på eksamensbeviset! </p>
+						</div>
+					</div>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel" data-slide="prev">
+					<span class="arrow-left glyphicon-chevron-left"></span>
+				</a>
+				<a class="carousel-control right" href="#myCarousel" data-slide="next">
+					<span class="arrow-right glyphicon-chevron-right"></span>
+				</a>
 			</div>
-			<div class="col-sm-10">
-				<p>Da jeg skrev min bachelor på jurastudiet, sørgede teamet hos Studiekorrektur for at læse korrektur på min afhandling. Det var utrolig nemt, og det har klart påvirket min karakter i den rigtige retning, at<br>
-					opgaven stod fejlfri og strømlinet. Jeg vil ikke tøve med at bruge Studiekorrektur igen ved aflevering af mit kandidat speciale!</p>
-			</div>
+
 		</div>
 	</div>
 </section>
@@ -306,8 +386,9 @@ $tmpl = JURI::base().'templates/studie/';
 						<div class="col-md-12 form-group">
 							<?php
 							  require_once('recaptchalib.php');
-							  $publickey = "6LehjgMTAAAAANt2O-hrqTtVEd9q_3n-ZwZ7nfWX"; // you got this from the signup page
-							  echo recaptcha_get_html($publickey);
+							  $publickey = "6LeyiQUTAAAAAEz5qhOBQncyBEQhDvGkANSH6maH"; // you got this from the signup page
+							  echo recaptcha_get_html($publickey,'',true);
+							  //echo recaptcha_get_html($publickey);
 							?>
 						</div>
 					</div>

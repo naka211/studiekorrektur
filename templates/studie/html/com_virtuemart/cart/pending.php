@@ -125,8 +125,10 @@ input[type='file'] {opacity:1;}
 								</div>
 								<div class="col-md-6">
 									<form action="index.php" method="post" enctype="multipart/form-data" class="form-validate">
-									<p>Edited word fil: <span><?php echo $order['details']['BT']->danish_edited_file;?></span></p>
+									<p>Completed Word file with tracked changes: <span><?php echo $order['details']['BT']->danish_edited_file;?></span></p>
 									<input class="mb10 required" type="file" name="danish_file">
+									<p>Completed Word file without tracked changes: <span><?php echo $order['details']['BT']->english_edited_file;?></span></p>
+									<input class="mb10 required" type="file" name="english_file">
 									<p>How many corrections total:</p>
 									<input class="form-control input4 required" type="text" name="correct_words" value="<?php echo $order['details']['BT']->correct_words;?>">
 									<p>Comments:</p>
