@@ -20,9 +20,9 @@ defined('_JEXEC') or die('Restricted access');
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <td style="border-bottom: none;">
-                    <h2>Tak for din ordre </h2>
+                    <!--<h2>Tak for din ordre </h2>-->
 					<p>Kære <?php echo $this->orderDetails["details"]["BT"]->first_name." ".$this->orderDetails["details"]["BT"]->last_name;?>,</p>
-                    <p>Tak for din ordre!<br>
+                    <p>Tak for din ordre!<br><br>
                     Vi har modtaget din bestilling og den uploadede fil.<br>
                     Dit ordrenr. er <?php echo $this->orderDetails["details"]["BT"]->order_number;?> - du modtager også denne ordrebekræftelse på mail.</p>
                     <p>Sprog: <?php echo $this->orderDetails["details"]["BT"]->language;?></p>
@@ -61,7 +61,7 @@ defined('_JEXEC') or die('Restricted access');
                 </tr>
                 <tr>
                     <td  style="border-bottom: none;" colspan="4">
-                        <p>Du er velkommen til at kontakte os på info@studiekorrektur.dk eller +45 3029 6044, hvis du skulle have spørgsmål.<br>
+                        <p>Du er velkommen til at kontakte os på info@studiekorrektur.dk eller +45 3029 6044, hvis du skulle have spørgsmål.<br><br>
                         Du ønskes en god dag!</p>
                         <p>De bedste hilsener,<br>
                         Teamet bag Studiekorrektur.dk</p>
