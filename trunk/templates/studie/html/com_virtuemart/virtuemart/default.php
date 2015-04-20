@@ -265,7 +265,7 @@ defined('_JEXEC') or die('Restricted access');
 					<p>Korrektur på stavning og tegnsætning.</p>
 					<div class="w-price2">
 						<p class="text-uppercase price3">Pris: 24,95 DKK</p>
-						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
+						<p>Pr. normalside a 2.400 tegn inkl. mellemrum</p>
 					</div>
 					<a class="btn" onClick="setProduct(this, 1)" id="standard_da">Vælg</a>
 				</div>
@@ -278,7 +278,7 @@ defined('_JEXEC') or die('Restricted access');
 					Lette sproglige tilretninger.</p>
 					<div class="w-price2">
 						<p class="text-uppercase price3">Pris: 29,95 DKK</p>
-						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
+						<p>Pr. normalside a 2.400 tegn inkl. mellemrum</p>
 					</div>
 					<a class="btn" onClick="setProduct(this, 2)" id="premium_da">Valgt</a>
 				</div>
@@ -305,7 +305,7 @@ defined('_JEXEC') or die('Restricted access');
 					<p>Korrektur på stavning og tegnsætning.</p>
 					<div class="w-price">
 						<p class="text-uppercase price3">Pris: 24,95 DKK</p>
-						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
+						<p>Pr. normalside a 2.400 tegn inkl. mellemrum</p>
 					</div>
 					<a class="btn btnChoose2" onClick="setProduct(this, 1)" id="standard_en">Vælg</a>
 				</div>
@@ -318,7 +318,7 @@ defined('_JEXEC') or die('Restricted access');
 					Lette sproglige tilretninger.</p>
 					<div class="w-price">
 						<p class="text-uppercase price3">Pris: 29,95 DKK</p>
-						<p>Pr. normalside á 2.400 tegn inkl. mellemrum</p>
+						<p>Pr. normalside a 2.400 tegn inkl. mellemrum</p>
 					</div>
 					<a class="btn btnChoose2" onClick="setProduct(this, 2)" id="premium_en">Valgt</a>
 				</div>
