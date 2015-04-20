@@ -123,7 +123,7 @@ $tmpl = JURI::base().'templates/studie/';
 					<div class="col-sm-2 col-lg-2"> <i class="fa fa-info-circle fa-4x mt10"></i> </div>
 					<div class="col-sm-10 col-lg-10 pad0">
 						<h4>Om os</h4>
-						<p>Teamet bag Studiekorrektur.dk består af professionelle freelance korrekturlæsere med mange års erfaring samt stifterne Jacob Cuculiza og Alexander Ilkjær. Det to sidstnævnte står kun for salg og markedsføring, mens korrekturlæsningen overlades til de professionelle.</p>
+						<p>Teamet bag Studiekorrektur.dk består af professionelle freelance korrekturlæsere med mange års erfaring samt stifterne Jacob Cuculiza og Alexander Ilkjær. De to sidstnævnte står kun for salg og markedsføring, mens korrekturlæsningen overlades til de professionelle.</p>
 					</div>
 				</div>
 			</div>
@@ -138,7 +138,7 @@ $tmpl = JURI::base().'templates/studie/';
 				<hgroup>
 					<h3>Priser på korrekturlæsning</h3>
 					<p class="f20">Vi tilbyder korrekturlæsning på både dansk og engelsk - prisen er den samme! <br>
-						Bemærk - minimumsbestilling på 10 sider.</p>
+						Bemærk, minimumsbestilling på 10 normalsider a 2.400 tegn inkl. mellemrum.</p>
 				</hgroup>
 			</div>
 		</div>
