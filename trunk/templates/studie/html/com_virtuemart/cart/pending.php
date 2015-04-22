@@ -117,9 +117,9 @@ input[type='file'] {opacity:1;}
 								<div class="col-md-6">
 									<?php if(!$order['details']['BT']->downloaded){?>
 									<a id="downloadLink" class="btnDownload" href="javascript:void(0);" onClick="loadLink(<?php echo $order['details']['BT']->virtuemart_order_id;?>)">Click here to view download link</a>
-									<p>File name: <?php echo $order['details']['BT']->danish_file;?> <span id="download<?php echo $order['details']['BT']->virtuemart_order_id;?>" style="display:none;"><a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->danish_file;?>">Download</a></span></p>
+									<p>File name: <?php echo $order['details']['BT']->danish_file;?> <span id="download<?php echo $order['details']['BT']->virtuemart_order_id;?>" style="display:none;"><a class="btnDownload" href="<?php echo JURI::base().'index.php?option=com_virtuemart&view=cart&task=downloadFile&fileName='.$order['details']['BT']->danish_file;?>">Download</a></span></p>
 									<?php } else {?>
-									<p>File name: <?php echo $order['details']['BT']->danish_file;?> <a class="btnDownload" href="<?php echo JURI::base().'images/original_file/'.$order['details']['BT']->danish_file;?>">Download</a></p>
+									<p>File name: <?php echo $order['details']['BT']->danish_file;?> <a class="btnDownload" href="<?php echo JURI::base().'index.php?option=com_virtuemart&view=cart&task=downloadFile&fileName='.$order['details']['BT']->danish_file;?>">Download</a></p>
 									<?php }?>
 									<p><strong>Comments</strong>: <?php echo $order["details"]["BT"]->comment;?></p>
 								</div>

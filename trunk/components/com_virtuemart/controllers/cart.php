@@ -583,8 +583,8 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$html .= 'Korrekturlæseren havde flg. kommentarer til opgaven i øvrigt, som du bør være opmærksom på:<br>'.$order['details']['BT']->freelance_comment.'<br><br>';
 	}
 	$html .= 'Der er lavet '.$order['details']['BT']->correct_words.' antal rettelser i dit dokument.<br><br>
-	Link til korrekturlæst opgave med korrektionstegn: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->danish_edited_file.'">'.$order['details']['BT']->danish_edited_file.'</a><br><br>
-	Link til korrekturlæst opgave uden korrektionstegn: <a href="'.JURI::base().'images/edited_file/'.$order['details']['BT']->english_edited_file.'">'.$order['details']['BT']->english_edited_file.'</a><br><br>';
+	Link til korrekturlæst opgave med korrektionstegn: <a href="'.JURI::base().'index.php?option=com_virtuemart&view=cart&task=downloadFile&fileName='.$order['details']['BT']->danish_edited_file.'">'.$order['details']['BT']->danish_edited_file.'</a><br><br>
+	Link til korrekturlæst opgave uden korrektionstegn: <a href="'.JURI::base().'index.php?option=com_virtuemart&view=cart&task=downloadFile&fileName='.$order['details']['BT']->english_edited_file.'">'.$order['details']['BT']->english_edited_file.'</a><br><br>';
     $html .= '
 			Tak fordi du valgte Studiekorrektur.dk – vi krydser fingrer for en høj karakter!<br><br>
 			De bedste hilsener,<br>
@@ -693,6 +693,21 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$sent = $mail->Send();
 		
 		echo 1; exit;
+	}
+	
+	function downloadFile(){
+		$fileName = JRequest::getVar("fileName");
+		$fileLink = JPATH_BASE.DS."images".DS."original_file".DS.$fileName;
+		
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+		header('Content-Disposition: attachment; filename='.$fileName);
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize($fileLink));
+		readfile($fileLink);
+		exit;
 	}
 	//T.Trung end
 }

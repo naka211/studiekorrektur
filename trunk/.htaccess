@@ -37,6 +37,7 @@ redirect 301 /bestilling/checkout/ /bestil-nu.html
 redirect 301 /author/studiekorrektur/ /
 redirect 301 /testimonials/john-doe/ /#testimonials
 redirect 301 /bestilling/ /bestil-nu.html
+#redirect 301 https://studiekorrektur.dk/index.php https://studiekorrektur.dk
 
 ## No directory listings
 IndexIgnore *
@@ -49,18 +50,16 @@ Options -Indexes
 
 RewriteEngine On
 
-#RewriteCond %{HTTPS} off
-#RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} 
-
 RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
 RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 
+#RewriteCond %{REQUEST_URI} !^.*\.html$
 #RewriteCond %{REQUEST_FILENAME} !-f
 #RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteRule ^(.*)$ index.php?$1 [L,QSA]
+#RewriteRule ^(.*)$ $1.html [L,R=301]
 
-#RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s(.*)/index\.php [NC]
-#RewriteRule ^ %1 [R=301,L]
+#RewriteCond %{THE_REQUEST} ^[^/]*/index\.php [NC]
+#RewriteRule . / [R=301,L]
 
 ## Begin - Rewrite rules to block out some common exploits.
 # If you experience problems on your site block out the operations listed below
