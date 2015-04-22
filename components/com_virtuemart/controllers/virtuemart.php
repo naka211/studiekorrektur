@@ -83,7 +83,8 @@ class VirtueMartControllerVirtuemart extends JControllerLegacy
 		$day = JRequest::getVar('day');
 		setlocale(LC_TIME, array('da_DA.UTF-8','da_DA@euro','da_DA','danish'));
 		if(date('D') == "Sat" || date('D') == "Sun"){
-			echo utf8_encode(strftime("%a. d. %d %b. %Y ",strtotime('+'.$day.' weekdays', strtotime ('next Monday'))).strftime("kl. %H:%M",strtotime('+'.$day.' days', strtotime ('next Monday'))));
+			$day = $day - 1;
+			echo utf8_encode(strftime("%a. d. %d %b. %Y ",strtotime('+'.$day.' weekdays', strtotime ('next Monday'))).strftime("kl. %H:%M",strtotime('+'.$day.' days', strtotime ('next Monday'))-3600));
 		} else {
 			echo utf8_encode(strftime("%a. d. %d %b. %Y ",strtotime('+'.$day.' weekdays')).strftime("kl. %H:%M",strtotime('+'.$day.' days')));
 		}

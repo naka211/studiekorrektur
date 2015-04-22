@@ -26,10 +26,12 @@ defined('_JEXEC') or die('Restricted access');
             if(jQuery(this).attr("value")=="Dansk"){
                 jQuery(".en").hide();
                 jQuery(".dk").show();
+				jQuery("#enImg").show();
             }
             if(jQuery(this).attr("value")=="Engelsk"){
                 jQuery(".dk").hide();
                 jQuery(".en").show();
+				jQuery("#enImg").hide();
 				
 				if(jQuery("#abstract").hasClass('btnCheck')){
 					jQuery("#abstract").click();
@@ -361,9 +363,16 @@ defined('_JEXEC') or die('Restricted access');
 						<input type="radio" name="lang" value="Engelsk"> Engelsk
 					</div>
 				</div>
+				<div class="row" id="enImg">
+					<div class="col-md-12">
+						<div class="en-abs mt10">
+							<img alt="" src="templates/studie/img/en-abstract.png">
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="col-md-3">
-				<label for=""><strong>Indtast antal tegn inkl. mellemrum</strong></label>
+				<label for="" style="font-size:13px;"><strong>Indtast antal tegn inkl. mellemrum</strong></label>
 				<input type="text" class="form-control input" id="words" onKeyUp="calPrice();" value="0">
 			</div>
 			<div class="col-md-2" style="text-align:center;">
