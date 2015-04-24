@@ -13,8 +13,8 @@ $siteURL = JURI::base();
 
 $protocol = '7';
 $msgtype = 'authorize';
-//$merchant = '21218146';
-$merchant = '35321330';
+$merchant = '21218146';
+//$merchant = '35321330';
 $language = 'da';
 $ordernumber = $order['details']['BT']->order_number;
 $amount = round($order['details']['BT']->order_total,2)*100;
@@ -27,11 +27,11 @@ $callbackurl = $siteURL . 'index.php?option=com_virtuemart&view=vmplg&task=plugi
 $autocapture = '0';
 //$cardtypelock = 'dankort, danske-dk, mastercard, mastercard-dk, american-express, american-express-dk, diners, diners-dk, edankort, fbg1886, jcb, mastercard-debet-dk, nordea-dk, visa, visa-dk, visa-electron, visa-electron-dk';
 $cardtypelock = '';
-//$testmode = 1;
-$testmode = 0;
+$testmode = 1;
+//$testmode = 0;
 $splitpayment = 0;
-//$md5word = 'Ds3F4Xk2xt7LZ59RKb1v26zdh8S8MJ48596qwI1f2i3T76B9Ul35V59a68e4N71r';
-$md5word = '6df7c584560e7d0373ece1d7a7290afde6d5a5b5645c4eecb4820a1574b17f2f';
+$md5word = 'Ds3F4Xk2xt7LZ59RKb1v26zdh8S8MJ48596qwI1f2i3T76B9Ul35V59a68e4N71r';
+//$md5word = '6df7c584560e7d0373ece1d7a7290afde6d5a5b5645c4eecb4820a1574b17f2f';
 $md5check = md5($protocol . $msgtype . $merchant . $language . $ordernumber . $amount . $currency . $continueurl . $cancelurl . $callbackurl . $autocapture . $cardtypelock . $testmode. $splitpayment . $md5word);
 ?>
 
