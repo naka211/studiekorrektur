@@ -697,11 +697,17 @@ class VirtueMartControllerCart extends JControllerLegacy {
 	
 	function downloadFile(){
 		$fileName = JRequest::getVar("fileName");
-		$fileLink = JPATH_BASE.DS."images".DS."original_file".DS.$fileName;
+		$original = JRequest::getVar("original");
+		
+		if($original){
+			$fileLink = JPATH_BASE.DS."images".DS."original_file".DS.$fileName;
+		} else {
+			$fileLink = JPATH_BASE.DS."images".DS."edited_file".DS.$fileName;
+		}
 		
 		header('Content-Description: File Transfer');
 		header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-		header('Content-Disposition: attachment; filename='.$fileName);
+		header('Content-Disposition: attachment; filename="'.$fileName.'"');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate');
 		header('Pragma: public');

@@ -394,7 +394,20 @@ ul.list-article li {margin-bottom: 15px; border-bottom: 1px dotted #ccc;}
 .office p {text-align: center;}
 .testimonials {padding: 40px 0 80px 0;}
 .post {min-height: 280px;}
-
+.iconDown {
+    bottom: 20px;
+    position: absolute;
+    right: -10px;
+}
+.btnBook {
+    background: none repeat scroll 0 0 #2ecc71;
+    color: #fff;
+}
+.btnBook:hover {
+    color: #fff;
+    opacity: 0.8;
+}
+.btnBook:focus {color: #fff;}
 /*==========  Non-Mobile First Method  ==========*/
 
 	@media (min-width: 1200px){

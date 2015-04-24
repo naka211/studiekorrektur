@@ -47,9 +47,11 @@ defined('_JEXEC') or die('Restricted access');
 		}
 		
 		getDeliveryTime = function(day){
+			jQuery(".btnAddcart").addClass("disabled");
 			jQuery.post( "<?php echo JURI::base();?>index.php?option=com_virtuemart&controller=virtuemart&task=getTime&day="+day, function(date) {
 				jQuery( "#delivery_time_txt" ).text( date );
-				jQuery("#delivery_date").val(date)
+				jQuery("#delivery_date").val(date);
+				jQuery(".btnAddcart").removeClass("disabled");
 			});
 		}
 	
@@ -246,6 +248,10 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery("#orderForm").submit();
 			}
 		});
+		
+		jQuery(".btnBook").click(function(e) {
+			
+		});
 	});
 </script>
 <section class="main-content">
@@ -374,6 +380,8 @@ defined('_JEXEC') or die('Restricted access');
 			<div class="col-md-3">
 				<label for="" style="font-size:13px;"><strong>Indtast antal tegn inkl. mellemrum</strong></label>
 				<input type="text" class="form-control input" id="words" onKeyUp="calPrice();" value="0">
+				<button class="btn btnBook pull-right btn-default" type="button">Bestil nu</button>
+				<img alt="" src="templates/studie/img/down2.png" class="iconDown">
 			</div>
 			<div class="col-md-2" style="text-align:center;">
 				<label for=""><strong>Antal normalsider:</strong></label>
@@ -403,7 +411,7 @@ defined('_JEXEC') or die('Restricted access');
 		<div class="row text-center">
 			<hr class="black">
 			<!--<a class="btn btnAddcart" href="#myModal" data-toggle="modal" data-target="#smallModal">Læg bestilling i indkøbskurven</a>-->
-			<a class="btn btnAddcart">Læg bestilling i indkøbskurven</a>
+			<a class="btn btnAddcart disabled">Læg bestilling i indkøbskurven</a>
 			<a class="btnAddcart1" href="#myModal" data-toggle="modal" data-target="#smallModal"></a>
 		</div>
 		</form>
