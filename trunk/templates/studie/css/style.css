@@ -376,7 +376,7 @@ ul.list-article li {margin-bottom: 15px; border-bottom: 1px dotted #ccc;}
     border-radius: 0;
     margin-bottom: 10px;
 }
-.disabled {z-index: 1000; background-color: lightgrey; opacity: 0.6; pointer-events: none;}
+.disabled {z-index: 1000; background-color: lightgrey !important; opacity: 0.6; pointer-events: none;}
 .disabled .btnChoose2 {background: lightgrey; border-color: #808b96; color: #808b96;}
 
 /***18-04-2015***/
@@ -408,6 +408,7 @@ ul.list-article li {margin-bottom: 15px; border-bottom: 1px dotted #ccc;}
     opacity: 0.8;
 }
 .btnBook:focus {color: #fff;}
+
 /*==========  Non-Mobile First Method  ==========*/
 
 	@media (min-width: 1200px){

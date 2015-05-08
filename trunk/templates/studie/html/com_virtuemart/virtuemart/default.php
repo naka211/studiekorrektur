@@ -83,7 +83,7 @@ defined('_JEXEC') or die('Restricted access');
 					jQuery("#virtuemart_product_id").val("1");
 					jQuery("#price").val("24.95");
 				}
-				calPrice();
+				//calPrice();
 			}
 			
 			if(parseInt(id) == 2 && e.hasClass('btnUnChoose')){
@@ -113,8 +113,11 @@ defined('_JEXEC') or die('Restricted access');
 					jQuery("#virtuemart_product_id").val("2");
 					jQuery("#price").val("29.95");
 				}
-				calPrice();
+				//calPrice();
 			}
+			jQuery("#delivery_time_txt").html("");
+			jQuery("#total_price_txt").html("");
+			jQuery(".btnAddcart").addClass("disabled");
 		};
 		
 		setCheckExpress = function(e){
@@ -129,11 +132,11 @@ defined('_JEXEC') or die('Restricted access');
 				if(product_id == 1){
 					jQuery("#virtuemart_product_id").val("3");
 					jQuery("#price").val("37.425");
-					calPrice();
+					//calPrice();
 				} else {
 					jQuery("#virtuemart_product_id").val("4");
 					jQuery("#price").val("44.925");
-					calPrice();
+					//calPrice();
 				}
 				
 				/*if(jQuery("#quantity").val() < 20){
@@ -149,11 +152,11 @@ defined('_JEXEC') or die('Restricted access');
 				if(product_id == 3){
 					jQuery("#virtuemart_product_id").val("1");
 					jQuery("#price").val("24.95");
-					calPrice();
+					//calPrice();
 				} else {
 					jQuery("#virtuemart_product_id").val("2");
 					jQuery("#price").val("29.95");
-					calPrice();
+					//calPrice();
 				}
 				
 				/*if(jQuery("#quantity").val() < 20){
@@ -162,6 +165,9 @@ defined('_JEXEC') or die('Restricted access');
 					getDeliveryTime(3);
 				}*/
 			}
+			jQuery("#delivery_time_txt").html("");
+			jQuery("#total_price_txt").html("");
+			jQuery(".btnAddcart").addClass("disabled");
 		}
 		
 		setCheckAbstract = function(e, id){
@@ -177,11 +183,14 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery('#express_da').removeClass('btnCheck').addClass('btnUnCheck').text('Tilvælg');
 				
 				jQuery(".productDisabled").addClass("disabled");
+				jQuery(".btnBook").addClass("disabled");
+				jQuery('[name="lang"]').addClass("disabled");
+				jQuery("#pages_txt").html("");
 				
 				getDeliveryTime(2);
 				
 				jQuery("#words").val(0);
-				jQuery("#pages_txt").text(0);
+				/*jQuery("#pages_txt").text(0);*/
 				jQuery("#words").prop( "disabled", true );
 				
 				jQuery("#virtuemart_product_id").val("5");
@@ -193,6 +202,12 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery('#'+id).removeClass('btnCheck').addClass('btnUnCheck').text('Vælg');
 				jQuery("#words").prop( "disabled", false );
 				jQuery(".productDisabled").removeClass("disabled");
+				jQuery(".btnBook").removeClass("disabled");
+				jQuery("#pages_txt").html("");
+				jQuery("#delivery_time_txt").html("");
+				jQuery("#total_price_txt").html("");
+				jQuery('[name="lang"]').removeClass("disabled");
+				
 				jQuery("#premium_en").click();
 				
 				jQuery("#abstract_flag").val("0");
@@ -200,7 +215,7 @@ defined('_JEXEC') or die('Restricted access');
 				jQuery("#quantity").val("0");
 				
 				jQuery("#totalPrice").val(0);
-				setTotalPriceTxt();
+				//setTotalPriceTxt();
 			}
 		}
 		
@@ -250,6 +265,11 @@ defined('_JEXEC') or die('Restricted access');
 		});
 		
 		jQuery(".btnBook").click(function(e) {
+			if(jQuery("#words").val() == 0){
+				jQuery(".btnBook1").click();
+			} else {
+				calPrice();
+			}
 			
 		});
 	});
@@ -379,13 +399,13 @@ defined('_JEXEC') or die('Restricted access');
 			</div>
 			<div class="col-md-3">
 				<label for="" style="font-size:13px;"><strong>Indtast antal tegn inkl. mellemrum</strong></label>
-				<input type="text" class="form-control input" id="words" onKeyUp="calPrice();" value="0">
-				<button class="btn btnBook pull-right btn-default" type="button">Bestil nu</button>
+				<input type="text" class="form-control input" id="words" value="0">
+				<button class="btn btnBook pull-right" type="button">Beregn</button>
 				<img alt="" src="templates/studie/img/down2.png" class="iconDown">
 			</div>
 			<div class="col-md-2" style="text-align:center;">
 				<label for=""><strong>Antal normalsider:</strong></label>
-				<p id="pages_txt">0</p>
+				<p id="pages_txt"><!--0--></p>
 			</div>
 			<div class="col-md-3">
 				<label for=""><strong>Leveringstidspunkt:</strong></label>
@@ -393,7 +413,7 @@ defined('_JEXEC') or die('Restricted access');
 			</div>
 			<div class="col-md-2">
 				<label for=""><strong>Total pris:</strong></label>
-				<p id="total_price_txt">0,00 DKK</p>
+				<p id="total_price_txt"><!--0,00 DKK--></p>
 			</div>
 			<input type="hidden" name="task" value="add"/>
 			<input type="hidden" value="com_virtuemart" name="option">
@@ -413,6 +433,7 @@ defined('_JEXEC') or die('Restricted access');
 			<!--<a class="btn btnAddcart" href="#myModal" data-toggle="modal" data-target="#smallModal">Læg bestilling i indkøbskurven</a>-->
 			<a class="btn btnAddcart disabled">Læg bestilling i indkøbskurven</a>
 			<a class="btnAddcart1" href="#myModal" data-toggle="modal" data-target="#smallModal"></a>
+			<a class="btnBook1" href="#wordsModal" data-toggle="modal" data-target="#wordsModal"></a>
 		</div>
 		</form>
 		<!-- Modal HTML -->
@@ -421,6 +442,17 @@ defined('_JEXEC') or die('Restricted access');
 				<div class="modal-content">
 					<div class="modal-body text-center">
 						<p>Du skal min. bestille 10 sider.</p>
+						<a class="btnClose" href="#" data-dismiss="modal"><i class="fa fa-times"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="wordsModal" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-body text-center">
+						<p>Angiv antallet af karakter.</p>
 						<a class="btnClose" href="#" data-dismiss="modal"><i class="fa fa-times"></i></a>
 					</div>
 				</div>
