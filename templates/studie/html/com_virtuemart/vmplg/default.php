@@ -12,7 +12,7 @@ if(!class_exists('VmModel'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'vmmo
 $orderModel=VmModel::getModel('orders');
 $order = $orderModel->getOrder($orderid);
 
-if($order['details']['BT']->order_status != "C"){
+if($order['details']['BT']->order_status != "C" && $order['details']['BT']->order_status != "S"){
 	if (!class_exists('VirtueMartModelOrders')) require( JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'orders.php' );
 	$modelOrder = VmModel::getModel('orders');	
 	$order1 = array();		
@@ -104,7 +104,7 @@ if(!$order["details"]["BT"]->freelance_id){
 			<table cellpadding="0" cellspacing="0">
 				<tr>
 					<td style="border-bottom: none;">
-						<p>Du kan se opgaven ved at login til din profil her: <a href="'.JURI::base().'index.php/login.html">'.JURI::base().'index.php/login.html</a></p>
+						<p>Du kan se opgaven ved at login til din profil her: <a href="'.JURI::base().'login">'.JURI::base().'login</a></p>
 					</td>
 				</tr>
 			</table>

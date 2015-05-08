@@ -23,8 +23,8 @@ defined('_JEXEC') or die('Restricted access');
                     <!--<h2>Tak for din ordre </h2>-->
 					<p>Kære <?php echo $this->orderDetails["details"]["BT"]->first_name." ".$this->orderDetails["details"]["BT"]->last_name;?>,</p>
                     <p>Tak for din ordre!<br><br>
-                    Vi har modtaget din bestilling og den uploadede fil.<br>
-                    Dit ordrenr. er <?php echo $this->orderDetails["details"]["BT"]->order_number;?> - du modtager også denne ordrebekræftelse på mail.</p>
+                    Vi har modtaget din bestilling og den uploadede fil.<br><br>
+                    Dit ordrenr. er <?php echo $this->orderDetails["details"]["BT"]->order_number;?><!-- - du modtager også denne ordrebekræftelse på mail-->.</p>
                     <p>Sprog: <?php echo $this->orderDetails["details"]["BT"]->language;?></p>
                     <p>Leveringstidspunkt: <?php echo $this->orderDetails["details"]["BT"]->delivery_date;?></p>   
 					<p>Kommentar: <?php echo $this->orderDetails["details"]["BT"]->comment;?></p> 
@@ -64,7 +64,10 @@ defined('_JEXEC') or die('Restricted access');
                         <p>Du er velkommen til at kontakte os på info@studiekorrektur.dk eller +45 3029 6044, hvis du skulle have spørgsmål.<br><br>
                         Du ønskes en god dag!</p>
                         <p>De bedste hilsener,<br>
-                        Teamet bag Studiekorrektur.dk</p>
+                        Teamet bag Studiekorrektur.dk<br><br>
+						<img src="<?php echo JURI::base();?>templates/studie/img/logo.png" /><br><br>
+						Tlf.: +45 3029 6044<br>
+						Website: <a href="www.studiekorrektur.dk">www.studiekorrektur.dk</a></p>
                     </td>
                 </tr>
             </tbody>
