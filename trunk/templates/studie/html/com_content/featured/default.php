@@ -68,8 +68,8 @@ $tmpl = JURI::base().'templates/studie/';
 					<div class="col-sm-2 col-lg-2"> <i class="fa fa-desktop fa-4x mt10 f3-5"></i> </div>
 					<div class="col-sm-10 col-lg-10 pl0">
 						<h4>Kerneydelser</h4>
-						<p>Korrekturlæsning: Tilretning af stave- og tegnsætningsfejl<br>
-							Sproglig tilretning: Forbedring af sætningskonstruktioner og ordvalg</p>
+						<p>Korrekturlæsning: Tilretning af stave- og tegnsætningsfejl.<br>
+							Sproglig tilretning: Forbedring af sætningskonstruktioner og ordvalg.</p>
 					</div>
 				</div>
 			</div>
@@ -78,9 +78,12 @@ $tmpl = JURI::base().'templates/studie/';
 					<div class="col-sm-2 col-lg-2"> <i class="fa fa-refresh fa-4x mt10"></i> </div>
 					<div class="col-sm-10 col-lg-10 pad0">
 						<h4>Leveringstid</h4>
-						<p>Behandling af op til 20 sider: 2-3 arbejdsdage<br>
-							Behandling af 20 sider og opefter: 3-4 arbejdsdage<br>
-							Akut korrekturlæsning: 1-2 arbejdsdage (mod et gebyr på 50%)</p>
+						<p>Normal levering af op til 20 sider: 48 hverdagstimer.<br>
+Normal levering af 20 sider og opefter: 72 hverdagstimer.<br><br>
+
+Ekspreslevering af op til 20 sider: 24 hverdagstimer (+50% gebyr).<br>
+Ekspreslevering af 20 sider og opefter: 48 hverdagstimer (+50% gebyr).
+</p>
 					</div>
 				</div>
 			</div>
@@ -100,8 +103,8 @@ $tmpl = JURI::base().'templates/studie/';
 					<div class="col-sm-2 col-lg-2"> <i class="fa fa-search fa-4x mt10"></i> </div>
 					<div class="col-sm-10 col-lg-10 pad0">
 						<h4>Kvalitet</h4>
-						<p>Kvaliteten af vores korrekturydelser sikres gennem samarbejde med yderst kompetente korrekturlæsere<br>
-							Målsætningen er 100% fejlfrihed i korrekturlæsningen fra vores side</p>
+						<p>Kvaliteten af vores korrekturydelser sikres gennem samarbejde med yderst kompetente korrekturlæsere.<br>
+							Målsætningen er 100% fejlfrihed i korrekturlæsningen fra vores side.</p>
 					</div>
 				</div>
 			</div>
@@ -112,9 +115,7 @@ $tmpl = JURI::base().'templates/studie/';
 					<div class="col-sm-2 col-lg-2"> <i class="fa fa-repeat fa-4x mt10"></i> </div>
 					<div class="col-sm-10 col-lg-10 pl0">
 						<h4>Sådan gør du</h4>
-						<p>Gennem bestillingssiden uploades opgaven som et <br>
-							Word-dokument efter betaling. Dernæst godkender vi ordren,<br>
-							og vores professionelle korrekturlæser læser korrektur på opgaven. Til sidst får du et Word-dokument retur, hvor du enten kan gennemgå og godkende rettelserne enkeltvis eller godkende dem alle med ét klik.</p>
+						<p>Gennem bestillingssiden vælger du den ønskede korrekturydelse, får en leveringstid, uploader opgaven som et Word-dokument og indtaster til sidst dine betalingsoplysninger. Dernæst får du en ordrebekræftelse, og vores professionelle korrekturlæser læser korrektur på opgaven indenfor angivne deadline. Til sidst får du et Word-dokument retur, hvor du enten kan gennemgå og godkende rettelserne enkeltvis eller godkende dem alle med ét klik.</p>
 					</div>
 				</div>
 			</div>

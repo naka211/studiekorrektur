@@ -538,6 +538,7 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		$order_id = JRequest::getVar('order_id');
 		$correct_words = JRequest::getVar('correct_words');
 		$freelance_comment = JRequest::getVar('freelance_comment');
+		$freelance_comment = htmlspecialchars($freelance_comment);
 		$daFile = $_FILES["danish_file"];
 		$enFile = $_FILES["english_file"];
 		
@@ -552,7 +553,8 @@ class VirtueMartControllerCart extends JControllerLegacy {
 		move_uploaded_file($enFile["tmp_name"], $enFileDes.$enFileName);
 		
 		$db = JFactory::getDBO();
-		$db->setQuery("UPDATE #__virtuemart_order_userinfos SET danish_edited_file='".$daFileName."',  english_edited_file='".$enFileName."', correct_words='".$correct_words."', freelance_comment='".$freelance_comment."' WHERE virtuemart_order_id=".$order_id." AND address_type = 'BT'");
+		$query = 'UPDATE #__virtuemart_order_userinfos SET danish_edited_file="'.$daFileName.'",  english_edited_file="'.$enFileName.'", correct_words="'.$correct_words.'", freelance_comment="'.$freelance_comment.'" WHERE virtuemart_order_id='.$order_id.' AND address_type = "BT"';
+		$db->setQuery($query);
 		$db->query();
 		
 		$mainframe = JFactory::getApplication();
